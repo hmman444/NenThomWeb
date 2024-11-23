@@ -6,17 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scented Bliss - Shop Products</title>
-    <link rel="stylesheet" href="styles_product.css">
+    <link rel="stylesheet" href="../css/styles_product.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-light-cream">
     <!-- Header -->
     <header class="header">
         <div class="container">
-            <img src="images/logo.jpg" alt="Logo" class="logo">
+            <img src="../images/logo.jpg" alt="Logo" class="logo">
             <nav>
-                <a href="/NenthomWeb/TrangChu.jsp">Home</a>
-                <a href="/NenthomWeb/product.jsp">Products</a>
+                <a href="/NenthomWeb/views/TrangChu.jsp">Home</a>
+                <a href="/NenthomWeb/views/product.jsp">Products</a>
                 <a href="#">Collections</a>
                 <a href="#">About Us</a>
                 <a href="#">Contact</a>
@@ -67,7 +67,7 @@
 	        <div class="grid">
 		        <div class="product-card" >
 		                <div class="product-image">
-		                    <img src="images/anhSanPham.jpg" alt="Vanilla Dream Candle">
+		                    <img src="../images/anhSanPham.jpg" alt="Vanilla Dream Candle">
 		                </div>
 		                <div class="product-info">
 		                    <h3 class="product-name">Vanilla Dream</h3>
@@ -81,7 +81,7 @@
 		            </div>
 		        <div class="product-card">
 		                <div class="product-image">
-		                    <img src="images/anhSanPham.jpg" alt="Vanilla Dream Candle">
+		                    <img src="../images/anhSanPham.jpg" alt="Vanilla Dream Candle">
 		                </div>
 		                <div class="product-info">
 		                    <h3 class="product-name">Vanilla Dream</h3>
@@ -95,7 +95,7 @@
 		            </div>
 		        <div class="product-card">
 		                <div class="product-image">
-		                    <img src="images/anhSanPham.jpg" alt="Vanilla Dream Candle">
+		                    <img src="../images/anhSanPham.jpg" alt="Vanilla Dream Candle">
 		                </div>
 		                <div class="product-info">
 		                    <h3 class="product-name">Vanilla Dream</h3>
@@ -109,7 +109,7 @@
 		            </div>
 		        <div class="product-card">
 		                <div class="product-image">
-		                    <img src="images/anhSanPham.jpg" alt="Vanilla Dream Candle">
+		                    <img src="../images/anhSanPham.jpg" alt="Vanilla Dream Candle">
 		                </div>
 		                <div class="product-info">
 		                    <h3 class="product-name">Vanilla Dream</h3>
@@ -123,7 +123,7 @@
 		            </div>
 		        <div class="product-card">
 		                <div class="product-image">
-		                    <img src="images/anhSanPham.jpg" alt="Vanilla Dream Candle">
+		                    <img src="../images/anhSanPham.jpg" alt="Vanilla Dream Candle">
 		                </div>
 		                <div class="product-info">
 		                    <h3 class="product-name">Vanilla Dream</h3>
@@ -137,7 +137,7 @@
 		            </div>
 		        <div class="product-card">
 	                <div class="product-image">
-	                    <img src="images/anhSanPham.jpg" alt="Lavender Bliss Candle">
+	                    <img src="../images/anhSanPham.jpg" alt="Lavender Bliss Candle">
 	                </div>
 	                <div class="product-info">
 	                    <h3 class="product-name">Lavender Bliss</h3>

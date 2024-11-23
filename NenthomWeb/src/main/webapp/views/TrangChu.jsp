@@ -6,17 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ | Nến thơm</title>
-    <link rel="stylesheet" href="styles_TrangChu.css">
+    <link rel="stylesheet" href="../css/styles_TrangChu.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-light-cream">
     <!-- Header -->
     <header class="header">
         <div class="container">
-            <img src="images/logo.jpg" alt="Logo" class="logo">
+            <img src="../images/logo.jpg" alt="Logo" class="logo">
             <nav>
-                <a href="/NenthomWeb/TrangChu.jsp">Home</a>
-                <a href="/NenthomWeb/product.jsp">Products</a>
+                <a href="/NenthomWeb/views/TrangChu.jsp">Home</a>
+                <a href="/NenthomWeb/views/product.jsp">Products</a>
                 <a href="#">Collections</a>
                 <a href="#">About Us</a>
                 <a href="#">Contact</a>
@@ -31,7 +31,7 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <img src="images/anhNen.jpg" alt="Luxury Candle">
+        <img src="../images/anhNen.jpg" alt="Luxury Candle">
         <div class="overlay">
             <div class="hero-content">
                 <h1>Illuminate Your Space</h1>
@@ -46,21 +46,21 @@
         <h2>Our Collections</h2>
         <div class="grid">
             <div class="category-item">
-                <img src="images/anhSanPham.jpg" alt="Fragrance Candles">
+                <img src="../images/anhSanPham.jpg" alt="Fragrance Candles">
                 <div>
                     <h3>Fragrance Candles</h3>
                     <button>View Collection →</button>
                 </div>
             </div>
             <div class="category-item">
-                <img src="images/anhSanPham.jpg" alt="Decorative Candles">
+                <img src="../images/anhSanPham.jpg" alt="Decorative Candles">
                 <div>
                     <h3>Decorative Candles</h3>
                     <button>View Collection →</button>
                 </div>
             </div>
             <div class="category-item">
-                <img src="images/anhSanPham.jpg" alt="Gift Sets">
+                <img src="../images/anhSanPham.jpg" alt="Gift Sets">
                 <div>
                     <h3>Gift Sets</h3>
                     <button>View Collection →</button>
