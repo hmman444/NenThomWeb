@@ -1,0 +1,179 @@
+/* General */
+body {
+	font-family: 'Arial', sans-serif;
+	background-color: #faf7f2;
+	margin: 0;
+	padding: 86px 0 0 0;
+}
+
+/* Header và Footer giữ nguyên như file styles_product.css */
+
+/* Login Form Section */
+.login-section {
+	padding: 2rem 0;
+	text-align: center;
+	background: #f9f8f3;
+}
+
+.login-form {
+	max-width: 400px;
+	margin: 0 auto;
+	background: white;
+	padding: 2rem;
+	border-radius: 10px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h2 {
+	color: #8b5e3c;
+	margin-bottom: 1.5rem;
+	font-family: serif;
+}
+
+.form-group {
+	margin-bottom: 1.5rem;
+	text-align: left;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 0.5rem;
+	color: #8b5e3c;
+}
+
+.form-group input {
+	width: 100%;
+	padding: 0.8rem;
+	border: 1px solid #d4a373;
+	border-radius: 5px;
+	font-size: 1rem;
+}
+
+.login-button {
+	width: 100%;
+	padding: 0.8rem;
+	background: #8b5e3c;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background 0.3s;
+}
+
+.login-button:hover {
+	background: #d4a373;
+}
+
+.signup-link {
+	margin-top: 1rem;
+	font-size: 0.9rem;
+	color: #8b5e3c;
+}
+
+.signup-link a {
+	color: #1e90ff;
+	text-decoration: none;
+}
+
+.signup-link a:hover {
+	text-decoration: underline;
+}
+
+/* Header */
+.header {
+	background: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	position: fixed;
+	width: 100%;
+	z-index: 50;
+	padding: 1rem 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	top: 0;
+}
+
+.header .container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
+
+.header .logo {
+	height: 50px;
+	width: auto;
+}
+
+.header nav a {
+	margin-right: 20px;
+	text-decoration: none;
+	color: #8b5e3c;
+	transition: color 0.3s;
+}
+
+.header nav a:hover {
+	color: #d4a373;
+}
+
+.header .icons button {
+	background: none;
+	border: none;
+	color: #8b5e3c;
+	font-size: 1.2rem;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+/* Footer */
+footer {
+	background: #8b5e3c;
+	color: white;
+	padding: 2rem 1rem;
+}
+
+footer .container {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1rem;
+}
+
+footer h4 {
+	font-size: 1.2rem;
+	font-family: serif;
+}
+
+footer a {
+	color: white;
+	text-decoration: none;
+	margin-right: 10px;
+	transition: color 0.3s;
+}
+
+footer a:hover {
+	color: #d4a373;
+}
+
+/* Button Login */
+.login-button {
+	display: inline-block;
+	margin-left: auto; /* Đẩy button sang phải */
+	padding: 10px 20px;
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	background-color: #1e90ff; /* Màu xanh */
+	border-radius: 5px;
+	text-decoration: none;
+	transition: background-color 0.3s ease;
+	position: absolute;
+	top: 10px; /* Canh góc trên */
+	right: 10px; /* Canh góc phải */
+}
+
+.login-button:hover {
+	background-color: #187bcd; /* Màu xanh đậm khi hover */
+}
