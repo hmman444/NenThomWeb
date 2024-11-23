@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ | Nến thơm</title>
     <link rel="stylesheet" href="../css/styles_TrangChu.css">
+    <link rel="stylesheet" href="../css/styles_header_footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-light-cream">
@@ -23,7 +24,8 @@
             </nav>
             <div class="icons">
                 <button><i class="fas fa-search"></i></button>
-                <button><i class="fas fa-shopping-cart"></i></button>
+                <button onclick="window.location.href='cart.jsp';">
+                	<i class="fas fa-shopping-cart"></i></button>
                 <button><i class="fas fa-user"></i></button>
             </div>
         </div>
