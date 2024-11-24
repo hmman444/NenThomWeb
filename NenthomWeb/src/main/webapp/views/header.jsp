@@ -6,14 +6,18 @@
             <a href="/NenthomWeb/views/TrangChu.jsp">Home</a>
             <a href="/NenthomWeb/views/product.jsp">Products</a>
             <a href="#">Collections</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
+            <a href="/NenthomWeb/views/contact_policy.jsp">Contact and Policy</a>
         </nav>
         <div class="icons">
             <button><i class="fas fa-search"></i></button>
             <button onclick="window.location.href='cart.jsp';">
                 <i class="fas fa-shopping-cart"></i></button>
             <button><i class="fas fa-user"></i></button>
+        </div>
+        <div class="login-button">
+            <button onclick="window.location.href='/NenthomWeb/views/login.jsp';">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
         </div>
     </div>
 </header>

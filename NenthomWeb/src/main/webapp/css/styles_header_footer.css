@@ -97,3 +97,37 @@ form button {
 form button:hover {
     background: #8b5e3c;
 }
+
+/* Nút Login mới */
+.header .login-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.header .login-button button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #ff7e5f, #feb47b); /* Hiệu ứng gradient */
+    color: white;
+    border: none;
+    border-radius: 25px; /* Bo tròn nút */
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.header .login-button button i {
+    font-size: 16px; /* Kích thước biểu tượng */
+}
+
+.header .login-button button:hover {
+    background: linear-gradient(45deg, #ff6a5b, #fd9f79); /* Màu hover mới */
+    transform: translateY(-2px); /* Hiệu ứng nổi lên */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
