@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,137 +11,166 @@
 </head>
 <body class="bg-[#faf7f2]">
     <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <img src="../images/logo.jpg" alt="Logo" class="logo">
-            <nav>
-                <a href="/NenthomWeb/views/TrangChu.jsp">Home</a>
-                <a href="/NenthomWeb/views/product.jsp">Products</a>
-                <a href="#">Collections</a>
-                <a href="#">About Us</a>
-                <a href="#">Contact</a>
-            </nav>
-            <div class="icons">
-                <button><i class="fas fa-search"></i></button>
-                <button><i class="fas fa-shopping-cart"></i></button>
-                <button><i class="fas fa-user"></i></button>
-            </div>
-        </div>
-    </header>
+    <%@ include file="header.jsp" %>
 
     <!-- Cart Section -->
     <main class="cart-section">
-	  <div class="container">
-	    <h1 class="cart-title">Shopping Cart</h1>
-	    <div class="cart-content">
-	      <!-- Cart Items -->
-	      <div class="cart-items">
-	        <div class="cart-item">
-	          <img src="../images/anhSanPham.jpg" alt="Product Image" class="cart-item-image" />
-	          <div class="cart-item-details">
-	            <h2>Luxury Vanilla Dream Candle</h2>
-	            <p class="in-stock">In Stock</p>
-	            <div class="quantity-controls">
-			        <button class="quantity-btn" onclick="decrement()">-</button>
-			        <span id="quantityValue" class="quantity-value">1</span>
-			        <button class="quantity-btn" onclick="increment()">+</button>
-			    </div>
-	          </div>
-	          <div class="cart-item-price">$24.99</div>
-	          <button class="delete-btn"><i class="fas fa-trash"></i></button>
-	        </div>
-	        <div class="cart-item">
-	          <img src="../images/anhSanPham.jpg" alt="Product Image" class="cart-item-image" />
-	          <div class="cart-item-details">
-	            <h2>Luxury Vanilla Dream Candle</h2>
-	            <p class="in-stock">In Stock</p>
-	            <div class="quantity-controls">
-			        <button class="quantity-btn" onclick="decrement()">-</button>
-			        <span id="quantityValue" class="quantity-value">1</span>
-			        <button class="quantity-btn" onclick="increment()">+</button>
-			    </div>
-	          </div>
-	          <div class="cart-item-price">$24.99</div>
-	          <button class="delete-btn"><i class="fas fa-trash"></i></button>
-	        </div>
-
-	      </div>
-	      <!-- Order Summary -->
-	      <div class="order-summary">
-	        <h2>Order Summary</h2>
-	        <div class="summary-detail">
-	          <p>Subtotal:</p>
-	          <p>$70.97</p>
-	        </div>
-	        <div class="summary-detail">
-	          <p>Shipping:</p>
-	          <p>$5.99</p>
-	        </div>
-	        <div class="promo-code">
-		        <input type="text" placeholder="Enter discount code" class="promo-input" />
-		        <button class="promo-btn">Apply</button>
-		    </div>
-	        <div class="summary-total">
-	          <p>Total:</p>
-	          <p>$76.96</p>
-	        </div>
-	        <button class="checkout-btn">Proceed to Checkout</button>
-	      </div>
-	    </div>
-	  </div>
-	</main>
+        <div class="container">
+            <h1 class="cart-title">Shopping Cart</h1>
+            <div class="cart-content">
+                <!-- Cart Items -->
+                <div class="cart-items">
+                    <div class="cart-item">
+					    <img src="../images/anhSanPham.jpg" alt="Product Image" class="cart-item-image" />
+					    <div class="cart-item-details">
+					        <h2>Luxury Vanilla Dream Candle</h2>
+					        <p class="in-stock">In Stock</p>
+					        <div class="quantity-controls">
+					            <button class="quantity-btn" onclick="decrement(event)">-</button>
+					            <span class="quantity-value">1</span>
+					            <button class="quantity-btn" onclick="increment(event)">+</button>
+					        </div>
+					    </div>
+					    <div class="cart-item-price">$24.99</div>
+					    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+					</div>
+					
+					<div class="cart-item">
+					    <img src="../images/anhSanPham.jpg" alt="Product Image" class="cart-item-image" />
+					    <div class="cart-item-details">
+					        <h2>Luxury Vanilla Dream Candle</h2>
+					        <p class="in-stock">In Stock</p>
+					        <div class="quantity-controls">
+					            <button class="quantity-btn" onclick="decrement(event)">-</button>
+					            <span class="quantity-value">1</span>
+					            <button class="quantity-btn" onclick="increment(event)">+</button>
+					        </div>
+					    </div>
+					    <div class="cart-item-price">$24.99</div>
+					    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+					</div>
 
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-grid">
-            <div>
-                <h4>About Us</h4>
-                <p>Crafting premium scented candles for your perfect ambiance.</p>
-            </div>
-            <div>
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Shipping Info</a></li>
-                    <li><a href="#">Returns</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Connect</h4>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+                
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    <div class="summary-detail">
+                        <p>Subtotal:</p>
+                        <p>$70.97</p>
+                    </div>
+                    <div class="summary-detail">
+                        <p>Shipping:</p>
+                        <p>$5.99</p>
+                    </div>
+                    <div class="promo-code">
+                        <input type="text" placeholder="Enter discount code" class="promo-input" />
+                        <button onclick="applyCode()" class="promo-btn">Apply</button>
+                    </div>
+                    <div class="summary-total">
+                        <p>Total:</p>
+                        <p>$76.96</p>
+                    </div>
+                    <button class="checkout-btn" onclick="toggleModal()">Proceed to Checkout</button>
                 </div>
             </div>
-            <div>
-                <h4>Newsletter</h4>
-                <form>
-                    <input type="email" placeholder="Your email">
-                    <button>→</button>
-                </form>
-            </div>
         </div>
-    </footer>
-    <script>
-        let quantity = 1;
+    </main>
 
-        function increment() {
-            quantity++;
-            document.getElementById("quantityValue").textContent = quantity;
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="custom-modal-overlay custom-modal-hidden">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <h2>Checkout Information</h2>
+                <button onclick="toggleModal()" class="custom-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="custom-modal-form">
+                <!-- Shipping Information -->
+                <div>
+                    <h3>Shipping Information</h3>
+                    <div class="custom-form-grid">
+                        <div>
+                            <label>First Name</label>
+                            <input type="text" class="custom-input">
+                        </div>
+                        <div>
+                            <label>Last Name</label>
+                            <input type="text" class="custom-input">
+                        </div>
+                        <div class="custom-form-full-width">
+                            <label>Address</label>
+                            <input type="text" class="custom-input">
+                        </div>
+                        <div>
+                            <label>City</label>
+                            <input type="text" class="custom-input">
+                        </div>
+                        <div>
+                            <label>Postal Code</label>
+                            <input type="text" class="custom-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Information -->
+                <div>
+                    <h3>Payment Information</h3>
+                    <div class="custom-form-group">
+                        <div>
+                            <label>Card Number</label>
+                            <input type="text" class="custom-input custom-card-number" placeholder="**** **** **** ****">
+                        </div>
+                        <div class="custom-form-grid">
+                            <div>
+                                <label>Expiry Date</label>
+                                <input type="text" class="custom-input" placeholder="MM/YY">
+                            </div>
+                            <div>
+                                <label>CVV</label>
+                                <input type="text" class="custom-input" placeholder="***">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="custom-submit-button">Complete Purchase</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <%@ include file="footer.jsp" %>
+
+    <script>
+        function toggleModal() {
+            const modal = document.getElementById('checkoutModal');
+            modal.classList.toggle('custom-modal-hidden');
         }
 
-        function decrement() {
+        function increment(event) {
+            const quantityElement = event.target.closest('.quantity-controls').querySelector('.quantity-value');
+            let quantity = parseInt(quantityElement.textContent, 10);
+            quantity++;
+            quantityElement.textContent = quantity;
+        }
+
+        function decrement(event) {
+            const quantityElement = event.target.closest('.quantity-controls').querySelector('.quantity-value');
+            let quantity = parseInt(quantityElement.textContent, 10);
             if (quantity > 1) {
                 quantity--;
-                document.getElementById("quantityValue").textContent = quantity;
+                quantityElement.textContent = quantity;
             }
         }
 
+
         function applyCode() {
-            const promoInput = document.querySelector('.promo-input').value;
-            if (promoInput.trim() === "") {
+            const promoInput = document.querySelector('.promo-input').value.trim();
+            if (promoInput === "") {
                 alert("Please enter a promo code!");
             } else {
                 alert(`Promo code "${promoInput}" applied successfully!`);

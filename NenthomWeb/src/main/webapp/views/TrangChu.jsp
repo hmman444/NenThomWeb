@@ -12,24 +12,8 @@
 </head>
 <body class="bg-light-cream">
     <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <img src="../images/logo.jpg" alt="Logo" class="logo">
-            <nav>
-                <a href="/NenthomWeb/views/TrangChu.jsp">Home</a>
-                <a href="/NenthomWeb/views/product.jsp">Products</a>
-                <a href="#">Collections</a>
-                <a href="#">About Us</a>
-                <a href="#">Contact</a>
-            </nav>
-            <div class="icons">
-                <button><i class="fas fa-search"></i></button>
-                <button onclick="window.location.href='cart.jsp';">
-                	<i class="fas fa-shopping-cart"></i></button>
-                <button><i class="fas fa-user"></i></button>
-            </div>
-        </div>
-    </header>
+    <%@ include file="header.jsp" %>
+
 
     <!-- Hero Section -->
     <section class="hero">
@@ -72,34 +56,6 @@
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container footer-grid">
-            <div>
-                <h4>About Us</h4>
-                <p>Crafting premium scented candles for your perfect ambiance.</p>
-            </div>
-            <div>
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Shipping Info</a></li>
-                    <li><a href="#">Returns</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Connect</h4>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-pinterest"></i></a>
-            </div>
-            <div>
-                <h4>Newsletter</h4>
-                <form>
-                    <input type="email" placeholder="Your email">
-                    <button>→</button>
-                </form>
-            </div>
-        </div>
-    </footer>
+    <%@ include file="footer.jsp" %>
 </body>
 </html>
