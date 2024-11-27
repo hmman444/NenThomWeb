@@ -4,7 +4,7 @@
         <img src="../images/logo.jpg" alt="Logo" class="logo">
         <nav>
             <a href="/NenthomWeb/views/TrangChu.jsp">Home</a>
-            <a href="/NenthomWeb/views/product.jsp">Products</a>
+            <a href="/NenthomWeb/servlets/DSProduct_Servlet">Products</a>
             <a href="#">Collections</a>
             <a href="/NenthomWeb/views/contact_policy.jsp">Contact and Policy</a>
         </nav>

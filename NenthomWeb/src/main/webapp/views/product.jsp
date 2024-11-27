@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,95 +50,27 @@
 
     <!-- Product Grid -->
     <section class="products">
-	    <div class="container">
-	        <div class="grid">
-		        <div class="product-card" onclick="redirectToDetail('1')">
-		                <div class="product-image">
-		                    <img src="../images/anhSanPham.jpg" alt="Vanilla Dream Candle">
-		                </div>
-		                <div class="product-info">
-		                    <h3 class="product-name">Vanilla Dream</h3>
-		                    <p class="product-price">$24.99</p>
-		                    <div class="product-rating">
-		                        <span class="stars">★★★★☆</span>
-		                        <span class="reviews">(24 reviews)</span>
-		                    </div>
-		                    <button class="add-to-cart">Add to Cart</button>
-		                </div>
-		            </div>
-		        <div class="product-card">
-		                <div class="product-image">
-		                    <img src="../images/anhSanPham.jpg" alt="Vanilla Dream Candle">
-		                </div>
-		                <div class="product-info">
-		                    <h3 class="product-name">Vanilla Dream</h3>
-		                    <p class="product-price">$24.99</p>
-		                    <div class="product-rating">
-		                        <span class="stars">★★★★☆</span>
-		                        <span class="reviews">(24 reviews)</span>
-		                    </div>
-		                    <button class="add-to-cart">Add to Cart</button>
-		                </div>
-		            </div>
-		        <div class="product-card">
-		                <div class="product-image">
-		                    <img src="../images/anhSanPham.jpg" alt="Vanilla Dream Candle">
-		                </div>
-		                <div class="product-info">
-		                    <h3 class="product-name">Vanilla Dream</h3>
-		                    <p class="product-price">$24.99</p>
-		                    <div class="product-rating">
-		                        <span class="stars">★★★★☆</span>
-		                        <span class="reviews">(24 reviews)</span>
-		                    </div>
-		                    <button class="add-to-cart">Add to Cart</button>
-		                </div>
-		            </div>
-		        <div class="product-card">
-		                <div class="product-image">
-		                    <img src="../images/anhSanPham.jpg" alt="Vanilla Dream Candle">
-		                </div>
-		                <div class="product-info">
-		                    <h3 class="product-name">Vanilla Dream</h3>
-		                    <p class="product-price">$24.99</p>
-		                    <div class="product-rating">
-		                        <span class="stars">★★★★☆</span>
-		                        <span class="reviews">(24 reviews)</span>
-		                    </div>
-		                    <button class="add-to-cart">Add to Cart</button>
-		                </div>
-		            </div>
-		        <div class="product-card">
-		                <div class="product-image">
-		                    <img src="../images/anhSanPham.jpg" alt="Vanilla Dream Candle">
-		                </div>
-		                <div class="product-info">
-		                    <h3 class="product-name">Vanilla Dream</h3>
-		                    <p class="product-price">$24.99</p>
-		                    <div class="product-rating">
-		                        <span class="stars">★★★★☆</span>
-		                        <span class="reviews">(24 reviews)</span>
-		                    </div>
-		                    <button class="add-to-cart">Add to Cart</button>
-		                </div>
-		            </div>
-		        <div class="product-card">
-	                <div class="product-image">
-	                    <img src="../images/anhSanPham.jpg" alt="Lavender Bliss Candle">
-	                </div>
-	                <div class="product-info">
-	                    <h3 class="product-name">Lavender Bliss</h3>
-	                    <p class="product-price">$29.99</p>
-	                    <div class="product-rating">
-	                        <span class="stars">★★★★★</span>
-	                        <span class="reviews">(32 reviews)</span>
-	                    </div>
-	                    <button class="add-to-cart">Add to Cart</button>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</section>
+        <div class="container">
+            <div class="grid">
+                <c:forEach var="product" items="${products}">
+                    <div class="product-card" onclick="redirectToDetail('1')">
+                        <div class="product-image">
+                            <img src="../images/anhSanPham.jpg" alt="${product.name}">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">${product.name}</h3>
+                            <p class="product-price">$${product.price}</p>
+                            <div class="product-rating">
+                                <span class="stars">★★★★☆</span>
+                                <span class="reviews">(24 reviews)</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+    </section>
 
 
     <!-- Footer -->

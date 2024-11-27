@@ -18,7 +18,7 @@
         <div class="container">
             <div class="login-form">
                 <h2 id="form-title">Login</h2>
-                <form id="auth-form" action="processLogin.jsp" method="post">
+                <form id="auth-form" action="../servlets/Login_Servlet" method="post">
                     <!-- Username -->
                     <div class="form-group">
                         <label for="username">Username</label>
@@ -35,7 +35,7 @@
                         <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password">
                     </div>
                     <!-- Submit Button -->
-                    <button type="submit" id="submit-button" class="login-button">Login</button>
+                    <button type="submit" id="submit-button" class="login-page-button">Login</button>
                 </form>
                 <!-- Toggle between Login and Sign Up -->
                 <p class="toggle-link">
@@ -65,7 +65,7 @@
                 submitButton.textContent = "Sign Up";
                 toggleText.textContent = "Already have an account?";
                 toggleLink.textContent = "Login";
-                document.getElementById("auth-form").action = "processSignup.jsp";
+                form.action = "../servlets/Register_Servlet";
             } else {
                 // Switch to Login form
                 formTitle.textContent = "Login";
@@ -73,7 +73,7 @@
                 submitButton.textContent = "Login";
                 toggleText.textContent = "Don't have an account?";
                 toggleLink.textContent = "Sign up";
-                document.getElementById("auth-form").action = "processLogin.jsp";
+                form.action = "../servlets/Login_Servlet";
             }
         }
     </script>
