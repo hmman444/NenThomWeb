@@ -59,7 +59,7 @@ public class Login_Servlet extends HttpServlet {
 		if (error) {
 			request.setAttribute("message", message);
 			request.setAttribute("error", error);
-			request.getRequestDispatcher("/views/Login.jsp").forward(request, response);
+			request.getRequestDispatcher("/views/login.jsp").forward(request, response);
 		}
 	}
 

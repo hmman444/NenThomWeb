@@ -12,7 +12,8 @@
             <button><i class="fas fa-search"></i></button>
             <button onclick="window.location.href='cart.jsp';">
                 <i class="fas fa-shopping-cart"></i></button>
-            <button><i class="fas fa-user"></i></button>
+            <button onclick="window.location.href='profile.jsp';">
+            	<i class="fas fa-user"></i></button>
         </div>
         <div class="login-button">
             <button onclick="window.location.href='/NenthomWeb/views/login.jsp';">

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,37 +21,22 @@
             <div class="cart-content">
                 <!-- Cart Items -->
                 <div class="cart-items">
-                    <div class="cart-item">
-					    <img src="../images/anhSanPham.jpg" alt="Product Image" class="cart-item-image" />
-					    <div class="cart-item-details">
-					        <h2>Luxury Vanilla Dream Candle</h2>
-					        <p class="in-stock">In Stock</p>
-					        <div class="quantity-controls">
-					            <button class="quantity-btn" onclick="decrement(event)">-</button>
-					            <span class="quantity-value">1</span>
-					            <button class="quantity-btn" onclick="increment(event)">+</button>
-					        </div>
-					    </div>
-					    <div class="cart-item-price">$24.99</div>
-					    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-					</div>
-					
-					<div class="cart-item">
-					    <img src="../images/anhSanPham.jpg" alt="Product Image" class="cart-item-image" />
-					    <div class="cart-item-details">
-					        <h2>Luxury Vanilla Dream Candle</h2>
-					        <p class="in-stock">In Stock</p>
-					        <div class="quantity-controls">
-					            <button class="quantity-btn" onclick="decrement(event)">-</button>
-					            <span class="quantity-value">1</span>
-					            <button class="quantity-btn" onclick="increment(event)">+</button>
-					        </div>
-					    </div>
-					    <div class="cart-item-price">$24.99</div>
-					    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-					</div>
-
-
+                    <c:forEach var="cart" items="${cartList}">
+                        <div class="cart-item">
+                            <img src="../images/anhSanPham.jpg" alt="Product Image" class="cart-item-image" />
+                            <div class="cart-item-details">
+                                <h2>Product ID: ${cart.productId}</h2>
+                                <p class="in-stock">In Stock</p>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn" onclick="decrement(event)">-</button>
+                                    <span class="quantity-value">${cart.quantity}</span>
+                                    <button class="quantity-btn" onclick="increment(event)">+</button>
+                                </div>
+                            </div>
+                            <div class="cart-item-price">$${cart.price}</div>
+                            <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </c:forEach>
                 </div>
                 
 

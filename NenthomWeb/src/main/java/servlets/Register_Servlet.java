@@ -48,6 +48,7 @@ public class Register_Servlet extends HttpServlet {
 				if (taiKhoanDao.addUser(taiKhoan)) {
 					message = "Đăng ký thành công!";
 					error = false;
+					request.getRequestDispatcher("/views/login.jsp").forward(request, response);
 				} else {
 					message = "Lỗi đăng ký!";
 					error = true;
@@ -61,7 +62,7 @@ public class Register_Servlet extends HttpServlet {
 		}
 		request.setAttribute("message", message);
 		request.setAttribute("error", error);
-		request.getRequestDispatcher("/login.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/register.jsp").forward(request, response);
 	}
 
 }

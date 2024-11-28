@@ -8,16 +8,32 @@
     <link rel="stylesheet" href="../css/styles_Login.css">
     <link rel="stylesheet" href="../css/styles_header_footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body class="bg-light-cream">
     <!-- Header -->
     <%@ include file="header.jsp" %>
 
-    <!-- Login / Sign Up Form -->
+    <!-- Login Form -->
     <section class="login-section">
         <div class="container">
             <div class="login-form">
                 <h2 id="form-title">Login</h2>
+                <!-- Check if there is a message attribute to display -->
+                <% if (request.getAttribute("message") != null) { %>
+                    <script type="text/javascript">
+                        var message = "<%= request.getAttribute("message") %>";
+                        var error = <%= request.getAttribute("error") %>;
+
+                        if (error) {
+                            toastr.error(message, "Lỗi");
+                        } else {
+                            toastr.success(message, "Thành công");
+                        }
+                    </script>
+                <% } %>
                 <form id="auth-form" action="../servlets/Login_Servlet" method="post">
                     <!-- Username -->
                     <div class="form-group">
@@ -28,11 +44,6 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                    </div>
-                    <!-- Confirm Password (hidden by default) -->
-                    <div class="form-group" id="confirm-password-group" style="display: none;">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password">
                     </div>
                     <!-- Submit Button -->
                     <button type="submit" id="submit-button" class="login-page-button">Login</button>
@@ -50,31 +61,8 @@
     <%@ include file="footer.jsp" %>
 
     <script>
-        // Toggle between Login and Sign Up forms
         function toggleForm() {
-            const formTitle = document.getElementById("form-title");
-            const confirmPasswordGroup = document.getElementById("confirm-password-group");
-            const submitButton = document.getElementById("submit-button");
-            const toggleText = document.getElementById("toggle-text");
-            const toggleLink = document.querySelector(".toggle-link a");
-
-            if (formTitle.textContent === "Login") {
-                // Switch to Sign Up form
-                formTitle.textContent = "Sign Up";
-                confirmPasswordGroup.style.display = "block";
-                submitButton.textContent = "Sign Up";
-                toggleText.textContent = "Already have an account?";
-                toggleLink.textContent = "Login";
-                form.action = "../servlets/Register_Servlet";
-            } else {
-                // Switch to Login form
-                formTitle.textContent = "Login";
-                confirmPasswordGroup.style.display = "none";
-                submitButton.textContent = "Login";
-                toggleText.textContent = "Don't have an account?";
-                toggleLink.textContent = "Sign up";
-                form.action = "../servlets/Login_Servlet";
-            }
+            window.location.href = "register.jsp"; 
         }
     </script>
 </body>
