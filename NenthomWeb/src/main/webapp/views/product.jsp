@@ -82,13 +82,12 @@
 	    }
 	    function addToCart(productID) {
 	        // Lấy userID từ session hoặc cookie
-	        const userID = getUserIDFromSession(); // Giả sử có hàm này để lấy userID
-
+	        //const userID = getUserIDFromSession(); // Giả sử có hàm này để lấy userID
+			const userID = 2;
 	        if (!userID) {
 	            alert('You need to log in to add products to your cart.');
 	            return;
 	        }
-
 	        // Gửi yêu cầu POST tới servlet để thêm sản phẩm vào giỏ hàng
 	        fetch('../servlets/AddToCart_Servlet', {
 	            method: 'POST',
