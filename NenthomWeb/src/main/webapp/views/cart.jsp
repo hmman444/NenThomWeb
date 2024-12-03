@@ -51,26 +51,26 @@
                 </div>
 
                 <!-- Order Summary -->
-                <div class="order-summary">
-                    <h2>Order Summary</h2>
-                    <div class="summary-detail">
-                        <p>Subtotal:</p>
-                        <p>${subtotal}</p> <!-- Hiển thị tổng giá trị các sản phẩm -->
-                    </div>
-                    <div class="summary-detail">
-                        <p>Shipping:</p>
-                        <p>${shippingCost}</p> <!-- Hiển thị phí vận chuyển -->
-                    </div>
-                    <div class="promo-code">
-                        <input type="text" placeholder="Enter discount code" class="promo-input" />
-                        <button onclick="applyCode()" class="promo-btn">Apply</button>
-                    </div>
-                    <div class="summary-total">
-                        <p>Total:</p>
-                        <p>${totalAmount}</p> <!-- Hiển thị tổng tiền (Subtotal + Shipping) -->
-                    </div>
-                    <button class="checkout-btn" onclick="toggleModal()">Proceed to Checkout</button>
-                </div>
+				<div class="order-summary">
+				    <h2>Order Summary</h2>
+				    <div class="summary-detail">
+				        <p>Subtotal:</p>
+				        <p>${subtotal}</p> <!-- Hiển thị tổng giá trị các sản phẩm -->
+				    </div>
+				    <div class="summary-detail">
+				        <p>Shipping:</p>
+				        <p>${shippingCost}</p> <!-- Hiển thị phí vận chuyển -->
+				    </div>
+				    <div class="promo-code">
+				        <input type="text" placeholder="Enter discount code" class="promo-input" />
+				        <button onclick="applyCode()" class="promo-btn">Apply</button>
+				    </div>
+				    <div class="summary-total">
+				        <p>Total:</p>
+				        <p>${totalAmount}</p> <!-- Hiển thị tổng tiền (Subtotal + Shipping) -->
+				    </div>
+				    <button class="checkout-btn" onclick="toggleModal()">Proceed to Checkout</button>
+				</div>
             </div>
         </div>
     </main>
