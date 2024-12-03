@@ -21,6 +21,7 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .cart-items {
@@ -143,25 +144,13 @@ body {
 /* Promo Code */
 .promo-code {
     display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.promo-input {
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid #d4a373;
-    border-radius: 5px;
-    outline: none;
-    flex: 1;
-    color: #8b5e3c;
-}
-
-.promo-input:focus {
-    border-color: #8b5e3c;
+    flex-direction: column;  /* Đảm bảo các phần tử nằm theo chiều dọc */
+    gap: 10px; /* Khoảng cách giữa nút và ô nhập */
+    width: 100%; /* Đảm bảo chúng chiếm đầy chiều rộng */
 }
 
 .promo-btn {
+    width: 100%; /* Button chiếm hết chiều rộng */
     padding: 10px 15px;
     font-size: 16px;
     background: #d4a373;
@@ -172,8 +161,23 @@ body {
     transition: background 0.3s ease;
 }
 
-.promo-btn:hover {
-    background: #8b5e3c;
+.promo-input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #d4a373;
+    border-radius: 5px;
+    outline: none;
+    flex: 1;
+    color: #8b5e3c;
+    text-align: center;
+}
+
+.promo-input::placeholder {
+    text-align: center; /* Căn giữa placeholder */
+}
+
+.promo-input:focus {
+    border-color: #8b5e3c;
 }
 
 /* Modal Overlay */
@@ -205,6 +209,7 @@ body {
     overflow-y: auto; /* Cuộn nội dung nếu cần */
     animation: slideDown 0.3s ease-out; /* Thêm hiệu ứng xuất hiện */
 }
+
 @keyframes slideDown {
     from {
         opacity: 0;
@@ -244,47 +249,76 @@ body {
     color: #8b5e3c;
 }
 
-.custom-modal-form h3 {
-    font-size: 1.25rem;
-    font-family: 'Georgia', serif;
-    color: #8b5e3c;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 0.5rem;
+/* Styling for the Discounts Section */
+.discounts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Khoảng cách giữa các ưu đãi */
+    max-height: 400px; /* Giới hạn chiều cao */
+    overflow-y: auto;  /* Hiển thị thanh cuộn khi cần */
+    padding-right: 10px; /* Thêm khoảng cách bên phải khi có thanh cuộn */
 }
 
-.custom-form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-
-.custom-form-full-width {
-    grid-column: span 2;
-}
-
-.custom-input {
-    width: 90%;
-    padding: 0.75rem; /* Tăng khoảng cách */
-    border: 1px solid #ccc;
+/* CSS for selected state */
+.discount-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: white;
+    border: 2px solid #d4a373;
     border-radius: 8px;
-    font-size: 1rem;
-    color: #333;
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    margin-bottom: 1rem;
-}
-.custom-form-full-width .custom-input,
-.custom-card-number{
-    width: 95%;
-}
-.custom-input:focus {
-    border-color: #8b5e3c;
-    box-shadow: 0 0 5px rgba(139, 94, 60, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
+.discount-item.selected {
+    background-color: #d4a373; /* Màu nền khi được chọn */
+    color: white; /* Màu chữ khi được chọn */
+    border-color: #8b5e3c; /* Màu viền khi được chọn */
+}
+
+.discount-item .discount-name {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.discount-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+
+.discount-item:hover {
+    transform: translateX(10px); /* Di chuyển nhẹ khi hover */
+}
+
+.discount-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.discount-info {
+    flex-grow: 1;
+}
+
+.discount-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.discount-details {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Submit Button */
 .custom-submit-button {
     width: 100%;
     padding: 0.75rem 1.5rem;

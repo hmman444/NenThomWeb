@@ -9,12 +9,14 @@ import java.util.List;
 
 import constant.SystemConstant;
 import dao.CartDAO;
+import dao.DiscountDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Cart;
+import models.Discount;
 import models.Product;
 import services.ConnectionUtil;
 
@@ -68,14 +70,18 @@ public class ListCart_Servlet extends HttpServlet {
 
             // Tính tổng giá tiền (Subtotal + Shipping)
             double totalAmount = subtotal + shippingCost;
-
-            // Truyền dữ liệu giỏ hàng, sản phẩm, và các thông tin tính toán vào request
+            
+            DiscountDAO discountDAO = new DiscountDAO();
+            List<Discount> activeDiscounts = discountDAO.getActiveDiscounts();
+            
+            // Truyền dữ liệu giỏ hàng, sản phẩm, các thông tin tính toán và ưu đãi vào request
             request.setAttribute("cartList", cartList);
             request.setAttribute("productList", productList);
             request.setAttribute("subtotal", subtotal);
             request.setAttribute("shippingCost", shippingCost);
             request.setAttribute("totalAmount", totalAmount);
-
+            request.setAttribute("activeDiscounts", activeDiscounts);
+            
             // Chuyển tiếp đến trang giỏ hàng (cart.jsp)
             request.getRequestDispatcher("/views/cart.jsp").forward(request, response);
 
