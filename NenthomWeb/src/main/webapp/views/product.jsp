@@ -24,10 +24,17 @@
 	    <div class="container">
 	        <div class="search-filter-content d-flex justify-content-between align-items-center flex-wrap">
 	            <!-- Thanh tìm kiếm -->
-	            <form class="d-flex w-75 mb-2 mb-md-0" action="SearchProduct_Servlet" method="get" id="search-form">
-	                <input type="text" class="form-control" name="search" placeholder="Search products..." onchange="this.form.submit()">
-	                <button type="submit" class="btn btn-outline-primary ms-2"><i class="fas fa-search"></i> Search</button>
-	            </form>
+	            <div class="d-flex gap-2 w-75 mb-2 mb-md-0">
+	                <!-- Form chứa ô nhập tìm kiếm -->
+	                <form action="SearchProduct_Servlet" method="get" id="search-input-form" class="d-flex">
+	                    <input type="text" class="form-control" name="search" placeholder="Search products..." onchange="this.form.submit()">
+	                </form>
+	
+	                <!-- Form chứa nút tìm kiếm -->
+	                <form action="SearchProduct_Servlet" method="get" id="search-button-form" class="d-flex">
+	                    <button type="submit" class="btn btn-outline-primary ms-2"><i class="fas fa-search"></i> Search</button>
+	                </form>
+	            </div>
 	            
 	            <!-- Bộ lọc -->
 	            <div class="filters d-flex gap-2">

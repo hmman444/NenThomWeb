@@ -6,90 +6,97 @@ body {
     padding: 86px 0 0 0;
 }
 
-/* Search and Filter Section */
-/* Tổng thể phần Search và Filter */
-.search-filter {
-    padding: 1rem 0;
-    background: white;
-    text-align: center; /* Căn giữa nội dung */
-}
-
-/* Thanh tìm kiếm */
+/* Thanh tìm kiếm và bộ lọc nằm trên cùng một hàng */
 .search-filter .search-filter-content {
     padding: 1rem 0;
+    display: flex;
+    justify-content: center; /* Căn giữa tất cả các phần tử */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    flex-wrap: wrap; /* Cho phép các phần tử xuống dòng khi cần */
+    gap: 15px; /* Khoảng cách giữa các phần tử */
 }
 
-.search-filter .search-filter-content .form-control {
-    border-radius: 5px; /* Bo góc cho ô tìm kiếm */
-    font-size: 1rem;
-}
-
-.search-filter .search-filter-content .btn {
-    border-radius: 5px; /* Bo góc cho nút tìm kiếm */
-    font-size: 1rem;
-}
-
-.search-filter .search-filter-content .filters select {
-    border-radius: 5px; /* Bo góc cho các select */
-    font-size: 1rem;
-    padding: 0.5rem;
+/* Điều chỉnh các phần tử form-control và button */
+.search-filter .search-filter-content .form-control,
+.search-filter .search-filter-content .btn,
+.search-filter .filters select {
+    max-width: 200px;
 }
 
 /* Thanh tìm kiếm */
-.search-filter .search-bar {
+.search-filter .search-filter-content .search-bar {
     display: flex;
     align-items: center;
-    border: 1px solid #d4a373; /* Viền */
+    border: 1px solid #8b5e3c; /* Viền màu nâu cho thanh tìm kiếm */
     border-radius: 5px; /* Bo góc */
     overflow: hidden; /* Đảm bảo bo góc cho cả nút và input */
-    width: 80%; /* Giới hạn chiều rộng */
+    flex-grow: 1; /* Thanh tìm kiếm chiếm không gian còn lại */
     margin-right: 10px; /* Khoảng cách giữa input và button */
 }
 
-.search-filter .search-bar input {
+.search-filter .search-filter-content .search-bar input {
     flex: 1; /* Input chiếm toàn bộ chiều rộng còn lại */
-    padding: 10px;
+    padding: 12px;
     border: none; /* Loại bỏ viền mặc định */
     outline: none; /* Loại bỏ viền khi focus */
     font-size: 1rem;
-    color: #8b5e3c;
+    color: #8b5e3c; /* Màu chữ nâu */
+    background-color: #fff;
 }
 
-/* Nút tìm kiếm (tách biệt ra ngoài) */
+/* Nút tìm kiếm */
 .search-filter .search-button {
-    background: #d4a373; /* Màu nền nút */
+    background: #8b5e3c; /* Màu nền nút */
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 12px 20px;
     font-size: 1rem;
     cursor: pointer;
     border-radius: 5px; /* Bo góc nút */
-    display: inline-block; /* Đảm bảo nó không bị dính vào các phần tử khác */
+    transition: background 0.3s ease;
 }
 
+/* Nút tìm kiếm khi hover */
 .search-filter .search-button:hover {
-    background: #8b5e3c; /* Màu nền khi hover */
-    color: white; /* Màu chữ khi hover */
+    background: #d4a373; /* Màu nền khi hover */
 }
 
 /* Bộ lọc */
 .search-filter .filters {
     display: flex;
-    gap: 1rem; /* Khoảng cách giữa các bộ lọc */
-    flex-wrap: wrap; /* Cho phép các phần tử xuống dòng khi màn hình nhỏ */
+    gap: 20px; /* Khoảng cách giữa các bộ lọc */
+    align-items: center; /* Căn giữa các bộ lọc */
 }
 
-.search-filter .filters select,
-.search-filter .search-filter-content .form-control {
-    max-width: 200px;
+/* Các filter select */
+.search-filter .filters select {
+    padding: 10px 15px;
+    border: 1px solid #8b5e3c; /* Viền bộ lọc màu nâu */
+    border-radius: 5px; /* Bo góc bộ lọc */
+    background-color: #fff;
+    font-size: 1rem;
+    color: #8b5e3c;
+    transition: border-color 0.3s ease;
 }
 
-/* Điều chỉnh các select và input khi màn hình nhỏ */
+/* Khi hover vào bộ lọc */
+.search-filter .filters select:hover {
+    border-color: #d4a373;
+}
+
+/* Khi bộ lọc được chọn */
+.search-filter .filters select:focus {
+    outline: none;
+    border-color: #d4a373; /* Màu viền khi focus */
+}
+
+/* Điều chỉnh các phần tử khi màn hình nhỏ */
 @media (max-width: 768px) {
     .search-filter .search-filter-content {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center; /* Căn giữa theo chiều dọc */
     }
+
     .search-filter .search-filter-content .filters,
     .search-filter .search-filter-content .form-control,
     .search-filter .search-filter-content .btn {
@@ -120,18 +127,11 @@ body {
     box-shadow: 0px 0px 10px 10px #444;
 }
 
+/* Grid cho sản phẩm */
 .product-grid .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
-}
-
-/* Grid cho sản phẩm */
-.product-grid .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Chia cột động, tối thiểu 200px mỗi sản phẩm */
-    gap: 1.5rem; /* Khoảng cách giữa các sản phẩm */
-    padding: 1rem;
 }
 
 /* Card sản phẩm */
@@ -194,7 +194,7 @@ body {
     color: white;
     padding: 0.5rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     font-size: 0.9rem;
     transition: background 0.3s;
     cursor: pointer;
