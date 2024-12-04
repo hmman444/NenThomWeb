@@ -81,6 +81,7 @@ body {
     color: #2d3748;
 }
 
+
 .add-product-button {
     background-color: #8b5e3c;
     color: white;
@@ -180,6 +181,8 @@ body {
 }
 
 .modal-content {
+	max-height: 80vh; 
+    overflow-y: auto;
     background-color: white;
     padding: 2rem;
     border-radius: 0.375rem;
