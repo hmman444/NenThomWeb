@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
+import dao.CategorieDAO;
 import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.Categorie;
 import models.Product;
 import services.ConnectionUtil;
 
@@ -27,8 +29,11 @@ public class DSProduct_Servlet extends HttpServlet {
             ProductDAO productDao = new ProductDAO(connection);
             List<Product> products = productDao.getAllProducts();
 
+            CategorieDAO categorieDAO = new CategorieDAO(connection);
+            List<Categorie> categories = categorieDAO.getAllCategories();
+            
             request.setAttribute("products", products);
-
+            request.setAttribute("categories", categories);
             request.getRequestDispatcher("/views/product.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

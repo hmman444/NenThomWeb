@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="../css/styles_header_footer.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.11.2/toastify.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light-cream">
 	<!-- Header -->
@@ -20,34 +21,51 @@
 
 	<!-- Search and Filter Section -->
 	<section class="search-filter">
-		<div class="container">
-			<div class="search-filter-content">
-				<div class="search-bar">
-					<input type="text" placeholder="Search products...">
-					<button>
-						<i class="fas fa-search"></i>
-					</button>
-				</div>
-				<div class="filters">
-					<select>
-						<option>All Categories</option>
-						<option>Fragrance Candles</option>
-						<option>Decorative Candles</option>
-						<option>Gift Sets</option>
-					</select> <select>
-						<option>Price Range</option>
-						<option>Under $25</option>
-						<option>$25 - $50</option>
-						<option>Over $50</option>
-					</select> <select>
-						<option>Rating</option>
-						<option>4+ Stars</option>
-						<option>3+ Stars</option>
-						<option>All Ratings</option>
-					</select>
-				</div>
-			</div>
-		</div>
+	    <div class="container">
+	        <div class="search-filter-content d-flex justify-content-between align-items-center flex-wrap">
+	            <!-- Thanh tìm kiếm -->
+	            <div class="d-flex gap-2 w-75 mb-2 mb-md-0">
+	                <!-- Form chứa ô nhập tìm kiếm -->
+	                <form action="SearchProduct_Servlet" method="get" id="search-input-form" class="d-flex">
+	                    <input type="text" class="form-control" name="search" placeholder="Search products..." onchange="this.form.submit()">
+	                </form>
+	
+	                <!-- Form chứa nút tìm kiếm -->
+	                <form action="SearchProduct_Servlet" method="get" id="search-button-form" class="d-flex">
+	                    <button type="submit" class="btn btn-outline-primary ms-2"><i class="fas fa-search"></i> Search</button>
+	                </form>
+	            </div>
+	            
+	            <!-- Bộ lọc -->
+	            <div class="filters d-flex gap-2">
+	                <form action="SearchProduct_Servlet" method="get" class="d-flex gap-2">
+	                    <select name="category" class="form-select" onchange="this.form.submit()">
+	                        <option>Categories</option>
+	                        <c:forEach var="category" items="${categories}">
+	                            <option value="${category.categoryID}">${category.name}</option>
+	                        </c:forEach>
+	                        <option value="all">All Products</option>
+	                    </select>
+	                    <select name="price" class="form-select" onchange="this.form.submit()">
+	                        <option>Price</option>
+	                        <option value="1">Under $10</option>
+	                        <option value="2">$11 - $25</option>
+	                        <option value="3">$26 - $49</option>
+	                        <option value="4">Over $50</option>
+	                        <option value="all">All Products</option>
+	                    </select>
+	                    <select name="rating" class="form-select">
+	                        <option>All Ratings</option>
+	                        <option>1+ Stars</option>
+	                        <option>2+ Stars</option>
+	                        <option>3+ Stars</option>
+	                        <option>4+ Stars</option>
+	                        <option>5+ Stars</option>
+	                    </select>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
 	</section>
 
 	<!-- Product Grid -->
