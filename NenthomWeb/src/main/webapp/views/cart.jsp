@@ -63,11 +63,11 @@
                     </div>
                     <div class="promo-code">
                         <button onclick="applyCode()" class="promo-btn">Select discount</button>
-                        <input type="text" id="promo-input" placeholder="No discount selected" class="promo-input" disabled />
+                        <input type="text" id="promo-input" placeholder="No discount selected" class="promo-input" disabled value="${selectedDiscount != null ? selectedDiscount.discountName : ''}" />
                     </div>
                     <div class="summary-total">
                         <p>Total:</p>
-                        <p>${totalAmount}</p> <!-- Hiển thị tổng tiền (Subtotal + Shipping) -->
+                        <p id="totalAmount">${totalAmount}</p> <!-- Hiển thị tổng tiền (Subtotal + Shipping) -->
                     </div>
                     <button class="checkout-btn" onclick="toggleModal()">Proceed to Checkout</button>
                 </div>
@@ -76,41 +76,41 @@
     </main>
 
     <!-- Promo Code Modal -->
-	<div id="promoModal" class="custom-modal-overlay custom-modal-hidden">
-	    <div class="custom-modal-content">
-	        <div class="custom-modal-header">
-	            <h2>Select Discount</h2>
-	            <button onclick="closeModal()" class="custom-modal-close">&times;</button>
-	        </div>
-	        <div class="custom-modal-body">
-	            <form>
-	                <label for="promoCode">Select a discount</label>
-	                <!-- Container for the discounts -->
-	                <div class="discounts-container">
-	                    <c:forEach var="discount" items="${activeDiscounts}">
-	                        <div class="discount-item">
-	                            <img src="https://img.lovepik.com/element/45004/0128.png_860.png" alt="Discount image" class="discount-image">
-	                            <div class="discount-info">
-	                                <h3 class="discount-name">${discount.discountName}</h3>
-	                                <p class="discount-details">
-	                                    <c:choose>
-	                                        <c:when test="${discount.discountType == 'percentage'}">
-	                                            ${discount.discountValue}% off
-	                                        </c:when>
-	                                        <c:otherwise>
-	                                            ${discount.discountValue} off
-	                                        </c:otherwise>
-	                                    </c:choose>
-	                                </p>
-	                            </div>
-	                        </div>
-	                    </c:forEach>
-	                </div>
-	                <button type="button" class="custom-submit-button" onclick="applyPromoCode()">Apply Code</button>
-	            </form>
-	        </div>
-	    </div>
-	</div>
+    <div id="promoModal" class="custom-modal-overlay custom-modal-hidden">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <h2>Select Discount</h2>
+                <button onclick="closeModal()" class="custom-modal-close">&times;</button>
+            </div>
+            <div class="custom-modal-body">
+                <form>
+                    <label for="promoCode">Select a discount</label>
+                    <!-- Container for the discounts -->
+                    <div class="discounts-container">
+                        <c:forEach var="discount" items="${activeDiscounts}">
+                            <div class="discount-item" onclick="selectDiscount(${discount.discountID}, '${discount.discountName}', ${discount.discountValue}, '${discount.discountType}')">
+                                <img src="https://img.lovepik.com/element/45004/0128.png_860.png" alt="Discount image" class="discount-image">
+                                <div class="discount-info">
+                                    <h3 class="discount-name">${discount.discountName}</h3>
+                                    <p class="discount-details">
+                                        <c:choose>
+                                            <c:when test="${discount.discountType == 'percentage'}">
+                                                ${discount.discountValue}% off
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${discount.discountValue} off
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <button type="button" class="custom-submit-button" onclick="applyPromoCode()">Apply Code</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <%@ include file="footer.jsp" %>
@@ -144,32 +144,51 @@
             document.getElementById('promoModal').classList.add('custom-modal-hidden');
         }
 
+        function selectDiscount(discountID, discountName, discountValue, discountType) {
+            // Lưu thông tin ưu đãi vào các biến global
+            window.selectedDiscount = {
+                discountID: discountID,
+                discountName: discountName,
+                discountValue: discountValue,
+                discountType: discountType
+            };
+
+            // Cập nhật lại giá trị input
+            document.getElementById('promo-input').value = discountName;
+
+            // Xóa lớp 'selected' khỏi tất cả các discount items
+            const discountItems = document.querySelectorAll('.discount-item');
+            discountItems.forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Thêm lớp 'selected' vào discount item được chọn
+            const selectedItem = event.target.closest('.discount-item');
+            selectedItem.classList.add('selected');
+        }
+
+
         function applyPromoCode() {
-            const promoCode = document.getElementById('promoCode').value.trim();
-            if (promoCode === "") {
-                alert("Please enter a promo code!");
+            if (window.selectedDiscount) {
+                const { discountID, discountName, discountValue, discountType } = window.selectedDiscount;
+                let subtotal = parseFloat('${subtotal}');
+                let shippingCost = parseFloat('${shippingCost}');
+                let totalAmount = subtotal + shippingCost;
+
+                // Tính lại tổng tiền sau khi áp dụng ưu đãi
+                if (discountType === 'percentage') {
+                    totalAmount -= (totalAmount * discountValue / 100);
+                } else {
+                    totalAmount -= discountValue;
+                }
+
+                // Cập nhật lại tổng tiền trong giao diện
+                document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
+                closeModal();
             } else {
-                alert(`Promo code "${promoCode}" applied successfully!`);
-                document.querySelector('.promo-input').value = promoCode; // Fill the input field with the promo code
-                closeModal(); // Close the modal
+                alert('Please select a discount!');
             }
         }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const discountItems = document.querySelectorAll('.discount-item');
-
-            discountItems.forEach(function(item) {
-                item.addEventListener('click', function() {
-                    // Xóa dấu hiệu đã chọn khỏi tất cả các ưu đãi
-                    discountItems.forEach(function(innerItem) {
-                        innerItem.classList.remove('selected');
-                    });
-
-                    // Thêm dấu hiệu đã chọn vào ưu đãi được nhấp
-                    item.classList.add('selected');
-                });
-            });
-        });
     </script>
 </body>
 </html>

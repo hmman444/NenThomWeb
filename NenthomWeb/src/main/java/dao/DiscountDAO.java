@@ -37,4 +37,32 @@ public class DiscountDAO {
 
 		return activeDiscounts;
 	}
+	
+	// Get discount by ID
+    public Discount getDiscountById(int discountID) {
+        Discount discount = null;
+        String query = "SELECT * FROM Discounts WHERE DiscountID = ? AND IsActive = 1 AND GETDATE() BETWEEN StartDate AND EndDate";
+
+        try (Connection conn = ConnectionUtil.DB();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, discountID);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String discountName = rs.getString("DiscountName");
+                    String discountType = rs.getString("DiscountType");
+                    double discountValue = rs.getDouble("DiscountValue");
+                    Date startDate = rs.getDate("StartDate");
+                    Date endDate = rs.getDate("EndDate");
+                    boolean isActive = rs.getBoolean("IsActive");
+
+                    discount = new Discount(discountID, discountName, discountType, discountValue, startDate, endDate, isActive);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return discount;
+    }
 }

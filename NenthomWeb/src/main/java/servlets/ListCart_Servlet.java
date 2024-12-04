@@ -22,7 +22,7 @@ import services.ConnectionUtil;
 
 @WebServlet("/servlets/ListCart_Servlet")
 public class ListCart_Servlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public ListCart_Servlet() {
         super();
@@ -70,10 +70,25 @@ public class ListCart_Servlet extends HttpServlet {
 
             // Tính tổng giá tiền (Subtotal + Shipping)
             double totalAmount = subtotal + shippingCost;
-            
+
+            // Kiểm tra nếu có mã giảm giá (Discount)
+            String discountId = request.getParameter("discountId");
             DiscountDAO discountDAO = new DiscountDAO();
             List<Discount> activeDiscounts = discountDAO.getActiveDiscounts();
-            
+
+            Discount selectedDiscount = null;
+            if (discountId != null && !discountId.isEmpty()) {
+                selectedDiscount = discountDAO.getDiscountById(Integer.parseInt(discountId)); // Lấy ưu đãi theo ID
+                // Cập nhật lại tổng tiền nếu có discount
+                if (selectedDiscount != null) {
+                    if (selectedDiscount.getDiscountType().equals("percentage")) {
+                        totalAmount = totalAmount - (totalAmount * selectedDiscount.getDiscountValue() / 100);
+                    } else {
+                        totalAmount = totalAmount - selectedDiscount.getDiscountValue();
+                    }
+                }
+            }
+
             // Truyền dữ liệu giỏ hàng, sản phẩm, các thông tin tính toán và ưu đãi vào request
             request.setAttribute("cartList", cartList);
             request.setAttribute("productList", productList);
@@ -81,7 +96,8 @@ public class ListCart_Servlet extends HttpServlet {
             request.setAttribute("shippingCost", shippingCost);
             request.setAttribute("totalAmount", totalAmount);
             request.setAttribute("activeDiscounts", activeDiscounts);
-            
+            request.setAttribute("selectedDiscount", selectedDiscount);
+
             // Chuyển tiếp đến trang giỏ hàng (cart.jsp)
             request.getRequestDispatcher("/views/cart.jsp").forward(request, response);
 
@@ -91,8 +107,7 @@ public class ListCart_Servlet extends HttpServlet {
         }
     }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
 }
