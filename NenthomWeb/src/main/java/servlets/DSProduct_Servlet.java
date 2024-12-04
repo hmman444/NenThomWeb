@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
+import dao.OrderDAO;
 import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.Order;
 import models.Product;
 import services.ConnectionUtil;
 
@@ -26,10 +28,20 @@ public class DSProduct_Servlet extends HttpServlet {
 		try (Connection connection = ConnectionUtil.DB()) {
             ProductDAO productDao = new ProductDAO(connection);
             List<Product> products = productDao.getAllProducts();
+            
+            OrderDAO orderDao = new OrderDAO(connection);
+            List<Order> orders = orderDao.getAllOrders();
 
-            request.setAttribute("products", products);
+            String page = request.getParameter("page");
 
-            request.getRequestDispatcher("/views/product.jsp").forward(request, response);
+            if ("admin".equals(page)) {
+                request.setAttribute("products", products);
+                request.setAttribute("orders", orders);
+                request.getRequestDispatcher("/views/admin.jsp").forward(request, response);
+            } else {
+                request.setAttribute("products", products);
+                request.getRequestDispatcher("/views/product.jsp").forward(request, response);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu.");

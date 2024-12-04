@@ -15,7 +15,6 @@
     <!-- Header -->
     <%@ include file="header.jsp" %>
 	
-
 	<!-- Search and Filter Section -->
 	<section class="search-filter">
 		<div class="container">

@@ -1,5 +1,11 @@
 package models;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Base64;
+
 public class Product {
 	private int productID;
 	private String name;
@@ -64,5 +70,34 @@ public class Product {
 	public void setImageBase64(String imageBase64) {
 		this.imageBase64 = imageBase64;
 	}
+	
+	public String encodeImageToBase64(String imagePath) {
+	    File file = new File(imagePath);
+	    try (FileInputStream fileInputStream = new FileInputStream(file)) {
+	        byte[] imageBytes = new byte[(int) file.length()];
+	        fileInputStream.read(imageBytes);
+	        
+	        // Chuyển đổi byte[] thành Base64
+	        return Base64.getEncoder().encodeToString(imageBytes);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
+	
+	public boolean decodeBase64ToImage(String base64String, String imagePath) {
+	    try {
+	        // Chuyển chuỗi Base64 thành mảng byte
+	        byte[] imageBytes = Base64.getDecoder().decode(base64String);
 
+	        // Ghi mảng byte vào tệp hình ảnh
+	        try (FileOutputStream fileOutputStream = new FileOutputStream(new File(imagePath))) {
+	            fileOutputStream.write(imageBytes);
+	        }
+	        return true;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
 }

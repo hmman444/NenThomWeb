@@ -4,4 +4,54 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>AddProduct_Servlet</display-name>
+    <servlet-name>AddProduct_Servlet</servlet-name>
+    <servlet-class>servlets.AddProduct_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddProduct_Servlet</servlet-name>
+    <url-pattern>/AddProduct_Servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DSCatagory_Servlet</display-name>
+    <servlet-name>DSCatagory_Servlet</servlet-name>
+    <servlet-class>servlets.DSCatagory_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DSCatagory_Servlet</servlet-name>
+    <url-pattern>/DSCatagory_Servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditProduct_Servlet</display-name>
+    <servlet-name>EditProduct_Servlet</servlet-name>
+    <servlet-class>servlets.EditProduct_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditProduct_Servlet</servlet-name>
+    <url-pattern>/EditProduct_Servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteProduct_Servlet</display-name>
+    <servlet-name>DeleteProduct_Servlet</servlet-name>
+    <servlet-class>servlets.DeleteProduct_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteProduct_Servlet</servlet-name>
+    <url-pattern>/DeleteProduct_Servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DSOrder_Servlet</display-name>
+    <servlet-name>DSOrder_Servlet</servlet-name>
+    <servlet-class>servlets.DSOrder_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DSOrder_Servlet</servlet-name>
+    <url-pattern>/DSOrder_Servlet</url-pattern>
+  </servlet-mapping>
 </web-app>

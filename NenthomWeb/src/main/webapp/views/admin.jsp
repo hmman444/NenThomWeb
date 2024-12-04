@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,11 +23,11 @@
                 <h1 id="dashboardText" class="sidebar-title">Dashboard</h1>
             </div>
             <nav class="sidebar-nav">
-                <a href="#" class="sidebar-link">
+                <a  id="productsLink"  class="sidebar-link">
                     <i class="fas fa-box mr-2"></i>
                     <span class="nav-text">Products</span>
                 </a>
-                <a href="#" class="sidebar-link">
+                <a  id="invoicesLink"  class="sidebar-link">
                     <i class="fas fa-file-invoice mr-2"></i>
                     <span class="nav-text">Invoices</span>
                 </a>
@@ -32,7 +35,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="main-content">
+        <div id="productsSection" class="main-content">
             <!-- Products Section -->
             <div class="products-header">
                 <h2 class="products-title">Products</h2>
@@ -43,91 +46,187 @@
 
             <!-- Product Grid -->
             <div class="product-grid">
-                <!-- Product Card -->
-                <div class="product-card">
-                    <img src="../images/anhSanPham.jpg" alt="Product" class="product-image">
-                    <h3 class="product-name">Vanilla Dream</h3>
-                    <p class="product-description">...</p>
-                    <div class="product-footer">
-                        <span class="product-price">$24.99</span>
-                        <div class="product-actions">
-                            <button onclick="showEditModal(this)" class="edit-button"><i class="fas fa-edit"></i></button>
-                            <button class="delete-button"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                
-            </div>
+			    <c:forEach var="product" items="${products}">
+			        <div class="product-card">
+			            <img src="data:image/jpeg;base64,${product.imageBase64}" alt="Product" class="product-image">
+			            <h3 class="product-name">${product.name}</h3>
+			            <p class="product-description">${product.description}</p>
+			            <div class="product-footer">
+			                <span class="product-price">$${product.price}</span>
+			                <span class="product-stock">Stock: ${product.stock}</span>  <!-- Hiển thị số lượng sản phẩm -->
+			                <div class="product-actions">
+			                    <button onclick="showEditModal(this)" class="edit-button"><i class="fas fa-edit"></i></button>
+			                    <form action="/NenthomWeb/servlets/DeleteProduct_Servlet" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">
+				                    <input type="hidden" name="productName" value="${product.name}" />
+				                    <button type="submit" class="delete-button">
+				                        <i class="fas fa-trash"></i>
+				                    </button>
+				                </form>
+			                </div>
+			            </div>
+			        </div>
+			    </c:forEach>
+			</div>
 
             <!-- Add Product Modal -->
             <div id="addModal" class="modal hidden">
-                <div class="modal-content">
+                <div class="modal-content" style="max-height: 90%; overflow-y: auto;">
                     <div class="modal-header">
                         <h3 class="modal-title">Add New Product</h3>
                         <button onclick="hideAddModal()" class="close-button">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    <form class="modal-form">
+                    <form class="modal-form" action="/NenthomWeb/servlets/AddProduct_Servlet" method="POST">
                         <div class="form-group">
-                            <label class="form-label">Product Name</label>
-                            <input type="text" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Price</label>
-                            <input type="number" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-input"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Image</label>
-                            <input type="file" class="form-input">
-                        </div>
-                        <button type="submit" class="submit-button">Add Product</button>
+			                <label class="form-label">Product Name</label>
+			                <input type="text" class="form-input" name="name" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Price</label>
+			                <input type="number" class="form-input" name="price" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Description</label>
+			                <textarea class="form-input" name="description" required></textarea>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Stock</label>
+			                <input type="number" class="form-input" name="stock" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Image</label>
+			                <input type="file" class="form-input" name="image" accept="image/*" required>
+			            </div>
+			            <button type="submit" class="submit-button">Add Product</button>
                     </form>
                 </div>
             </div>
 
             <!-- Edit Product Modal -->
-			<div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-			    <div class="bg-white rounded-lg p-8 w-full max-w-md">
-			        <div class="flex justify-between items-center mb-6">
-			            <h3 class="text-xl font-bold">Edit Product</h3>
-			            <button onclick="hideEditModal()" class="text-gray-500 hover:text-gray-700">
+			<div id="editModal" class="modal hidden">
+			    <div class="modal-content" style="max-height: 90%; overflow-y: auto;">
+			        <div class="modal-header">
+			            <h3 class="modal-title">Edit Product</h3>
+			            <button onclick="hideEditModal()" class="close-button">
 			                <i class="fas fa-times"></i>
 			            </button>
 			        </div>
-			        <form id="editProductForm" class="space-y-4">
-			            <div>
-			                <label class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
-			                <input type="text" id="editProductName" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#8b5e3c] focus:border-[#8b5e3c]">
+			        <form id="editProductForm" class="modal-form" action="/NenthomWeb/servlets/EditProduct_Servlet" method="POST" >
+			            <input type="hidden" name="productName" id="editProductName">
+			            <div class="form-group">
+			                <label class="form-label">Product Name</label>
+			                <input type="text" class="form-input" name="name" id="editProductNameField" placeholder="Enter product name" required>
 			            </div>
-			            <div>
-			                <label class="block text-sm font-medium text-gray-700 mb-1">Price</label>
-			                <input type="number" id="editPrice" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#8b5e3c] focus:border-[#8b5e3c]">
+			            <div class="form-group">
+			                <label class="form-label">Price</label>
+			                <input type="number" class="form-input" name="price" id="editPrice" placeholder="Enter product price" required>
 			            </div>
-			            <div>
-			                <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-			                <textarea id="editDescription" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#8b5e3c] focus:border-[#8b5e3c]"></textarea>
+			            <div class="form-group">
+			                <label class="form-label">Description</label>
+			                <textarea class="form-input" name="description" id="editDescription" placeholder="Enter product description" required></textarea>
 			            </div>
-			            <div>
-			                <label class="block text-sm font-medium text-gray-700 mb-1">Current Image</label>
-			                <img id="editCurrentImage" src="" alt="Current Product" class="w-full h-32 object-cover rounded-lg mb-2">
-			                <label class="block text-sm font-medium text-gray-700 mb-1">Change Image</label>
-			                <input type="file" id="editImage" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#8b5e3c] focus:border-[#8b5e3c]">
+			            <div class="form-group">
+			                <label class="form-label">Stock</label>
+			                <input type="number" class="form-input" name="stock" id="editStock" placeholder="Enter product stock" required>
 			            </div>
-			            <button type="submit" class="w-full bg-[#8b5e3c] text-white py-2 rounded-lg hover:bg-[#a47851] transition duration-300">Update Product</button>
+			            <div class="form-group">
+			                <label class="form-label">Image</label>
+			                <input type="file" class="form-input" name="image" id="editImage" accept="image/*" onchange="previewEditImage(event)">
+			                <img id="editCurrentImage" src="" alt="Current Product Image" class="w-full h-32 object-cover rounded-lg mb-2">
+			            </div>
+			            <button type="submit" class="submit-button">Update Product</button>
 			        </form>
 			    </div>
 			</div>
-			            
+
         </div>
+        <!-- Invoices Section (Hiện ra khi nhấn vào "Invoices" trong Sidebar) -->
+		<div id="invoicesSection" class="invoices-section main-content hidden">
+		    <h2 class="products-title">Invoices</h2>
+		    <table class="table-auto w-full text-left border-collapse">
+		        <thead>
+		            <tr>
+		                <th class="px-4 py-2">Order ID</th>
+		                <th class="px-4 py-2">User ID</th>
+		                <th class="px-4 py-2">Total Price</th>
+		                <th class="px-4 py-2">Order Status</th>
+		                <th class="px-4 py-2">Shipping Address</th>
+		                <th class="px-4 py-2">Create At</th>
+		                <th class="px-4 py-2">Actions</th> <!-- Thêm cột Actions -->
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <c:forEach var="order" items="${orders}">
+		                <tr>
+		                    <td class="border px-4 py-2">${order.orderID}</td>
+		                    <td class="border px-4 py-2">${order.userID}</td>
+		                    <td class="border px-4 py-2">${order.totalPrice}</td>
+		                    <td class="border px-4 py-2">${order.orderStatus}</td>
+		                    <td class="border px-4 py-2">${order.shippingAddress}</td>
+		                    <td class="border px-4 py-2">${order.createdAt}</td>
+		                    <td class="border px-4 py-2">
+		                        <button onclick="viewOrderDetails(${order.orderID})" class="text-blue-500 hover:underline">View Details</button>
+		                    </td>
+		                </tr>
+		            </c:forEach>
+		        </tbody>
+		    </table>
+		</div>
+        
     </div>
 
     <script>
+	    function viewOrderDetails(orderID) {
+	        // Gửi yêu cầu AJAX hoặc chuyển hướng đến trang chi tiết của đơn hàng
+	        window.location.href = "/NenthomWeb/servlets/OrderDetails_Servlet?orderID=" + orderID;
+	    }
+	    document.getElementById("productsLink").addEventListener("click", function(event) {
+	    	event.preventDefault();
+	    	document.getElementById("invoicesSection").classList.add("hidden");
+	        document.getElementById("productsSection").classList.remove("hidden");
+	        
+	        //window.location.href = "/NenthomWeb/servlets/DSProduct_Servlet?page=admin";
+	    });
+
+	    document.getElementById("invoicesLink").addEventListener("click", function(event) {
+	    	event.preventDefault();
+	    	document.getElementById("productsSection").classList.add("hidden");
+	        document.getElementById("invoicesSection").classList.remove("hidden");
+	        
+	        //window.location.href = "/NenthomWeb/servlets/DSOrder_Servlet";
+	    });
+
+
+	 	// Chuyển đổi file ảnh thành chuỗi Base64
+	    document.getElementById("editProductForm").addEventListener("submit", function (event) {
+		    event.preventDefault(); // Dừng hành động mặc định của form
+		
+		    const fileInput = document.getElementById("editImage"); // Trường nhập file
+		    const file = fileInput.files[0]; // Lấy file đã chọn
+		
+		    if (file) {
+		        const reader = new FileReader();
+		        reader.onload = function (e) {
+		            const base64Image = e.target.result.split(",")[1]; // Lấy phần Base64 từ DataURL
+		            const hiddenInput = document.createElement("input"); // Tạo input ẩn để lưu Base64
+		            hiddenInput.type = "hidden";
+		            hiddenInput.name = "imageBase64";
+		            hiddenInput.value = base64Image;
+		
+		            // Thêm input ẩn vào form
+		            document.getElementById("editProductForm").appendChild(hiddenInput);
+		
+		            // Gửi form sau khi xử lý xong
+		            document.getElementById("editProductForm").submit();
+		        };
+		        reader.readAsDataURL(file); // Đọc file dưới dạng Base64
+		    } else {
+		        // Gửi form nếu không có file mới
+		        document.getElementById("editProductForm").submit();
+		    }
+		});
+
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             const dashboardText = document.getElementById("dashboardText");
@@ -170,21 +269,43 @@
         }
 
         function showEditModal(button) {
-        	const productCard = button.closest(".product-card"); // Tìm thẻ div chứa sản phẩm
-            const productName = productCard.querySelector("h3").textContent; // Lấy tên sản phẩm
-            const price = productCard.querySelector("span").textContent.replace("$", ""); // Lấy giá sản phẩm
-            const description = productCard.querySelector("p").textContent; // Lấy mô tả sản phẩm
-            const imageUrl = productCard.querySelector("img").src; // Lấy hình ảnh sản phẩm
+            const productCard = button.closest(".product-card"); // Tìm thẻ div chứa sản phẩm
+            const productName = productCard.querySelector(".product-name").textContent; // Lấy tên sản phẩm
+            const price = productCard.querySelector(".product-price").textContent.replace('$', ''); // Lấy giá sản phẩm
+            let priceInt = parseInt(price, 10);
+            const description = productCard.querySelector(".product-description").textContent; // Lấy mô tả sản phẩm
+            const stock = productCard.querySelector(".product-stock").textContent.replace('Stock: ', ''); // Lấy số lượng sản phẩm
+            const currentImage = productCard.querySelector(".product-image").src; // Lấy ảnh sản phẩm
 
             // Điền thông tin vào form sửa
-            document.getElementById("editProductName").value = productName;
-            document.getElementById("editPrice").value = price;
+            document.getElementById("editProductNameField").value = productName;
+            document.getElementById("editPrice").value = priceInt;
             document.getElementById("editDescription").value = description;
-            document.getElementById("editCurrentImage").src = imageUrl; // Hiển thị ảnh hiện tại
+            document.getElementById("editStock").value = stock;
+            document.getElementById("editCurrentImage").src = currentImage; // Cập nhật ảnh xem trước
+
+            // Điền tên sản phẩm vào hidden field (chắc chắn khi submit, tên sản phẩm sẽ được gửi lên)
+            document.getElementById("editProductName").value = productName;
 
             // Hiển thị modal sửa
             document.getElementById("editModal").classList.remove("hidden");
         }
+
+        function previewEditImage(event) {
+            const file = event.target.files[0]; // Lấy file ảnh từ input
+            const preview = document.getElementById("editCurrentImage"); // Lấy thẻ img để hiển thị ảnh
+
+            if (file) {
+                const reader = new FileReader(); // Tạo đối tượng FileReader để đọc file
+                reader.onload = function (e) {
+                    preview.src = e.target.result; // Gán ảnh xem trước vào thẻ img
+                };
+                reader.readAsDataURL(file); // Đọc file dưới dạng DataURL (Base64)
+            } else {
+                preview.src = ""; // Nếu không chọn file, xóa ảnh xem trước
+            }
+        }
+
 
         function hideEditModal() {
             document.getElementById("editModal").classList.add("hidden");
