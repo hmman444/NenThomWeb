@@ -10,6 +10,7 @@ import java.util.List;
 import constant.SystemConstant;
 import dao.CartDAO;
 import dao.DiscountDAO;
+import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -42,26 +43,16 @@ public class ListCart_Servlet extends HttpServlet {
             for (Cart cart : cartList) {
                 int productID = cart.getProductID();
 
-                // Lấy thông tin sản phẩm từ bảng Products
-                String productSql = "SELECT * FROM Products WHERE ProductID = ?";
-                try (PreparedStatement stmt = connection.prepareStatement(productSql)) {
-                    stmt.setInt(1, productID);
-                    ResultSet rs = stmt.executeQuery();
-                    if (rs.next()) {
-                        String name = rs.getString("Name");
-                        String description = rs.getString("Description");
-                        double price = rs.getDouble("Price");
-                        int stock = rs.getInt("Stock");
-                        String imageBase64 = rs.getString("ImageBase64");
+                ProductDAO productDAO = new ProductDAO(connection);
+                // Lấy thông tin sản phẩm từ ProductDAO
+                Product product = productDAO.getProductById(productID);
+                if (product != null) {
+                    // Tính toán tổng giá trị của sản phẩm trong giỏ hàng
+                    double productTotalPrice = product.getPrice() * cart.getQuantity();
+                    subtotal += productTotalPrice;
 
-                        // Tính toán tổng giá trị của sản phẩm trong giỏ hàng
-                        double productTotalPrice = price * cart.getQuantity();
-                        subtotal += productTotalPrice;
-
-                        // Tạo đối tượng Product và thêm vào danh sách
-                        Product product = new Product(productID, name, description, price, stock, imageBase64);
-                        productList.add(product);
-                    }
+                    // Thêm sản phẩm vào danh sách
+                    productList.add(product);
                 }
             }
 

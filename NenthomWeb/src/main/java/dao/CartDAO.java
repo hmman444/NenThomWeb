@@ -75,4 +75,46 @@ public class CartDAO {
 
 		return cartItems;
 	}
+	
+	// Cập nhật thông tin giỏ hàng của sản phẩm
+    public void updateCartItem(Cart cartItem) {
+        String sql = "UPDATE cart SET quantity = ? WHERE userId = ? AND productId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, cartItem.getQuantity());
+            statement.setInt(2, cartItem.getUserID());
+            statement.setInt(3, cartItem.getProductID());
+            int rowsAffected = statement.executeUpdate();
+            
+            if (rowsAffected == 0) {
+                throw new SQLException("Không tìm thấy sản phẩm để cập nhật.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi cập nhật giỏ hàng: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Lấy thông tin giỏ hàng của người dùng cho sản phẩm cụ thể
+    public Cart getCartItem(int userId, int productId) {
+        String sql = "SELECT * FROM cart WHERE userId = ? AND productId = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, productId);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    Cart cartItem = new Cart();
+                    cartItem.setUserID(rs.getInt("userId"));
+                    cartItem.setProductID(rs.getInt("productId"));
+                    cartItem.setQuantity(rs.getInt("quantity"));
+                    return cartItem;
+                } else {
+                    System.err.println("Không tìm thấy sản phẩm trong giỏ hàng.");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy thông tin giỏ hàng: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null; // Trả về null nếu không tìm thấy sản phẩm trong giỏ hàng
+    }
 }

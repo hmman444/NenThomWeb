@@ -9,6 +9,10 @@ public class Cart {
 	private int quantity;
 	private Timestamp createdAt;
 
+	public Cart() {
+		
+	}
+	
 	public Cart(int userID, int productID, int quantity) {
 		this.userID = userID;
 		this.productID = productID;

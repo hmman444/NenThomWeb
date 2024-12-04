@@ -21,33 +21,41 @@
                 <!-- Cart Items -->
                 <div class="cart-items">
                     <c:forEach var="cart" items="${cartList}">
-                        <c:forEach var="product" items="${productList}">
-                            <c:if test="${product.productID == cart.productID}">
-                                <div class="cart-item">
-                                    <!-- Hiển thị hình ảnh sản phẩm -->
-                                    <img src="../images/anhSanPham.jpg" alt="Product Image" class="cart-item-image" />
-                                    
-                                    <div class="cart-item-details">
-                                        <!-- Hiển thị tên sản phẩm -->
-                                        <h2>${product.name}</h2>
-                                        <p class="in-stock">In Stock</p>
-                                        
-                                        <div class="quantity-controls">
-                                            <!-- Điều khiển tăng/giảm số lượng -->
-                                            <button class="quantity-btn" onclick="decrement(event)">-</button>
-                                            <span class="quantity-value">${cart.quantity}</span>
-                                            <button class="quantity-btn" onclick="increment(event)">+</button>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Hiển thị giá sản phẩm -->
-                                    <div class="cart-item-price">$${product.price}</div>
-                                    <!-- Nút xóa sản phẩm khỏi giỏ hàng -->
-                                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </c:if>
-                        </c:forEach>
-                    </c:forEach>
+					    <c:forEach var="product" items="${productList}">
+					        <c:if test="${product.productID == cart.productID}">
+					            <div class="cart-item">
+					                <!-- Hiển thị hình ảnh sản phẩm -->
+					                <img src="../images/anhSanPham.jpg" alt="Product Image" class="cart-item-image" />
+					
+					                <div class="cart-item-details">
+					                    <!-- Hiển thị tên sản phẩm -->
+					                    <h2>${product.name}</h2>
+					                    <p class="in-stock">In Stock</p>
+					
+					                    <!-- Form để gửi dữ liệu tăng/giảm số lượng -->
+					                    <form action="/NenthomWeb/servlets/UpdateCart_Servlet" method="POST">
+					                        <!-- Lưu thông tin sản phẩm và hành động (tăng/giảm) -->
+					                        <input type="hidden" name="productId" value="${product.productID}" />
+					                        <input type="hidden" name="action" value="decrement" id="action-decrement-${product.productID}" />
+					                        
+					                        <div class="quantity-controls">
+					                            <!-- Điều khiển giảm số lượng -->
+					                            <button type="submit" class="quantity-btn" onclick="setAction(event, 'decrement', ${product.productID})">-</button>
+					                            <span class="quantity-value">${cart.quantity}</span>
+					                            <!-- Điều khiển tăng số lượng -->
+					                            <button type="submit" class="quantity-btn" onclick="setAction(event, 'increment', ${product.productID})">+</button>
+					                        </div>
+					                    </form>
+					                </div>
+					
+					                <!-- Hiển thị giá sản phẩm -->
+					                <div class="cart-item-price">$${product.price}</div>
+					                <!-- Nút xóa sản phẩm khỏi giỏ hàng -->
+					                <button class="delete-btn"><i class="fas fa-trash"></i></button>
+					            </div>
+					        </c:if>
+					    </c:forEach>
+					</c:forEach>
                 </div>
 
                 <!-- Order Summary -->
@@ -120,20 +128,12 @@
             window.location.href = "/NenthomWeb/views/checkout.jsp";
         }
 
-        function increment(event) {
-            const quantityElement = event.target.closest('.quantity-controls').querySelector('.quantity-value');
-            let quantity = parseInt(quantityElement.textContent, 10);
-            quantity++;
-            quantityElement.textContent = quantity;
-        }
-
-        function decrement(event) {
-            const quantityElement = event.target.closest('.quantity-controls').querySelector('.quantity-value');
-            let quantity = parseInt(quantityElement.textContent, 10);
-            if (quantity > 1) {
-                quantity--;
-                quantityElement.textContent = quantity;
-            }
+        function setAction(event, action, productId) {
+            // Lấy form chứa nút vừa được click
+            const form = event.target.closest('form');
+            
+            // Cập nhật giá trị của action trong form
+            form.querySelector('input[name="action"]').value = action;
         }
 
         function applyCode() {

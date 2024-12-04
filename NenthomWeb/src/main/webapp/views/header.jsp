@@ -9,7 +9,6 @@
             <a href="/NenthomWeb/views/contact_policy.jsp">Contact and Policy</a>
         </nav>
         <div class="icons">
-            <button><i class="fas fa-search"></i></button>
             <button onclick="window.location.href='/NenthomWeb/servlets/ListCart_Servlet';">
     			<i class="fas fa-shopping-cart"></i></button>
             <button onclick="window.location.href='profile.jsp';">

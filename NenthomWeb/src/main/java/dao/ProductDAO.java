@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -40,4 +41,30 @@ public class ProductDAO {
 
 		return products;
 	}
+	
+	// Lấy thông tin sản phẩm theo ID
+    public Product getProductById(int productId) {
+        Product product = null;
+        String sql = "SELECT ProductID, Name, Description, Price, Stock, ImageBase64 FROM Products WHERE ProductID = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, productId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("ProductID");
+                String name = resultSet.getString("Name");
+                String description = resultSet.getString("Description");
+                double price = resultSet.getDouble("Price");
+                int stock = resultSet.getInt("Stock");
+                String imageBase64 = resultSet.getString("ImageBase64");
+
+                product = new Product(id, name, description, price, stock, imageBase64);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return product;
+    }
 }
