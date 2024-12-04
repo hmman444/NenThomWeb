@@ -14,12 +14,25 @@ body {
     text-align: center; /* Căn giữa nội dung */
 }
 
+/* Thanh tìm kiếm */
 .search-filter .search-filter-content {
-    display: flex;
-    flex-wrap: wrap; /* Tự động xuống dòng nếu không đủ chỗ */
-    gap: 1rem; /* Khoảng cách giữa các phần tử */
-    align-items: center;
-    justify-content: center; /* Căn giữa các phần tử */
+    padding: 1rem 0;
+}
+
+.search-filter .search-filter-content .form-control {
+    border-radius: 5px; /* Bo góc cho ô tìm kiếm */
+    font-size: 1rem;
+}
+
+.search-filter .search-filter-content .btn {
+    border-radius: 5px; /* Bo góc cho nút tìm kiếm */
+    font-size: 1rem;
+}
+
+.search-filter .search-filter-content .filters select {
+    border-radius: 5px; /* Bo góc cho các select */
+    font-size: 1rem;
+    padding: 0.5rem;
 }
 
 /* Thanh tìm kiếm */
@@ -29,6 +42,8 @@ body {
     border: 1px solid #d4a373; /* Viền */
     border-radius: 5px; /* Bo góc */
     overflow: hidden; /* Đảm bảo bo góc cho cả nút và input */
+    width: 80%; /* Giới hạn chiều rộng */
+    margin-right: 10px; /* Khoảng cách giữa input và button */
 }
 
 .search-filter .search-bar input {
@@ -40,35 +55,46 @@ body {
     color: #8b5e3c;
 }
 
-.search-filter .search-bar button {
-    background: white; /* Màu nền trắng */
+/* Nút tìm kiếm (tách biệt ra ngoài) */
+.search-filter .search-button {
+    background: #d4a373; /* Màu nền nút */
+    color: white;
     border: none;
     padding: 10px 15px;
-    color: #8b5e3c; /* Màu icon */
-    cursor: pointer;
     font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px; /* Bo góc nút */
+    display: inline-block; /* Đảm bảo nó không bị dính vào các phần tử khác */
 }
 
-.search-filter .search-bar button:hover {
-    background: #d4a373; /* Màu nền khi hover */
-    color: white; /* Màu icon khi hover */
+.search-filter .search-button:hover {
+    background: #8b5e3c; /* Màu nền khi hover */
+    color: white; /* Màu chữ khi hover */
 }
 
 /* Bộ lọc */
 .search-filter .filters {
     display: flex;
     gap: 1rem; /* Khoảng cách giữa các bộ lọc */
-    flex-wrap: wrap; /* Xuống dòng nếu không đủ không gian */
+    flex-wrap: wrap; /* Cho phép các phần tử xuống dòng khi màn hình nhỏ */
 }
 
-.search-filter .filters select {
-    padding: 10px;
-    border: 1px solid #d4a373;
-    border-radius: 5px;
-    font-size: 1rem;
-    color: #8b5e3c;
-    background: white;
-    cursor: pointer;
+.search-filter .filters select,
+.search-filter .search-filter-content .form-control {
+    max-width: 200px;
+}
+
+/* Điều chỉnh các select và input khi màn hình nhỏ */
+@media (max-width: 768px) {
+    .search-filter .search-filter-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .search-filter .search-filter-content .filters,
+    .search-filter .search-filter-content .form-control,
+    .search-filter .search-filter-content .btn {
+        width: 100%;
+    }
 }
 
 /* Product Grid */
@@ -78,32 +104,28 @@ body {
     background-color: #f9f8f3; /* Nền nhẹ */
 }
 
-.products .container .grid{
-/* 	width:85vw;
-	margin:20px 0;
-	display: flex;
-	flex-wrap:wrap;
-	justify-content: flex-start;
-	gap:30px; */
-	display: grid;
+.products .container .grid {
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
     gap: 1.5rem; /* Space between items */
     max-width: 1200px;
-    margin:20px auto;
-	
-}
-.products .container .grid .product-card{
-	margin: 0;
+    margin: 20px auto;
 }
 
-.products .container .grid .product-card:hover{
-	box-shadow: 0px 0px 10px 10px #444;
+.products .container .grid .product-card {
+    margin: 0;
 }
+
+.products .container .grid .product-card:hover {
+    box-shadow: 0px 0px 10px 10px #444;
+}
+
 .product-grid .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
 }
+
 /* Grid cho sản phẩm */
 .product-grid .grid {
     display: grid;
@@ -114,7 +136,7 @@ body {
 
 /* Card sản phẩm */
 .product-card {
-	cursor: pointer;
+    cursor: pointer;
     background: white;
     border-radius: 8px;
     overflow: hidden;
@@ -181,6 +203,3 @@ body {
 .product-card .add-to-cart:hover {
     background: #d4a373;
 }
-
-
-
