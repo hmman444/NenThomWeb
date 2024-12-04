@@ -2,15 +2,18 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 import constant.SystemConstant;
 import dao.CartDAO;
+import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Cart;
+import models.Product;
 import services.ConnectionUtil;
 
 @WebServlet("/servlets/AddToCart_Servlet")
@@ -53,10 +56,18 @@ public class AddToCart_Servlet extends HttpServlet {
         try (Connection connection = ConnectionUtil.DB()) {
             CartDAO cartDAO = new CartDAO(connection);
             cartDAO.addToCart(cart);
-            response.getWriter().write("Product added to cart");
+            request.setAttribute("successMessage", "Product added to cart successfully!");
+            
+            ProductDAO productDao = new ProductDAO(connection);
+            List<Product> products = productDao.getAllProducts();
+            request.setAttribute("products", products);
+            
+            request.getRequestDispatcher("/views/product.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().write("Error adding to cart");
+            // Thông báo lỗi nếu có
+            request.setAttribute("errorMessage", "Error adding to cart.");
+            request.getRequestDispatcher("/views/product.jsp").forward(request, response);
         }
     }
 }
