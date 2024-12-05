@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import dao.TaiKhoanDAO;
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,40 +28,52 @@ public class Login_Servlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String message = "";
-		boolean error = false;
+            throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String message = "";
+        boolean error = false;
 
-		try (Connection conn = ConnectionUtil.DB()) {
-			TaiKhoanDAO taiKhoanDao = new TaiKhoanDAO(conn);
+        try (Connection conn = ConnectionUtil.DB()) {
+            TaiKhoanDAO taiKhoanDao = new TaiKhoanDAO(conn);
+            UserDAO userDao = new UserDAO(conn);
 
-			if (!taiKhoanDao.isUsernameExist(username)) {
-				message = "Tài khoản không tồn tại!";
-				error = true;
-			} else {
-				String storedPassword = taiKhoanDao.getPasswordByUsername(username);
-				if (storedPassword.equals(password)) {
-					HttpSession session = request.getSession();
-					session.setAttribute("username", username);
-					response.sendRedirect("/views/TrangChu.jsp");
-				} else {
-					message = "Mật khẩu không đúng!";
-					error = true;
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			message = "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu!";
-			error = true;
-		}
+            if (!taiKhoanDao.isUsernameExist(username)) {
+                message = "Tài khoản không tồn tại!";
+                error = true;
+            } else {
+                String storedPassword = taiKhoanDao.getPasswordByUsername(username);
+                if (storedPassword.equals(password)) {
+                    // Lấy role của người dùng
+                    String role = taiKhoanDao.getRoleByUsername(username);
+                    int userID = userDao.getUserIDByUsername(username);
 
-		if (error) {
-			request.setAttribute("message", message);
-			request.setAttribute("error", error);
-			request.getRequestDispatcher("/views/login.jsp").forward(request, response);
-		}
-	}
+                    HttpSession session = request.getSession();
+                    session.setAttribute("username", username);
+                    session.setAttribute("userID", userID);
 
+                    // Chuyển hướng đến trang quản lý theo quyền
+                    if ("manager".equals(role)) {
+                        request.getRequestDispatcher("/views/admin.jsp").forward(request, response);
+                    } else if ("user".equals(role)) {
+                        request.getRequestDispatcher("/views/TrangChu.jsp").forward(request, response);
+                    }
+                } else {
+                    message = "Mật khẩu không đúng!";
+                    error = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            message = "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu!";
+            error = true;
+        }
+
+        if (error) {
+            // Đưa thông báo và trạng thái lỗi về JSP
+            request.setAttribute("message", message);
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("/views/login.jsp").forward(request, response);
+        }
+    }
 }

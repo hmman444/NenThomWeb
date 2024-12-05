@@ -76,4 +76,20 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public int getUserIDByUsername(String username) throws SQLException {
+	    String query = "SELECT u.UserID FROM Users u " +
+	                   "JOIN Account a ON u.AccountID = a.AccountID " +
+	                   "WHERE a.Username = ?";
+
+	    try (PreparedStatement stmt = connection.prepareStatement(query)) {
+	        stmt.setString(1, username);
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getInt("UserID");
+	        } else {
+	            throw new SQLException("Không tìm thấy UserID cho username: " + username);
+	        }
+	    }
+	}
 }

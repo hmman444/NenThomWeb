@@ -13,14 +13,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body class="bg-light-cream">
-    <!-- Header -->
     <%@ include file="header.jsp" %>
 
-    <!-- Login Form -->
     <section class="login-section">
         <div class="container">
             <div class="login-form">
                 <h2 id="form-title">Login</h2>
+
                 <!-- Check if there is a message attribute to display -->
                 <% if (request.getAttribute("message") != null) { %>
                     <script type="text/javascript">
@@ -34,6 +33,7 @@
                         }
                     </script>
                 <% } %>
+
                 <form id="auth-form" action="../servlets/Login_Servlet" method="post">
                     <!-- Username -->
                     <div class="form-group">
@@ -48,7 +48,7 @@
                     <!-- Submit Button -->
                     <button type="submit" id="submit-button" class="login-page-button">Login</button>
                 </form>
-                <!-- Toggle between Login and Sign Up -->
+
                 <p class="toggle-link">
                     <span id="toggle-text">Don't have an account?</span>
                     <a href="javascript:void(0)" onclick="toggleForm()">Sign up</a>
@@ -57,7 +57,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <%@ include file="footer.jsp" %>
 
     <script>
