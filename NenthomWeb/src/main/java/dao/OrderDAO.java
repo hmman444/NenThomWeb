@@ -95,4 +95,24 @@ public class OrderDAO {
         return items;
     }
 
+    public int createOrder(Order order) throws SQLException {
+        String sqlInsert = "INSERT INTO Orders (UserID, TotalPrice, OrderStatus, ShippingAddress, CreatedAt) VALUES (?, ?, ?, ?, ?)";
+        
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setInt(1, order.getUserID());
+            preparedStatement.setBigDecimal(2, order.getTotalPrice());
+            preparedStatement.setString(3, order.getOrderStatus());
+            preparedStatement.setString(4, order.getShippingAddress());
+            preparedStatement.setTimestamp(5, order.getCreatedAt());
+
+            preparedStatement.executeUpdate();
+
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1); // Trả về ID của đơn hàng vừa tạo
+            } else {
+                throw new SQLException("Tạo đơn hàng không thành công, không lấy được orderID.");
+            }
+        }
+    }
 }

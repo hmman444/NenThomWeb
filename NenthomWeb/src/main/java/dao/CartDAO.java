@@ -117,4 +117,16 @@ public class CartDAO {
         }
         return null; // Trả về null nếu không tìm thấy sản phẩm trong giỏ hàng
     }
+    
+    public void clearCart(int userId) {
+        String sql = "DELETE FROM Cart WHERE UserID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.err.println("Lỗi khi xóa giỏ hàng: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

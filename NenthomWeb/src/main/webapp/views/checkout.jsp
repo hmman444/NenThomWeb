@@ -102,10 +102,14 @@
 	                        </div>
 	                    </div>
 	                </div>
-	            </div>
-	
-	            <button type="submit" class="submit-button">Complete Purchase</button>
+	            </div>		           
 	        </form>
+	        <!-- Form thanh toán -->
+			<form action="Checkout_Servlet" method="post">
+			    <input type="hidden" name="totalAmount" value="${totalAmount}">
+			    <input type="hidden" name="address" value="${user.address}">
+			    <button type="submit">Thanh toán</button>
+			</form>
 	    </div>
 	</main>
 
