@@ -2,13 +2,13 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
 import constant.SystemConstant;
 import dao.CartDAO;
 import dao.DiscountDAO;
 import dao.ProductDAO;
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,13 +17,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import models.Cart;
 import models.Discount;
 import models.Product;
+import models.User;
 import services.ConnectionUtil;
 
-@WebServlet("/servlets/ListCart_Servlet")
-public class ListCart_Servlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    public ListCart_Servlet() {
+@WebServlet("/servlets/LoadInfoCheckout_Servlet")
+public class LoadInfoCheckout_Servlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+    public LoadInfoCheckout_Servlet() {
         super();
     }
 
@@ -31,26 +32,22 @@ public class ListCart_Servlet extends HttpServlet {
         try (Connection connection = ConnectionUtil.DB()) {
             int userId = SystemConstant.USERID;
 
-            // Lấy danh sách các sản phẩm trong giỏ hàng của người dùng
+            UserDAO userDAO = new UserDAO(connection);
+            User user = userDAO.getUserById(userId);
+            
             CartDAO cartDAO = new CartDAO(connection);
             List<Cart> cartList = cartDAO.getCartItems(userId);
 
-            // Tạo danh sách các sản phẩm trong giỏ hàng (bao gồm tên, mô tả, giá, số lượng, hình ảnh)
-            List<Product> productList = new ArrayList<>();
-            double subtotal = 0.0; // Tổng giá trị của các sản phẩm trong giỏ hàng
+            double subtotal = 0.0; 
             for (Cart cart : cartList) {
                 int productID = cart.getProductID();
 
                 ProductDAO productDAO = new ProductDAO(connection);
-                // Lấy thông tin sản phẩm từ ProductDAO
                 Product product = productDAO.getProductById(productID);
                 if (product != null) {
                     // Tính toán tổng giá trị của sản phẩm trong giỏ hàng
                     double productTotalPrice = product.getPrice() * cart.getQuantity();
                     subtotal += productTotalPrice;
-
-                    // Thêm sản phẩm vào danh sách
-                    productList.add(product);
                 }
             }
 
@@ -61,9 +58,8 @@ public class ListCart_Servlet extends HttpServlet {
             double totalAmount = subtotal + shippingCost;
 
             // Kiểm tra nếu có mã giảm giá (Discount)
-            String discountId = request.getParameter("discountId");
+            String discountId = request.getParameter("discountID");
             DiscountDAO discountDAO = new DiscountDAO();
-            List<Discount> activeDiscounts = discountDAO.getActiveDiscounts();
 
             Discount selectedDiscount = null;
             if (discountId != null && !discountId.isEmpty()) {
@@ -77,18 +73,16 @@ public class ListCart_Servlet extends HttpServlet {
                     }
                 }
             }
-
-            // Truyền dữ liệu giỏ hàng, sản phẩm, các thông tin tính toán và ưu đãi vào request
-            request.setAttribute("cartList", cartList);
-            request.setAttribute("productList", productList);
+            String formattedTotalAmount = String.format("%.2f", totalAmount);
+            
+            request.setAttribute("user", user);
             request.setAttribute("subtotal", subtotal);
             request.setAttribute("shippingCost", shippingCost);
-            request.setAttribute("totalAmount", totalAmount);
-            request.setAttribute("activeDiscounts", activeDiscounts);
+            request.setAttribute("totalAmount", formattedTotalAmount);
             request.setAttribute("selectedDiscount", selectedDiscount);
 
             // Chuyển tiếp đến trang giỏ hàng (cart.jsp)
-            request.getRequestDispatcher("/views/cart.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/checkout.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,7 +90,8 @@ public class ListCart_Servlet extends HttpServlet {
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
 }

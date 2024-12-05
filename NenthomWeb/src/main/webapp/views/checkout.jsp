@@ -23,19 +23,19 @@
 	            <div class="section shipping-information">
 	                <h3>Shipping Information</h3>
 	                <div class="input-grid">
-	                    <div>
-	                        <label for="name">Full Name</label>
+					    <div>
+					        <label for="name">Full Name</label>
 	                        <input type="text" id="name" name="name" class="input-field" required>
-	                    </div>
-	                    <div>
-	                        <label for="phone">Phone Number</label>
-	                        <input type="text" id="phone" name="phone" class="input-field" required>
-	                    </div>
-	                    <div class="full-width">
-	                        <label for="address">Address</label>
-	                        <input type="text" id="address" name="address" class="input-field" required>
-	                    </div>
-	                </div>
+					    </div>
+					    <div>
+					        <label for="phone">Phone Number</label>
+					        <input type="text" id="phone" name="phone" class="input-field" value="${user.phoneNumber}" readonly>
+					    </div>
+					    <div class="full-width">
+					        <label for="address">Address</label>
+					        <input type="text" id="address" name="address" class="input-field" value="${user.address}" readonly>
+					    </div>
+					</div>
 	            </div>
 	
 	            <div class="section payment-information">
@@ -61,7 +61,8 @@
 	                <div class="order-summary">
 	                    <h3>Order Summary</h3>
 	                    <p>Subtotal: $${subtotal}</p>
-	                    <p>Shipping: $${shippingCost}</p>
+	                    <p>Shipping: $${shippingCost}</p>	
+	                    <p>Discount: ${selectedDiscount.discountName}</p>                    
 	                    <p>Total: $${totalAmount}</p>
 	                </div>
 	

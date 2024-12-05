@@ -124,9 +124,10 @@
     <%@ include file="footer.jsp" %>
 
     <script>
-        function toggleModal() {
-            window.location.href = "/NenthomWeb/views/checkout.jsp";
-        }
+	    function toggleModal() {
+	    	const { discountID, discountName, discountValue, discountType } = window.selectedDiscount;	            
+            window.location.href = "/NenthomWeb/servlets/LoadInfoCheckout_Servlet?discountID=" + discountID;
+	    }
 
         function setAction(event, action, productId) {
             // Lấy form chứa nút vừa được click
@@ -171,6 +172,7 @@
         function applyPromoCode() {
             if (window.selectedDiscount) {
                 const { discountID, discountName, discountValue, discountType } = window.selectedDiscount;
+                console.log(discountID);
                 let subtotal = parseFloat('${subtotal}');
                 let shippingCost = parseFloat('${shippingCost}');
                 let totalAmount = subtotal + shippingCost;
