@@ -13,7 +13,7 @@
         <div class="icons">
             <button onclick="window.location.href='/NenthomWeb/servlets/ListCart_Servlet';">
     			<i class="fas fa-shopping-cart"></i></button>
-            <button onclick="window.location.href='/NenthomWeb/views/profile.jsp';">
+            <button onclick="window.location.href='/NenthomWeb/servlets/LoadProfile_Servlet';">
             	<i class="fas fa-user"></i></button>
         </div>
     </div>

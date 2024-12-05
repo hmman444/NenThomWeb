@@ -26,20 +26,20 @@
                     </div>
                     <div class="user-info">
                         <div class="info-item">
-                            <label for="username">Full Name</label>
-                            <p id="username">Huỳnh Minh Mẫn</p>
+                            <label for="username">ID User</label>
+                            <p id="username">${user.userId}</p> <!-- Hiển thị Full Name từ đối tượng user -->
                         </div>
                         <div class="info-item">
                             <label for="email">Email</label>
-                            <p id="email">nsndman0404@gmail.com</p>
+                            <p id="email">${user.email}</p> <!-- Hiển thị Email từ đối tượng user -->
                         </div>
                         <div class="info-item">
                             <label for="phone">Phone Number</label>
-                            <p id="phone">+84 377179132</p>
+                            <p id="phone">${user.phoneNumber}</p> <!-- Hiển thị Phone từ đối tượng user -->
                         </div>
                         <div class="info-item">
                             <label for="address">Shipping Address</label>
-                            <p id="address">Thiên hà số 67, hành tinh 48</p>
+                            <p id="address">${user.address}</p> <!-- Hiển thị Address từ đối tượng user -->
                         </div>
                     </div>
                 </div>
@@ -59,18 +59,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>#1</td>
-                                    <td>2024-11-25</td>
-                                    <td>Delivered</td>
-                                    <td>$50.00</td>
-                                </tr>
-                                <tr>
-                                    <td>#2</td>
-                                    <td>2024-11-20</td>
-                                    <td>Processing</td>
-                                    <td>$35.00</td>
-                                </tr>
+                                <!-- Hiển thị thông tin các đơn hàng từ danh sách orders -->
+                                <c:forEach var="order" items="${orders}">
+                                    <tr>
+                                        <td>#${order.orderID}</td>
+                                        <td>${order.createdAt}</td> <!-- Hiển thị ngày tạo đơn hàng -->
+                                        <td>${order.orderStatus}</td> <!-- Hiển thị trạng thái đơn hàng -->
+                                        <td>${order.totalPrice}</td> <!-- Hiển thị tổng tiền đơn hàng -->
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>

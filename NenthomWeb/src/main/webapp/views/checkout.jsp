@@ -108,7 +108,7 @@
 			<form action="Checkout_Servlet" method="post">
 			    <input type="hidden" name="totalAmount" value="${totalAmount}">
 			    <input type="hidden" name="address" value="${user.address}">
-			    <button type="submit">Thanh toán</button>
+			    <button type="submit" class="submit-button">Thanh toán</button>
 			</form>
 	    </div>
 	</main>

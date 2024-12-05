@@ -102,5 +102,4 @@ public class Checkout_Servlet extends HttpServlet {
 	        request.getRequestDispatcher("/views/product.jsp").forward(request, response);
 	    }
 	}
-
 }

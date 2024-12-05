@@ -115,4 +115,29 @@ public class OrderDAO {
             }
         }
     }
+    
+    public List<Order> getOrdersByUserId(int userId) {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT OrderID, UserID, TotalPrice, OrderStatus, ShippingAddress, CreatedAt FROM Orders WHERE UserID = ?";
+        
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Order order = new Order();
+                    order.setOrderID(rs.getInt("OrderID"));
+                    order.setUserID(rs.getInt("UserID"));
+                    order.setTotalPrice(rs.getBigDecimal("TotalPrice"));
+                    order.setOrderStatus(rs.getString("OrderStatus"));
+                    order.setShippingAddress(rs.getString("ShippingAddress"));
+                    order.setCreatedAt(rs.getTimestamp("CreatedAt"));
+                    orders.add(order);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
 }
