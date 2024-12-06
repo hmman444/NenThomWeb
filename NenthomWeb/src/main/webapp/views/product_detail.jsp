@@ -20,7 +20,7 @@
             <!-- Product Images -->
             <div class="product-images">
                 <div class="main-image">
-                    <img src="../images/anhSanPham.jpg" alt="Luxury Vanilla Candle">
+                    <img src="../images/anhNen.jpg" alt="Luxury Vanilla Candle">
                     <!-- <div class="discount-tag">20% OFF</div> -->
                 </div>
             </div>
