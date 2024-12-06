@@ -168,7 +168,7 @@
 			            <input type="hidden" name="productName" id="editProductName">
 			            <div class="form-group">
 			                <label class="form-label">Product Name</label>
-			                <input type="text" class="form-input" name="name" id="editProductNameField" placeholder="Enter product name" required>
+			                <input type="text" class="form-input" name="name" id="editProductNameField" placeholder="Enter product name" disabled>
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Price</label>
