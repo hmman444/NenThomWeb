@@ -35,7 +35,7 @@ public class AddProduct_Servlet extends HttpServlet {
         try (Connection connection = ConnectionUtil.DB()) {
             ProductDAO productDAO = new ProductDAO(connection);
             productDAO.addProduct(product);
-            response.sendRedirect("/NenthomWeb/servlets/DSProduct_Servlet?page=admin");
+            response.sendRedirect("/NenthomWeb/servlets/DSProduct_Servlet?page=admin&message=success&action=product");
 
         } catch (Exception e) {
             e.printStackTrace();

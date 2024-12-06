@@ -65,4 +65,53 @@ public class DiscountDAO {
 
         return discount;
     }
+    
+    private static final String ADD_DISCOUNT_QUERY = "INSERT INTO Discounts (DiscountName, DiscountType, DiscountValue, StartDate, EndDate, IsActive) VALUES (?, ?, ?, ?, ?, 1)";
+    private static final String UPDATE_DISCOUNT_QUERY = "UPDATE Discounts SET DiscountName = ?, DiscountType = ?, DiscountValue = ?, StartDate = ?, EndDate = ? WHERE DiscountID = ?";
+    private static final String DELETE_DISCOUNT_QUERY = "DELETE FROM Discounts WHERE DiscountID = ?";
+
+    // Add a new discount
+    public boolean addDiscount(Discount discount) {
+        try (Connection conn = ConnectionUtil.DB();
+             PreparedStatement ps = conn.prepareStatement(ADD_DISCOUNT_QUERY)) {
+            ps.setString(1, discount.getDiscountName());
+            ps.setString(2, discount.getDiscountType());
+            ps.setDouble(3, discount.getDiscountValue());
+            ps.setDate(4, discount.getStartDate());
+            ps.setDate(5, discount.getEndDate());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Update an existing discount
+    public boolean updateDiscount(Discount discount) {
+        try (Connection conn = ConnectionUtil.DB();
+             PreparedStatement ps = conn.prepareStatement(UPDATE_DISCOUNT_QUERY)) {
+            ps.setString(1, discount.getDiscountName());
+            ps.setString(2, discount.getDiscountType());
+            ps.setDouble(3, discount.getDiscountValue());
+            ps.setDate(4, discount.getStartDate());
+            ps.setDate(5, discount.getEndDate());
+            ps.setInt(6, discount.getDiscountID());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Delete a discount by ID
+    public boolean deleteDiscount(int discountID) {
+        try (Connection conn = ConnectionUtil.DB();
+             PreparedStatement ps = conn.prepareStatement(DELETE_DISCOUNT_QUERY)) {
+            ps.setInt(1, discountID);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
