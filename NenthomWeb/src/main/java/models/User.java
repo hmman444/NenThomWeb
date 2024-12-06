@@ -7,6 +7,10 @@ public class User {
 	private String phoneNumber;
 	private String address;
 
+	public User() {
+
+	}
+
 	public User(int userId, int accountId, String email, String phoneNumber, String address) {
 		this.userId = userId;
 		this.accountId = accountId;

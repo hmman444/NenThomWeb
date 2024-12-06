@@ -51,18 +51,21 @@ public class UserDAO {
 	}
 
 	// Cập nhật thông tin người dùng
-	public void updateUser(User user) {
-		String updateSql = "UPDATE Users SET Email = ?, PhoneNumber = ?, Address = ? WHERE UserId = ?";
+	public boolean updateUser(User user) {
+	    String updateSql = "UPDATE Users SET Email = ?, PhoneNumber = ?, Address = ? WHERE UserId = ?";
 
-		try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
-			updateStmt.setString(1, user.getEmail());
-			updateStmt.setString(2, user.getPhoneNumber());
-			updateStmt.setString(3, user.getAddress());
-			updateStmt.setInt(4, user.getUserId());
-			updateStmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	    try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+	        updateStmt.setString(1, user.getEmail());
+	        updateStmt.setString(2, user.getPhoneNumber());
+	        updateStmt.setString(3, user.getAddress());
+	        updateStmt.setInt(4, user.getUserId());
+
+	        int rowsUpdated = updateStmt.executeUpdate();
+	        return rowsUpdated > 0; // Trả về true nếu có ít nhất một dòng được cập nhật
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false; // Trả về false nếu có lỗi xảy ra
+	    }
 	}
 
 	// Xóa người dùng

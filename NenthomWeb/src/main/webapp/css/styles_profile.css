@@ -122,3 +122,11 @@
     font-size: 1rem;
     color: #555;
 }
+
+.info-item {
+        margin-bottom: 20px; 
+    }
+
+    .update-btn {
+        margin-top: 20px; 
+    }
