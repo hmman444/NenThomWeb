@@ -2,22 +2,14 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.util.List;
 
-import dao.CategorieDAO;
-import dao.DiscountDAO;
-import dao.ProductDAO;
 import dao.ProductCategoryDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.Categorie;
-import models.Discount;
-import models.Product;
 import services.ConnectionUtil;
 
 @WebServlet("/servlets/SaveCategory_Servlet")

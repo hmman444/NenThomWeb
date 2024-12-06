@@ -1,18 +1,17 @@
 package servlets;
 
+import java.io.IOException;
+import java.sql.Connection;
+
+import dao.CartDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Cart;
 import services.ConnectionUtil;
-
-import java.io.IOException;
-import java.sql.Connection;
-
-import constant.SystemConstant;
-import dao.CartDAO;
 
 @WebServlet("/servlets/UpdateCart_Servlet")
 public class UpdateCart_Servlet extends HttpServlet {
@@ -27,7 +26,8 @@ public class UpdateCart_Servlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int userId = SystemConstant.USERID; // Lấy userId từ constant
+		HttpSession session = request.getSession();
+    	int userID = (int) session.getAttribute("userID");
 
         // Lấy productId và action (tăng hoặc giảm)
         int productId = Integer.parseInt(request.getParameter("productId"));
@@ -36,7 +36,7 @@ public class UpdateCart_Servlet extends HttpServlet {
         // Kết nối với DB và cập nhật số lượng trong giỏ hàng
         try (Connection connection = ConnectionUtil.DB()) {
             CartDAO cartDAO = new CartDAO(connection);
-            Cart cartItem = cartDAO.getCartItem(userId, productId);
+            Cart cartItem = cartDAO.getCartItem(userID, productId);
 
             if (cartItem != null) {
                 int newQuantity = cartItem.getQuantity();

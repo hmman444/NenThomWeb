@@ -7,7 +7,7 @@
             <a href="/NenthomWeb/servlets/DSProduct_Servlet?page=product">Products</a>
             <a href="#">Collections</a>
             <a href="/NenthomWeb/views/contact_policy.jsp">Contact and Policy</a>
-            <a href="/NenthomWeb/views/login.jsp">Login</a>
+            <a href="/NenthomWeb/servlets/Logout_Servlet">Logout</a>
         </nav>
         <div class="icons">
             <button onclick="window.location.href='/NenthomWeb/servlets/ListCart_Servlet';">

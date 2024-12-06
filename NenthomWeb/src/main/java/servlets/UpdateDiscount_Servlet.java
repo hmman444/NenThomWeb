@@ -1,9 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.Date;
-import java.util.List;
 
 import dao.DiscountDAO;
 import jakarta.servlet.ServletException;
@@ -12,7 +10,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Discount;
-import services.ConnectionUtil;
 
 @WebServlet("/servlets/UpdateDiscount_Servlet")
 public class UpdateDiscount_Servlet extends HttpServlet {

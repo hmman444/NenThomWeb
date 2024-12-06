@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-import constant.SystemConstant;
 import dao.CartDAO;
 import dao.ProductDAO;
 import jakarta.servlet.ServletException;
@@ -12,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Cart;
 import models.Product;
 import services.ConnectionUtil;
@@ -48,7 +48,8 @@ public class AddToCart_Servlet extends HttpServlet {
         }
 
         // Tiến hành các xử lý tiếp theo
-        int userID = SystemConstant.USERID;
+        HttpSession session = request.getSession();
+        int userID = (int) session.getAttribute("userID");
         int quantity = 1;  // Số lượng mặc định là 1
 
         // Thêm vào giỏ hàng

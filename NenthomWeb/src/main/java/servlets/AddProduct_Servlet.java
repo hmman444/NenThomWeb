@@ -2,7 +2,6 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.List;
 
 import dao.ProductDAO;
 import jakarta.servlet.ServletException;

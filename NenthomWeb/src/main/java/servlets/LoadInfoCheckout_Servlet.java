@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-import constant.SystemConstant;
 import dao.CartDAO;
 import dao.DiscountDAO;
 import dao.ProductDAO;
@@ -14,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Cart;
 import models.Discount;
 import models.Product;
@@ -30,13 +30,14 @@ public class LoadInfoCheckout_Servlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try (Connection connection = ConnectionUtil.DB()) {
-            int userId = SystemConstant.USERID;
+        	HttpSession session = request.getSession();
+        	int userID = (int) session.getAttribute("userID");
 
             UserDAO userDAO = new UserDAO(connection);
-            User user = userDAO.getUserById(userId);
+            User user = userDAO.getUserById(userID);
             
             CartDAO cartDAO = new CartDAO(connection);
-            List<Cart> cartList = cartDAO.getCartItems(userId);
+            List<Cart> cartList = cartDAO.getCartItems(userID);
 
             double subtotal = 0.0; 
             for (Cart cart : cartList) {

@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.util.List;
 
 import dao.CategorieDAO;
-import dao.CategoryDAO;
 import dao.DiscountDAO;
 import dao.OrderDAO;
 import dao.ProductDAO;
@@ -15,7 +14,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Categorie;
-import models.Category;
 import models.Discount;
 import models.Order;
 import models.Product;

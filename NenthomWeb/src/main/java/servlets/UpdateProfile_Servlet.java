@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-import constant.SystemConstant;
 import dao.OrderDAO;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
@@ -12,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Order;
 import models.User;
 import services.ConnectionUtil;
@@ -29,14 +29,15 @@ public class UpdateProfile_Servlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userId = SystemConstant.USERID;
+		HttpSession session = request.getSession();
+    	int userID = (int) session.getAttribute("userID");
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         String address = request.getParameter("address");
        
         try (Connection connection = ConnectionUtil.DB()) {
         	User user = new User();
-            user.setUserId(userId);
+            user.setUserId(userID);
             user.setEmail(email);
             user.setPhoneNumber(phoneNumber);
             user.setAddress(address);
@@ -50,12 +51,10 @@ public class UpdateProfile_Servlet extends HttpServlet {
                 request.setAttribute("successMessage", "Profile update failed.");
             }
             
-            userId = SystemConstant.USERID;
-
-            user = userDAO.getUserById(userId);
+            user = userDAO.getUserById(userID);
             
             OrderDAO orderDAO = new OrderDAO(connection);
-            List<Order> orders = orderDAO.getOrdersByUserId(userId);
+            List<Order> orders = orderDAO.getOrdersByUserId(userID);
             
             request.setAttribute("user", user);
             request.setAttribute("orders", orders);

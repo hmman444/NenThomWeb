@@ -3,7 +3,6 @@ package servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 import dao.OrderDAO;
 import jakarta.servlet.ServletException;
@@ -12,7 +11,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Order;
-import models.OrderDetail;
 import services.ConnectionUtil;
 @WebServlet("/servlets/OrderDetail_Servlet")
 public class OrderDetail_Servlet extends HttpServlet {

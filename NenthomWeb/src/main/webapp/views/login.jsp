@@ -20,19 +20,18 @@
             <div class="login-form">
                 <h2 id="form-title">Login</h2>
 
-                <!-- Check if there is a message attribute to display -->
-                <% if (request.getAttribute("message") != null) { %>
+                <!-- Check if there is a logout message -->
+                <% 
+                    String logoutMessage = (String) request.getAttribute("logoutMessage");
+                    if (logoutMessage != null) {
+                %>
                     <script type="text/javascript">
-                        var message = "<%= request.getAttribute("message") %>";
-                        var error = <%= request.getAttribute("error") %>;
-
-                        if (error) {
-                            toastr.error(message, "Lỗi");
-                        } else {
-                            toastr.success(message, "Thành công");
-                        }
+                        // Hiển thị thông báo toast logout thành công
+                        toastr.success('<%= logoutMessage %>');
                     </script>
-                <% } %>
+                <% 
+                    }
+                %>
 
                 <form id="auth-form" action="../servlets/Login_Servlet" method="post">
                     <!-- Username -->

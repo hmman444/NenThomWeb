@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import constant.SystemConstant;
 import dao.CartDAO;
 import dao.CategorieDAO;
 import dao.OrderDAO;
@@ -17,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Cart;
 import models.Categorie;
 import models.Order;
@@ -40,7 +40,8 @@ public class Checkout_Servlet extends HttpServlet {
 	    String totalAmountStr = request.getParameter("totalAmount");        
 	    BigDecimal totalAmount = BigDecimal.valueOf(Double.parseDouble(totalAmountStr));
 	    String shippingAddress = request.getParameter("address");
-	    int userID = SystemConstant.USERID;
+	    HttpSession session = request.getSession();
+	    int userID = (int) session.getAttribute("userID");
 
 	    Order order = new Order();
 	    order.setUserID(userID);

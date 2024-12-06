@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.SystemConstant;
 import dao.CartDAO;
 import dao.DiscountDAO;
 import dao.ProductDAO;
@@ -14,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Cart;
 import models.Discount;
 import models.Product;
@@ -29,11 +29,12 @@ public class ListCart_Servlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try (Connection connection = ConnectionUtil.DB()) {
-            int userId = SystemConstant.USERID;
+        	HttpSession session = request.getSession();
+        	int userID = (int) session.getAttribute("userID");
 
             // Lấy danh sách các sản phẩm trong giỏ hàng của người dùng
             CartDAO cartDAO = new CartDAO(connection);
-            List<Cart> cartList = cartDAO.getCartItems(userId);
+            List<Cart> cartList = cartDAO.getCartItems(userID);
 
             // Tạo danh sách các sản phẩm trong giỏ hàng (bao gồm tên, mô tả, giá, số lượng, hình ảnh)
             List<Product> productList = new ArrayList<>();

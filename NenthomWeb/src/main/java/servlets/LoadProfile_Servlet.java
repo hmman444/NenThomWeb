@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-import constant.SystemConstant;
 import dao.OrderDAO;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
@@ -12,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Order;
 import models.User;
 import services.ConnectionUtil;
@@ -26,13 +26,14 @@ public class LoadProfile_Servlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try (Connection connection = ConnectionUtil.DB()) {
-            int userId = SystemConstant.USERID;
+        	HttpSession session = request.getSession();
+        	int userID = (int) session.getAttribute("userID");
 
             UserDAO userDAO = new UserDAO(connection);
-            User user = userDAO.getUserById(userId);
+            User user = userDAO.getUserById(userID);
             
             OrderDAO orderDAO = new OrderDAO(connection);
-            List<Order> orders = orderDAO.getOrdersByUserId(userId);
+            List<Order> orders = orderDAO.getOrdersByUserId(userID);
             
             request.setAttribute("user", user);
             request.setAttribute("orders", orders);

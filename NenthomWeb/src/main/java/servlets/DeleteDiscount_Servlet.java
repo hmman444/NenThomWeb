@@ -1,9 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Date;
-import java.util.List;
 
 import dao.DiscountDAO;
 import jakarta.servlet.ServletException;
@@ -11,8 +8,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.Discount;
-import services.ConnectionUtil;
 
 
 @WebServlet("/servlets/DeleteDiscount_Servlet")
