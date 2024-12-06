@@ -39,6 +39,10 @@
                     <i class="fas fa-th-large mr-2"></i>
                     <span class="nav-text">Categories</span>
                 </a>
+                <a href="/NenthomWeb/servlets/Logout_Servlet" id="logoutLink" class="sidebar-link">
+		            <i class="fas fa-sign-out-alt mr-2"></i>
+		            <span class="nav-text">Logout</span>
+		        </a>
             </nav>
         </div>
 

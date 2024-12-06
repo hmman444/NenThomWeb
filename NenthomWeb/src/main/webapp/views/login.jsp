@@ -13,7 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body class="bg-light-cream">
-    <%@ include file="header.jsp" %>
 
     <section class="login-section">
         <div class="container">
