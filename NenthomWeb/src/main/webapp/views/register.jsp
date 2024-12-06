@@ -13,8 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body class="bg-light-cream">
-    <!-- Header -->
-    <%@ include file="header.jsp"%>
 
     <!-- Register Form -->
     <section class="login-section">

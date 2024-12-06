@@ -59,7 +59,7 @@
 
     <script>
         function toggleForm() {
-            window.location.href = "register.jsp"; 
+            window.location.href = "/NenthomWeb/views/register.jsp"; 
         }
     </script>
 </body>

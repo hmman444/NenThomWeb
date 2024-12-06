@@ -49,10 +49,6 @@
 	                        <label for="expiryDate">Expiry Date</label>
 	                        <input type="text" id="expiryDate" name="expiryDate" class="input-field" placeholder="MM/YY" required>
 	                    </div>
-	                    <div>
-	                        <label for="cvv">CVV</label>
-	                        <input type="text" id="cvv" name="cvv" class="input-field" placeholder="***" required>
-	                    </div>
 	                </div>
 	            </div>
 	

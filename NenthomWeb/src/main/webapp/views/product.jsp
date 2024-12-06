@@ -23,7 +23,7 @@
 	    <div class="container">
 	        <div class="search-filter-content d-flex justify-content-between align-items-center flex-wrap">
 	            <!-- Thanh tìm kiếm -->
-	            <div class="d-flex gap-2 w-75 mb-2 mb-md-0">
+	            <div style="display:flex;" class="d-flex gap-2 w-75 mb-2 mb-md-0">
 	                <!-- Form chứa ô nhập tìm kiếm -->
 	                <form action="SearchProduct_Servlet" method="get" id="search-input-form" class="d-flex">
 	                    <input type="text" class="form-control" name="search" placeholder="Search products..." onchange="this.form.submit()">
@@ -53,14 +53,6 @@
 	                        <option value="4">Over $50</option>
 	                        <option value="all">All Products</option>
 	                    </select>
-	                    <select name="rating" class="form-select">
-	                        <option>All Ratings</option>
-	                        <option>1+ Stars</option>
-	                        <option>2+ Stars</option>
-	                        <option>3+ Stars</option>
-	                        <option>4+ Stars</option>
-	                        <option>5+ Stars</option>
-	                    </select>
 	                </form>
 	            </div>
 	        </div>
@@ -73,7 +65,7 @@
 			<div class="grid">
 				<!-- Loop through products -->
 				<c:forEach var="product" items="${products}">
-					<div class="product-card">
+					<div class="product-card" onclick="ProductDetail(${product.productID})">
 						<div class="product-image">
 							<img src="../images/anhSanPham.jpg" alt="${product.name}">
 						</div>
@@ -87,6 +79,7 @@
 							<!-- Add to Cart Form -->
 							<form action="/NenthomWeb/servlets/AddToCart_Servlet" method="POST">
 								<input type="hidden" name="productID" value="${product.productID}">
+								<input type="hidden" name="quantity" id="hiddenQuantity" value="1">
 								<button type="submit" class="add-to-cart">Add to Cart</button>
 							</form>
 						</div>
@@ -132,6 +125,10 @@
             position: "right", // Right side of the screen
             backgroundColor: "green", // Green color for success
         }).showToast();
+    }
+    
+    function ProductDetail(productID) {
+        window.location.href = "/NenthomWeb/servlets/ProductDetail_Servlet?productID=" + productID;
     }
 	</script>
 </body>

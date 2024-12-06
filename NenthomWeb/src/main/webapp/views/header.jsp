@@ -5,7 +5,6 @@
         <nav>
             <a href="/NenthomWeb/views/TrangChu.jsp">Home</a>
             <a href="/NenthomWeb/servlets/DSProduct_Servlet?page=product">Products</a>
-            <a href="#">Collections</a>
             <a href="/NenthomWeb/views/contact_policy.jsp">Contact and Policy</a>
             <a href="/NenthomWeb/servlets/Logout_Servlet">Logout</a>
         </nav>

@@ -31,7 +31,7 @@ public class AddToCart_Servlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Lấy giá trị productID từ request body (POST)
         String productIDStr = request.getParameter("productID");
-
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
         // Kiểm tra nếu productID hợp lệ
         if (productIDStr == null || productIDStr.isEmpty()) {
             response.getWriter().write("Error: Missing product ID.");
@@ -50,7 +50,6 @@ public class AddToCart_Servlet extends HttpServlet {
         // Tiến hành các xử lý tiếp theo
         HttpSession session = request.getSession();
         int userID = (int) session.getAttribute("userID");
-        int quantity = 1;  // Số lượng mặc định là 1
 
         // Thêm vào giỏ hàng
         Cart cart = new Cart(userID, productID, quantity);
