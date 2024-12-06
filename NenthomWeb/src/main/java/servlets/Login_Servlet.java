@@ -54,7 +54,7 @@ public class Login_Servlet extends HttpServlet {
 
                     // Chuyển hướng đến trang quản lý theo quyền
                     if ("manager".equals(role)) {
-                        request.getRequestDispatcher("/views/admin.jsp").forward(request, response);
+                        request.getRequestDispatcher("/servlets/DSProduct_Servlet?page=admin").forward(request, response);
                     } else if ("user".equals(role)) {
                         request.getRequestDispatcher("/views/TrangChu.jsp").forward(request, response);
                     }

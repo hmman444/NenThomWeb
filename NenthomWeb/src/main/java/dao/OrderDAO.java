@@ -42,7 +42,6 @@ public class OrderDAO {
     public Order getOrderById(int orderId) throws SQLException {
         Order order = null;
 
-        // Query lấy thông tin đơn hàng từ bảng Orders và Users
         String orderQuery = "SELECT o.OrderID, o.UserID, o.TotalPrice, o.OrderStatus, o.ShippingAddress, o.CreatedAt, u.Username "
                            + "FROM Orders o JOIN Users u ON o.UserID = u.UserID WHERE o.OrderID = ?";
 
@@ -57,13 +56,9 @@ public class OrderDAO {
                 order.setTotalPrice(rs.getBigDecimal("TotalPrice"));
                 order.setOrderStatus(rs.getString("OrderStatus"));
                 order.setShippingAddress(rs.getString("ShippingAddress"));
-
-                // Sửa lỗi: sử dụng getTimestamp và chuyển đổi thành Date
-                order.setCreatedAt(rs.getTimestamp("CreatedAt")); // getTimestamp trả về Timestamp
-
+                order.setCreatedAt(rs.getTimestamp("CreatedAt"));
                 order.setUsername(rs.getString("Username"));
-
-                // Lấy thông tin sản phẩm trong đơn hàng từ bảng OrderDetails
+                
                 List<OrderDetail> items = getOrderDetails(orderId);
                 order.setOrderItems(items);
             }
@@ -72,10 +67,9 @@ public class OrderDAO {
     }
 
 
-    private List<OrderDetail> getOrderDetails(int orderId) throws SQLException {
+    public List<OrderDetail> getOrderDetails(int orderId) throws SQLException {
         List<OrderDetail> items = new ArrayList<>();
 
-        // Query lấy thông tin sản phẩm trong đơn hàng từ bảng OrderDetails và Products
         String itemQuery = "SELECT od.ProductID, p.Name AS ProductName, od.Quantity, od.Price "
                            + "FROM OrderDetails od JOIN Products p ON od.ProductID = p.ProductID WHERE od.OrderID = ?";
 

@@ -1,12 +1,20 @@
 package servlets;
 
+import dao.CategorieDAO;
 import dao.CategoryDAO;
+import dao.DiscountDAO;
+import dao.OrderDAO;
+import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.Categorie;
 import models.Category;
+import models.Discount;
+import models.Order;
+import models.Product;
 import services.ConnectionUtil;
 
 import java.io.IOException;
@@ -23,16 +31,6 @@ public class DSCatagory_Servlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        try (Connection connection = ConnectionUtil.DB()) {
-        	CategoryDAO categoriesDAO = new CategoryDAO(connection);
-            List<Category> categories = categoriesDAO.getAllCategories();
-            request.setAttribute("categories", categories);
-
-            request.getRequestDispatcher("/views/yourJSP.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu.");
-        }
+    	
     }
 }

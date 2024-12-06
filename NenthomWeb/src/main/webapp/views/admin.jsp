@@ -20,16 +20,24 @@
                 <button onclick="toggleSidebar()" class="sidebar-toggle-button">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1 id="dashboardText" class="sidebar-title">Dashboard</h1>
+                <h1 id="dashboardText" class="sidebar-title">Management</h1>
             </div>
             <nav class="sidebar-nav">
                 <a  id="productsLink"  class="sidebar-link">
-                    <i class="fas fa-box mr-2"></i>
+                    <i class="fas fa-boxes mr-2"></i>
                     <span class="nav-text">Products</span>
                 </a>
                 <a  id="invoicesLink"  class="sidebar-link">
-                    <i class="fas fa-file-invoice mr-2"></i>
+                    <i class="fas fa-file-invoice-dollar mr-2"></i>
                     <span class="nav-text">Invoices</span>
+                </a>
+                <a  id="discountsLink"  class="sidebar-link">
+                    <i class="fas fa-tag mr-2"></i>
+                    <span class="nav-text">Discounts</span>
+                </a>
+                <a  id="categoriesLink"  class="sidebar-link">
+                    <i class="fas fa-th-large mr-2"></i>
+                    <span class="nav-text">Categories</span>
                 </a>
             </nav>
         </div>
@@ -48,7 +56,7 @@
             <div class="product-grid">
 			    <c:forEach var="product" items="${products}">
 			        <div class="product-card">
-			            <img src="data:image/jpeg;base64,${product.imageBase64}" alt="Product" class="product-image">
+			            <img src="../images/anhSanPham.jpg" alt="Product" class="product-image">
 			            <h3 class="product-name">${product.name}</h3>
 			            <p class="product-description">${product.description}</p>
 			            <div class="product-footer">
@@ -62,11 +70,51 @@
 				                        <i class="fas fa-trash"></i>
 				                    </button>
 				                </form>
+				                <button onclick="showCategoryModal(${product.productID})" class="delete-button">
+		                            <i class="fas fa-plus-circle"></i>
+		                        </button>
 			                </div>
 			            </div>
 			        </div>
 			    </c:forEach>
 			</div>
+			<!-- Modal Chọn danh mục -->
+			<div id="categoryModal" class="modal hidden">
+			    <div class="modal-content" style="background-color: #fff; border-radius: 12px; padding: 20px; width: 80%; max-width: 900px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+			        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 15px;">
+			            <h3 class="modal-title" style="font-size: 1.5rem; font-weight: 600;">Assign Categories to Product</h3>
+			            <button onclick="hideCategoryModal()" class="close-button" style="background: none; border: none; font-size: 1.5rem; color: #888;">
+			                <i class="fas fa-times"></i>
+			            </button>
+			        </div>
+			
+			        <!-- Form chọn danh mục -->
+			        <form id="categoryForm" action="/NenthomWeb/servlets/SaveCategory_Servlet" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
+			            <input type="hidden" id="productID" name="productID">
+			
+			            <!-- Danh sách danh mục -->
+			            <div style="display: flex; justify-content: space-between; gap: 20px;">
+			                <!-- Danh sách danh mục duy nhất -->
+			                <div style="flex: 1;">
+			                    <label for="availableCategories" class="form-label" style="font-size: 1rem; font-weight: 500;">Available Categories</label>
+			                    <select id="categories" name="categoryIDs[]" multiple class="form-input" style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; min-height: 150px; width: 100%; box-sizing: border-box;">
+			                        <c:forEach var="category" items="${categories}">
+			                            <option value="${category.categoryID}">${category.name}</option>
+			                        </c:forEach>
+			                    </select>
+			                </div>
+			            </div>
+			
+			            <!-- Nút Save -->
+			            <button type="submit" class="submit-button" style="align-self: flex-end; padding: 10px 20px; font-size: 1rem; border-radius: 8px; color: white; background-color: #8b5e3c; border: none; cursor: pointer; margin-top: 20px;">
+			                Save Categories
+			            </button>
+			        </form>
+			    </div>
+			</div>
+
+
+
 
             <!-- Add Product Modal -->
             <div id="addModal" class="modal hidden">
@@ -153,7 +201,6 @@
 		                <th class="px-4 py-2">Order Status</th>
 		                <th class="px-4 py-2">Shipping Address</th>
 		                <th class="px-4 py-2">Create At</th>
-		                <th class="px-4 py-2">Actions</th> <!-- Thêm cột Actions -->
 		            </tr>
 		        </thead>
 		        <tbody>
@@ -165,37 +212,425 @@
 		                    <td class="border px-4 py-2">${order.orderStatus}</td>
 		                    <td class="border px-4 py-2">${order.shippingAddress}</td>
 		                    <td class="border px-4 py-2">${order.createdAt}</td>
-		                    <td class="border px-4 py-2">
-		                        <button onclick="viewOrderDetails(${order.orderID})" class="text-blue-500 hover:underline">View Details</button>
-		                    </td>
 		                </tr>
 		            </c:forEach>
 		        </tbody>
 		    </table>
 		</div>
-        
+		<div id="categoriesSection" class="categories-section main-content hidden">
+		    <div class="products-header">
+		        <h2 class="products-title">Categories</h2>
+		        <button onclick="showAddCategoryModal()" class="add-product-button">
+		            <i class="fas fa-plus mr-2"></i>Add Category
+		        </button>
+		    </div>
+		    <table class="table-auto w-full text-left border-collapse">
+		        <thead>
+		            <tr>
+		                <th class="px-4 py-2">Category ID</th>
+		                <th class="px-4 py-2">Name</th>
+		                <th class="px-4 py-2">Description</th>
+		                <th class="px-4 py-2">Actions</th> <!-- Thêm cột Actions -->
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <c:forEach var="categorie" items="${categories}">
+		                <tr>
+		                    <td class="border px-4 py-2">${categorie.categoryID}</td>
+		                    <td class="border px-4 py-2">${categorie.name}</td>
+		                    <td class="border px-4 py-2">${categorie.description}</td>
+		                    <td class="border px-4 py-2">
+		                            <button 
+					                    class="text-blue-500 hover:underline edit-btn" 
+					                    data-id="${categorie.categoryID}" 
+					                    data-name="${categorie.name}" 
+					                    data-type="${categorie.description}" >
+					                    Edit
+					                </button>
+		                            <form action="/NenthomWeb/servlets/DeleteCategory_Servlet" method="POST" onsubmit="return confirm('Are you sure you want to delete this category?');">
+		                                <input type="hidden" name="categoryID" value="${categorie.categoryID}" />
+		                                <button type="submit" class="text-red-500 hover:underline">
+		                                    Delete
+		                                </button>
+		                            </form>
+		                        </td>
+		                </tr>
+		            </c:forEach>
+		        </tbody>
+		    </table>
+		</div>
+		<!-- Modal chỉnh sửa Category -->
+		<div id="editCategoryModal" class="modal hidden">
+		    <div class="modal-content">
+		        <div class="modal-header">
+		            <h3 class="modal-title">Edit Category</h3>
+		            <button onclick="hideEditCategoryModal()" class="close-button">
+		                <i class="fas fa-times"></i>
+		            </button>
+		        </div>
+		        <form class="modal-form" action="/NenthomWeb/servlets/EditCategory_Servlet" method="POST">
+		            <input type="hidden" name="categoryID" id="editCategoryID"> <!-- Hidden input để lưu ID -->
+		            <div class="form-group">
+		                <label class="form-label">Category Name</label>
+		                <input type="text" class="form-input" name="name" id="editCategoryName" required>
+		            </div>
+		            <div class="form-group">
+		                <label class="form-label">Category Description</label>
+		                <textarea class="form-input" name="description" id="editCategoryDescription" required></textarea>
+		            </div>
+		            <button type="submit" class="submit-button">Save Changes</button>
+		        </form>
+		    </div>
+		</div>
+		<!-- Add Category Modal -->
+		<div id="addCategoryModal" class="modal hidden">
+		    <div class="modal-content">
+		        <div class="modal-header">
+			            <h3 class="modal-title">Add New Category</h3>
+			            <button onclick="hideAddCategoryModal()" class="close-button">
+			                <i class="fas fa-times"></i>
+			            </button>
+			        </div>
+		        
+		        <!-- Form thêm danh mục -->
+		        <form class="modal-form" action="/NenthomWeb/servlets/AddCategory_Servlet" method="POST">
+			            <div class="form-group">
+			                <label class="form-label">Category Name</label>
+			                <input type="text" class="form-input" name="name" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Description</label>
+			                <input type="text" class="form-input" name="description" required>
+			            </div>
+			            <button type="submit" class="submit-button">Add Category</button>
+			        </form>
+		    </div>
+		</div>
+
+	
+        <!-- Discounts Section -->
+		<div id="discountsSection" class="discounts-section main-content hidden">
+		    <div class="products-header">
+		        <h2 class="products-title">Discounts</h2>
+		        <button onclick="showAddDiscountModal()" class="add-product-button">
+		            <i class="fas fa-plus mr-2"></i>Add Discount
+		        </button>
+		    </div>
+		
+		    <!-- Discounts Table -->
+		    <div class="discounts-table">
+		        <table class="table-auto w-full text-left border-collapse">
+		            <thead>
+		                <tr>
+		                	<th class="px-4 py-2">Discount ID</th>
+		                    <th class="px-4 py-2">Discount Name</th>
+		                    <th class="px-4 py-2">Discount Type</th>
+		                    <th class="px-4 py-2">Value</th>
+		                    <th class="px-4 py-2">Start Date</th>
+		                    <th class="px-4 py-2">End Date</th>
+		                    <th class="px-4 py-2">Actions</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <c:forEach var="discount" items="${discounts}">
+		                    <tr>
+		                    	<td class="border px-4 py-2">${discount.discountID}</td>
+		                        <td class="border px-4 py-2">${discount.discountName}</td>
+		                        <td class="border px-4 py-2">${discount.discountType}</td>
+		                        <td class="border px-4 py-2">${discount.discountValue}</td>
+		                        <td class="border px-4 py-2">${discount.startDate}</td>
+		                        <td class="border px-4 py-2">${discount.endDate}</td>
+		                        <td class="border px-4 py-2">
+		                            <button 
+					                    class="text-blue-500 hover:underline edit-btn" 
+					                    data-id="${discount.discountID}" 
+					                    data-name="${discount.discountName}" 
+					                    data-type="${discount.discountType}" 
+					                    data-value="${discount.discountValue}" 
+					                    data-start="${discount.startDate}" 
+					                    data-end="${discount.endDate}">
+					                    Edit
+					                </button>
+		                            <form action="/NenthomWeb/servlets/DeleteDiscount_Servlet" method="POST" onsubmit="return confirm('Are you sure you want to delete this discount?');">
+		                                <input type="hidden" name="discountID" value="${discount.discountID}" />
+		                                <button type="submit" class="text-red-500 hover:underline">
+		                                    Delete
+		                                </button>
+		                            </form>
+		                        </td>
+		                    </tr>
+		                </c:forEach>
+		            </tbody>
+		        </table>
+		    </div>
+		    <!-- Add Discount Modal -->
+			<div id="addDiscountModal" class="modal hidden">
+			    <div class="modal-content">
+			        <div class="modal-header">
+			            <h3 class="modal-title">Add New Discount</h3>
+			            <button onclick="hideAddDiscountModal()" class="close-button">
+			                <i class="fas fa-times"></i>
+			            </button>
+			        </div>
+			        <form class="modal-form" action="/NenthomWeb/servlets/AddDiscount_Servlet" method="POST">
+			            <div class="form-group">
+			                <label class="form-label">Discount Name</label>
+			                <input type="text" class="form-input" name="discountName" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Discount Type</label>
+			                <select class="form-input" name="discountType" required>
+			                    <option value="percentage">Percentage</option>
+			                    <option value="fixed">Fixed Amount</option>
+			                </select>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Discount Value</label>
+			                <input type="number" class="form-input" name="discountValue" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Start Date</label>
+			                <input type="date" class="form-input" name="startDate" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">End Date</label>
+			                <input type="date" class="form-input" name="endDate" required>
+			            </div>
+			            <button type="submit" class="submit-button">Add Discount</button>
+			        </form>
+			    </div>
+			</div>
+			<!-- Edit Discount Modal -->
+			<div id="editDiscountModal" class="modal hidden">
+			    <div class="modal-content">
+			        <div class="modal-header">
+			            <h3 class="modal-title">Edit Discount</h3>
+			            <button onclick="hideEditDiscountModal()" class="close-button">
+			                <i class="fas fa-times"></i>
+			            </button>
+			        </div>
+			        <form class="modal-form" action="/NenthomWeb/servlets/UpdateDiscount_Servlet" method="POST">
+			            <div class="form-group">
+			                <label class="form-label">Discount ID</label>
+			                <input type="text" class="form-input" name="discountID" id="editDiscountID" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Discount Name</label>
+			                <input type="text" class="form-input" name="discountName" id="editDiscountName" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Discount Type</label>
+			                <select class="form-input" name="discountType" id="editDiscountType" required>
+			                    <option value="percentage">Percentage</option>
+			                    <option value="fixed">Fixed Amount</option>
+			                </select>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Discount Value</label>
+			                <input type="number" class="form-input" name="discountValue" id="editDiscountValue" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">Start Date</label>
+			                <input type="date" class="form-input" name="startDate" id="editStartDate" required>
+			            </div>
+			            <div class="form-group">
+			                <label class="form-label">End Date</label>
+			                <input type="date" class="form-input" name="endDate" id="editEndDate" required>
+			            </div>
+			            <button type="submit" class="submit-button">Update Discount</button>
+			        </form>
+			    </div>
+			</div>
+			
+					    
+		</div>
     </div>
 
+
+
     <script>
+	    function moveCategory(fromId, toId) {
+	        const fromList = document.getElementById(fromId);
+	        const toList = document.getElementById(toId);
+	
+	        // Lấy danh mục được chọn từ list nguồn
+	        const selectedOptions = Array.from(fromList.selectedOptions);
+	        
+	        selectedOptions.forEach(option => {
+	            // Thêm vào list đích
+	            toList.appendChild(option);
+	        });
+	    }
+		function showCategoryModal(productID) {
+		    document.getElementById('productID').value = productID; // Gán ProductID cho form
+		    document.getElementById('categoryModal').classList.remove('hidden');
+		}
+		
+		// Ẩn modal
+		function hideCategoryModal() {
+		    document.getElementById('categoryModal').classList.add('hidden');
+		}
+	
+	    function showAddCategoryModal() {
+	        document.getElementById("addCategoryModal").classList.remove("hidden");
+	    }
+	
+	    // Hide Add Category Modal
+	    function hideAddCategoryModal() {
+	        document.getElementById("addCategoryModal").classList.add("hidden");
+	    }
+
+	    function showEditCategoryModal(button) {
+	        // Lấy thông tin từ các thuộc tính data-* trong nút Edit
+	        const categoryID = button.getAttribute("data-id");
+	        const categoryName = button.getAttribute("data-name");
+	        const categoryDescription = button.getAttribute("data-description");
+	
+	        // Điền thông tin vào các trường trong modal
+	        document.getElementById("editCategoryID").value = categoryID;
+	        document.getElementById("editCategoryName").value = categoryName;
+	        document.getElementById("editCategoryDescription").value = categoryDescription;
+	
+	        // Hiển thị modal
+	        document.getElementById("editCategoryModal").classList.remove("hidden");
+	    }
+	
+	    // Ẩn modal chỉnh sửa
+	    function hideEditCategoryModal() {
+	        document.getElementById("editCategoryModal").classList.add("hidden");
+	    }
+	
+	    // Gắn sự kiện cho các nút Edit
+	    document.querySelectorAll(".edit-btn").forEach(button => {
+	        button.addEventListener("click", function() {
+	            showEditCategoryModal(this);
+	        });
+	    });
+	
+	    // Hàm này giúp đóng modal khi bấm nút đóng
+	    function closeModal() {
+	        document.getElementById("editCategoryModal").classList.add("hidden");
+	    }
+	    function showAddDiscountModal() {
+	        document.getElementById("addDiscountModal").classList.remove("hidden");
+	    }
+	
+	    // Hide Add Discount Modal
+	    function hideAddDiscountModal() {
+	        document.getElementById("addDiscountModal").classList.add("hidden");
+	    }
+	
+	 	// Thêm sự kiện cho nút Edit
+	    document.querySelectorAll(".edit-btn").forEach(button => {
+		    button.addEventListener("click", function() {
+		        // Lấy thông tin từ các thuộc tính data-*
+		        const discountID = this.getAttribute("data-id");
+		        const discountName = this.getAttribute("data-name");
+		        const discountType = this.getAttribute("data-type");
+		        const discountValue = this.getAttribute("data-value");
+		        const startDate = this.getAttribute("data-start");
+		        const endDate = this.getAttribute("data-end");
+		
+		        // Điền thông tin vào modal
+		        document.getElementById("editDiscountID").value = discountID;
+		        document.getElementById("editDiscountName").value = discountName;
+		        document.getElementById("editDiscountType").value = discountType;
+		        document.getElementById("editDiscountValue").value = discountValue;
+		        document.getElementById("editStartDate").value = startDate;
+		        document.getElementById("editEndDate").value = endDate;
+		
+		        // Hiển thị modal
+		        document.getElementById("editDiscountModal").classList.remove("hidden");
+		    });
+		});
+	    // Hide Edit Discount Modal
+	    function hideEditDiscountModal() {
+	        document.getElementById("editDiscountModal").classList.add("hidden");
+	    }
+
 	    function viewOrderDetails(orderID) {
 	        // Gửi yêu cầu AJAX hoặc chuyển hướng đến trang chi tiết của đơn hàng
 	        window.location.href = "/NenthomWeb/servlets/OrderDetails_Servlet?orderID=" + orderID;
 	    }
+	    let currentAction = 'product'; // Biến lưu trạng thái hiện tại, mặc định là 'product'
+
+	    // Khi người dùng click vào các tab, hiển thị phần tương ứng và cập nhật action
 	    document.getElementById("productsLink").addEventListener("click", function(event) {
-	    	event.preventDefault();
-	    	document.getElementById("invoicesSection").classList.add("hidden");
-	        document.getElementById("productsSection").classList.remove("hidden");
-	        
-	        //window.location.href = "/NenthomWeb/servlets/DSProduct_Servlet?page=admin";
+	        event.preventDefault();  // Ngừng hành động mặc định của thẻ <a>
+	        document.getElementById("invoicesSection").style.display = 'none';
+	        document.getElementById("productsSection").style.display = 'block';
+	        document.getElementById("discountsSection").style.display = 'none';
+	        document.getElementById("categoriesSection").style.display = 'none';
+	        currentAction = 'product'; // Cập nhật trạng thái
+	        setActionInURL('product'); // Gọi hàm cập nhật URL
 	    });
 
 	    document.getElementById("invoicesLink").addEventListener("click", function(event) {
-	    	event.preventDefault();
-	    	document.getElementById("productsSection").classList.add("hidden");
-	        document.getElementById("invoicesSection").classList.remove("hidden");
-	        
-	        //window.location.href = "/NenthomWeb/servlets/DSOrder_Servlet";
+	        event.preventDefault();
+	        document.getElementById("invoicesSection").style.display = 'block';
+	        document.getElementById("productsSection").style.display = 'none';
+	        document.getElementById("discountsSection").style.display = 'none';
+	        document.getElementById("categoriesSection").style.display = 'none';
+	        currentAction = 'invoice'; // Cập nhật trạng thái
+	        setActionInURL('invoice'); // Gọi hàm cập nhật URL
 	    });
+
+	    document.getElementById("discountsLink").addEventListener("click", function(event) {
+	        event.preventDefault();
+	        document.getElementById("invoicesSection").style.display = 'none';
+	        document.getElementById("productsSection").style.display = 'none';
+	        document.getElementById("discountsSection").style.display = 'block';
+	        document.getElementById("categoriesSection").style.display = 'none';
+
+	        currentAction = 'discount'; // Cập nhật trạng thái
+	        setActionInURL('discount'); // Gọi hàm cập nhật URL
+	    });
+	    
+	    document.getElementById("categoriesLink").addEventListener("click", function(event) {
+	        event.preventDefault();
+	        document.getElementById("invoicesSection").style.display = 'none';
+	        document.getElementById("productsSection").style.display = 'none';
+	        document.getElementById("discountsSection").style.display = 'none';
+	        document.getElementById("categoriesSection").style.display = 'block';
+	        
+	        currentAction = 'category'; // Cập nhật trạng thái
+	        setActionInURL('category'); // Gọi hàm cập nhật URL
+	    });
+
+	    // Hàm cập nhật action vào URL (giữ trạng thái khi tải lại trang)
+	    function setActionInURL(action) {
+	        const url = new URL(window.location.href);
+	        url.searchParams.set('action', action); // Cập nhật tham số action
+	        history.pushState(null, '', url.toString()); // Cập nhật URL mà không tải lại trang
+	    }
+
+	    // Khi tải trang, tự động hiển thị tab theo giá trị action trong URL
+	    window.onload = function() {
+	        const url = new URL(window.location.href);
+	        const action = url.searchParams.get('action') || 'product'; // Mặc định là 'product' nếu không có action
+
+	        if (action === 'discount') {
+	            document.getElementById("invoicesSection").style.display = 'none';
+	            document.getElementById("productsSection").style.display = 'none';
+	            document.getElementById("discountsSection").style.display = 'block';
+	            document.getElementById("categoriesSection").style.display = 'none';
+	        } else if (action === 'invoice') {
+	            document.getElementById("invoicesSection").style.display = 'block';
+	            document.getElementById("productsSection").style.display = 'none';
+	            document.getElementById("discountsSection").style.display = 'none';
+	            document.getElementById("categoriesSection").style.display = 'none';
+	        } else if (action === 'category') {
+	            document.getElementById("invoicesSection").style.display = 'none';
+	            document.getElementById("productsSection").style.display = 'none';
+	            document.getElementById("discountsSection").style.display = 'none';
+	            document.getElementById("categoriesSection").style.display = 'block';
+	        } else {
+	            document.getElementById("invoicesSection").style.display = 'none';
+	            document.getElementById("productsSection").style.display = 'block';
+	            document.getElementById("discountsSection").style.display = 'none';
+	            document.getElementById("categoriesSection").style.display = 'none';
+	        }
+	    };
 
 
 	 	// Chuyển đổi file ảnh thành chuỗi Base64

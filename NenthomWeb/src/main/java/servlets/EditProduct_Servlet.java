@@ -21,28 +21,6 @@ public class EditProduct_Servlet extends HttpServlet {
         super();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Lấy tên sản phẩm từ tham số 'name' trong URL
-        String name = request.getParameter("name");
-        
-        try (Connection connection = ConnectionUtil.DB()) {
-            ProductDAO productDAO = new ProductDAO(connection);
-            Product product = productDAO.getProductByName(name); // Lấy sản phẩm theo tên
-
-            if (product != null) {
-                // Đưa sản phẩm vào request để hiển thị trên JSP
-                request.setAttribute("product", product);
-                request.getRequestDispatcher("/views/editProduct.jsp").forward(request, response);
-            } else {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Sản phẩm không tồn tại.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu.");
-        }
-    }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	String name = request.getParameter("name");
@@ -58,7 +36,7 @@ public class EditProduct_Servlet extends HttpServlet {
             boolean isUpdated = productDAO.updateProductByName(product); // Cập nhật sản phẩm trong DB
 
             if (isUpdated) {
-                response.sendRedirect("/NenthomWeb/servlets/DSProduct_Servlet?page=admin");
+                response.sendRedirect("/NenthomWeb/servlets/DSProduct_Servlet?page=admin&message=success&action=product");
             } else {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Không thể cập nhật sản phẩm.");
             }
