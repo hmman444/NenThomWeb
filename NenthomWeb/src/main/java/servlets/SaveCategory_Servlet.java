@@ -9,6 +9,7 @@ import java.util.List;
 import dao.CategorieDAO;
 import dao.DiscountDAO;
 import dao.ProductDAO;
+import dao.ProductCategoryDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,55 +22,37 @@ import services.ConnectionUtil;
 
 @WebServlet("/servlets/SaveCategory_Servlet")
 public class SaveCategory_Servlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-    private CategorieDAO categorieDAO;
-    private ProductDAO productDAO;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        // Khởi tạo các DAO, truyền Connection vào
-        Connection connection = (Connection) getServletContext().getAttribute("DBConnection");
-        this.categorieDAO = new CategorieDAO(connection);
-        this.productDAO = new ProductDAO(connection);
+    public SaveCategory_Servlet() {
+        super();
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Lấy thông tin từ form
-        String productID = request.getParameter("productID");
-        String[] selectedCategoryIDs = request.getParameterValues("categoryIDs[]");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try (Connection connection = ConnectionUtil.DB()) {
+            // Lấy thông tin từ request
+            String[] categoryIds = request.getParameterValues("categoryIDs[]");
+            int productId = Integer.parseInt(request.getParameter("productID"));
 
-        if (productID != null && selectedCategoryIDs != null) {
-            try {
-                // Lấy sản phẩm theo productID
-                int productIDInt = Integer.parseInt(productID);
-                Product product = productDAO.getProductById(productIDInt);
+            // Tạo đối tượng DAO để xử lý liên kết danh mục
+            ProductCategoryDAO productCategoryDAO = new ProductCategoryDAO(connection);
 
-                if (product != null) {
-                    // Cập nhật mối quan hệ giữa sản phẩm và các danh mục
-                    for (String categoryID : selectedCategoryIDs) {
-                        int categoryIDInt = Integer.parseInt(categoryID);
-                        Categorie category = categorieDAO.getCategoryByID(categoryIDInt);
-
-                        if (category != null) {
-                            // Thêm vào bảng ProductCategories (nếu chưa có mối quan hệ)
-                            //productDAO.assignCategoryToProduct(productIDInt, categoryIDInt);
-                        }
-                    }
-                    // Chuyển hướng về trang quản lý sản phẩm sau khi lưu
-                    response.sendRedirect("/NenthomWeb/admin/products");
-                } else {
-                    // Nếu sản phẩm không tồn tại
-                    response.getWriter().write("Product not found.");
+            // Kiểm tra xem các danh mục đã liên kết hay chưa, nếu chưa thì thực hiện liên kết
+            for (String categoryIdStr : categoryIds) {
+                int categoryId = Integer.parseInt(categoryIdStr);
+                // Kiểm tra nếu danh mục chưa liên kết
+                if (!productCategoryDAO.isCategoryLinked(productId, categoryId)) {
+                    // Thực hiện liên kết danh mục
+                    productCategoryDAO.linkCategoryToProduct(productId, categoryId);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                response.getWriter().write("Error while saving categories.");
             }
-        } else {
-            // Trường hợp không có dữ liệu hợp lệ
-            response.getWriter().write("Invalid input data.");
+
+            // Chuyển hướng về trang admin sau khi lưu
+            response.sendRedirect(request.getContextPath() + "/servlets/DSProduct_Servlet?page=admin&message=success&action=product");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi khi lưu danh mục.");
         }
     }
 }

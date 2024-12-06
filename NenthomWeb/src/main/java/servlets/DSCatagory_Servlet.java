@@ -31,29 +31,6 @@ public class DSCatagory_Servlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	try (Connection connection = ConnectionUtil.DB()) {
-    		CategorieDAO categorieDAO = new CategorieDAO(connection);
-            String productID = request.getParameter("productID");
-            List<Categorie> categoriesLinked;
-            List<Categorie> categoriesNotLinked;
-            if(productID != null && !productID.isEmpty() ) {
-            	categoriesNotLinked = categorieDAO.getCategoriesNotForProduct(Integer.parseInt(productID));
-                categoriesLinked = categorieDAO.getCategoriesForProduct(Integer.parseInt(productID));
-            }
-            else {
-                categoriesNotLinked = categorieDAO.getCategoriesNotForProduct(1);
-                categoriesLinked = categorieDAO.getCategoriesForProduct(1);
-            }
-            String action = request.getParameter("action");
-            
-            request.setAttribute("action", action);
-            request.setAttribute("categoriesNotLinked", categoriesNotLinked);
-            request.setAttribute("categoriesLinked", categoriesLinked);
-            response.sendRedirect("/NenthomWeb/servlets/DSProduct_Servlet?page=admin&message=success&action=selectCategory");
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu.");
-        }
+    	
     }
 }

@@ -45,16 +45,8 @@ public class DSProduct_Servlet extends HttpServlet {
             List<Categorie> categories = categorieDAO.getAllCategories();
             
             String productID = request.getParameter("productID");
-            List<Categorie> categoriesLinked;
-            List<Categorie> categoriesNotLinked;
-            if(productID != null && !productID.isEmpty() ) {
-            	categoriesNotLinked = categorieDAO.getCategoriesNotForProduct(Integer.parseInt(productID));
-                categoriesLinked = categorieDAO.getCategoriesForProduct(Integer.parseInt(productID));
-            }
-            else {
-                categoriesNotLinked = categorieDAO.getCategoriesNotForProduct(1);
-                categoriesLinked = categorieDAO.getCategoriesForProduct(1);
-            }
+            
+            
             String page = request.getParameter("page");
             
             String message = request.getParameter("message");
@@ -70,8 +62,6 @@ public class DSProduct_Servlet extends HttpServlet {
                 request.setAttribute("orders", orders);
                 request.setAttribute("discounts", discounts);
                 request.setAttribute("categories", categories);
-                request.setAttribute("categoriesNotLinked", categoriesNotLinked);
-                request.setAttribute("categoriesLinked", categories);
                 request.getRequestDispatcher("/views/admin.jsp").forward(request, response);
             } else {
                 request.setAttribute("products", products);

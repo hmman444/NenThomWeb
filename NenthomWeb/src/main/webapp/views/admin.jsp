@@ -80,7 +80,7 @@
 			</div>
 			<!-- Modal Chọn danh mục -->
 			<div id="categoryModal" class="modal hidden">
-			    <div class="modal-content" style="background-color: #fff; border-radius: 12px; padding: 20px; width: 60%; max-width: 800px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+			    <div class="modal-content" style="background-color: #fff; border-radius: 12px; padding: 20px; width: 80%; max-width: 900px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
 			        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 15px;">
 			            <h3 class="modal-title" style="font-size: 1.5rem; font-weight: 600;">Assign Categories to Product</h3>
 			            <button onclick="hideCategoryModal()" class="close-button" style="background: none; border: none; font-size: 1.5rem; color: #888;">
@@ -89,36 +89,16 @@
 			        </div>
 			
 			        <!-- Form chọn danh mục -->
-			        <form id="categoryForm" action="/NenthomWeb/servlets/SaveCategory_Servlet" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+			        <form id="categoryForm" action="/NenthomWeb/servlets/SaveCategory_Servlet" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
 			            <input type="hidden" id="productID" name="productID">
 			
-			            <!-- Hai cột danh mục: Danh mục đã chọn và danh mục chưa chọn -->
+			            <!-- Danh sách danh mục -->
 			            <div style="display: flex; justify-content: space-between; gap: 20px;">
-			                <!-- Danh sách danh mục chưa liên kết -->
+			                <!-- Danh sách danh mục duy nhất -->
 			                <div style="flex: 1;">
 			                    <label for="availableCategories" class="form-label" style="font-size: 1rem; font-weight: 500;">Available Categories</label>
-			                    <select id="availableCategories" name="availableCategories[]" multiple class="form-input" style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; min-height: 150px;">
-			                        <c:forEach var="category" items="${categoriesNotLinked}">
-			                            <option value="${category.categoryID}">${category.name}</option>
-			                        </c:forEach>
-			                    </select>
-			                </div>
-			
-			                <!-- Các nút chuyển giữa hai danh sách -->
-			                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;">
-			                    <button type="button" id="addCategory" class="move-button" onclick="moveCategory('availableCategories', 'selectedCategories')">
-			                        <i class="fas fa-arrow-right"></i>
-			                    </button>
-			                    <button type="button" id="removeCategory" class="move-button" onclick="moveCategory('selectedCategories', 'availableCategories')">
-			                        <i class="fas fa-arrow-left"></i>
-			                    </button>
-			                </div>
-			
-			                <!-- Danh sách danh mục đã liên kết -->
-			                <div style="flex: 1;">
-			                    <label for="selectedCategories" class="form-label" style="font-size: 1rem; font-weight: 500;">Selected Categories</label>
-			                    <select id="selectedCategories" name="categoryIDs[]" multiple class="form-input" style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; min-height: 150px;">
-			                        <c:forEach var="category" items="${categoriesLinked}">
+			                    <select id="categories" name="categoryIDs[]" multiple class="form-input" style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; min-height: 150px; width: 100%; box-sizing: border-box;">
+			                        <c:forEach var="category" items="${categories}">
 			                            <option value="${category.categoryID}">${category.name}</option>
 			                        </c:forEach>
 			                    </select>
@@ -126,12 +106,13 @@
 			            </div>
 			
 			            <!-- Nút Save -->
-			            <button type="submit" class="submit-button" style="align-self: flex-end; padding: 8px 16px; font-size: 1rem; border-radius: 8px; color: white; background-color: #8b5e3c; border: none; cursor: pointer;">
+			            <button type="submit" class="submit-button" style="align-self: flex-end; padding: 10px 20px; font-size: 1rem; border-radius: 8px; color: white; background-color: #8b5e3c; border: none; cursor: pointer; margin-top: 20px;">
 			                Save Categories
 			            </button>
 			        </form>
 			    </div>
 			</div>
+
 
 
 
