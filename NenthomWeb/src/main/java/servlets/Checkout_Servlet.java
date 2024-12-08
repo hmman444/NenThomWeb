@@ -46,7 +46,7 @@ public class Checkout_Servlet extends HttpServlet {
 	    Order order = new Order();
 	    order.setUserID(userID);
 	    order.setTotalPrice(totalAmount);
-	    order.setOrderStatus("pending"); 
+	    order.setOrderStatus("confirmed"); 
 	    order.setShippingAddress(shippingAddress);
 	    order.setCreatedAt(new java.sql.Timestamp(System.currentTimeMillis()));
 

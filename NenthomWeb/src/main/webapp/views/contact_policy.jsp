@@ -23,16 +23,16 @@
 				<div class="contact-info">
 					<h3>Thông Tin Liên Hệ</h3>
 					<p>
-						<strong>Số điện thoại:</strong> 0123 456 789
+						<strong>Số điện thoại:</strong> 0862267674
 					</p>
 					<p>
-						<strong>Email:</strong> support@example.com
+						<strong>Email:</strong> luandophu8114@gmail.com
 					</p>
 					<p>
 						<strong>Địa chỉ:</strong> 123 Đường ABC, TP. Hồ Chí Minh
 					</p>
 					<p>
-						<strong>Website:</strong> <a href="http://example.com">www.example.com</a>
+						<strong>Website:</strong> <a href="http://example.com">www.NenThomWeb.com</a>
 					</p>
 				</div>
 
