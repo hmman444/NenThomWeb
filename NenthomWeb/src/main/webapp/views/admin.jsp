@@ -10,7 +10,7 @@
     <title>Management Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles_admin.css"> <!-- Link đến file CSS -->
+    <link rel="stylesheet" href="<c:url value='/css/styles_admin.css'/>"> <!-- Link đến file CSS -->
 </head>
 <body class="bg-gray-100">
     <div class="flex">

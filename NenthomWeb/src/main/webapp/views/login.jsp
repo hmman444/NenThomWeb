@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Nến Thơm</title>
-    <link rel="stylesheet" href="../css/styles_Login.css">
-    <link rel="stylesheet" href="../css/styles_header_footer.css">
+    <link rel="stylesheet" href="<c:url value='/css/styles_Login.css'/>">
+    <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -32,7 +33,7 @@
                     }
                 %>
 
-                <form id="auth-form" action="../servlets/Login_Servlet" method="post">
+                <form id="auth-form" action="/NenthomWeb/servlets/Login_Servlet" method="post">
                     <!-- Username -->
                     <div class="form-group">
                         <label for="username">Username</label>

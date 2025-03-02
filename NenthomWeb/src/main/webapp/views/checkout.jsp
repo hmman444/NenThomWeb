@@ -5,8 +5,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout - Scented Bliss</title>
-    <link rel="stylesheet" href="../css/styles_header_footer.css">
-    <link rel="stylesheet" href="../css/styles_checkout.css">
+    <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
+    <link rel="stylesheet" href="<c:url value='/css/styles_checkout.css'/>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-faf7f2">
