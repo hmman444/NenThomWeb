@@ -8,10 +8,14 @@
     <title>Login | Nến Thơm</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_Login.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- Font Awesome từ WebJars -->
+	<link rel="stylesheet" href="<c:url value='/webjars/font-awesome/6.0.0/css/all.min.css'/>">
+	
+	<!-- Toastr từ WebJars -->
+	<link rel="stylesheet" href="<c:url value='/webjars/toastr/2.1.4/toastr.min.css'/>">
+	<script src="<c:url value='/webjars/jquery/3.6.0/jquery.min.js'/>"></script>
+	<script src="<c:url value='/webjars/toastr/2.1.4/toastr.min.js'/>"></script>
+
 </head>
 <body class="bg-light-cream">
 
