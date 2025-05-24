@@ -10,7 +10,7 @@
     <title>Scented Bliss - Product Detail</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_product_detail.css'/>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="<c:url value='/css/all.min.css'/>">
 </head>
 <body class="bg-[#faf7f2]">
     <!-- Header -->
@@ -69,7 +69,7 @@
                 
                 <div class="description">
                     <h3>Product Description</h3>
-                    <p>Immerse yourself in the luxurious scent of vanilla with our premium handcrafted candle...</p>
+                    <p>${product.description}</p>
                 </div>
                 
                 <div class="share">

@@ -1,4 +1,5 @@
 package servlets;
+import java.util.logging.Logger;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,10 +13,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import models.Product;
 import services.ConnectionUtil;
 
+import org.owasp.esapi.ESAPI;
 @WebServlet("/servlets/AddProduct_Servlet")
 public class AddProduct_Servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    private static final Logger logger = Logger.getLogger(AddProduct_Servlet.class.getName());
     public AddProduct_Servlet() {
         super();
     }
@@ -23,22 +25,41 @@ public class AddProduct_Servlet extends HttpServlet {
     // Phương thức xử lý yêu cầu POST khi form được gửi đi
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
-        double price = Double.parseDouble(request.getParameter("price"));
-        String description = request.getParameter("description");
-        int stock = Integer.parseInt(request.getParameter("stock"));
-        String imageBase64 = request.getParameter("imageBase64");
-        
-        Product product = new Product(0, name, description, price, stock, imageBase64);
-        
-        try (Connection connection = ConnectionUtil.DB()) {
-            ProductDAO productDAO = new ProductDAO(connection);
-            productDAO.addProduct(product);
-            response.sendRedirect("/NenthomWeb/servlets/DSProduct_Servlet?page=admin&message=success&action=product");
+    	
+response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu.");
-        }
+String name = request.getParameter("name");
+if (!name.matches("[a-zA-Z0-9 ]{1,50}")) {
+    throw new IllegalArgumentException("Tên không hợp lệ");
+}
+
+double price = Double.parseDouble(request.getParameter("price"));
+
+String description = request.getParameter("description");
+if (!description.matches("[a-zA-Z0-9 ]{1,500}")) {
+    throw new IllegalArgumentException("Mô tả không hợp lệ");
+}
+
+int stock = Integer.parseInt(request.getParameter("stock"));
+String imageBase64 = request.getParameter("imageBase64");
+
+Product product = new Product(0, name, description, price, stock, imageBase64);
+
+logger.info("Bắt đầu thêm sản phẩm: " + name + ", giá: " + price + ", tồn kho: " + stock);
+
+try (Connection connection = ConnectionUtil.DB()) {
+    ProductDAO productDAO = new ProductDAO(connection);
+    productDAO.addProduct(product);
+    
+    logger.info("Thêm sản phẩm thành công: " + name);
+
+    response.sendRedirect("/NenthomWeb/servlets/DSProduct_Servlet?page=admin&message=success&action=product");
+
+} catch (Exception e) {
+    logger.severe("Lỗi khi thêm sản phẩm: " + e.getMessage());
+    e.printStackTrace();
+    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu.");
+}
     }
+
 }
