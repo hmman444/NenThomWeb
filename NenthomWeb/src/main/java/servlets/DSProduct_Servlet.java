@@ -18,6 +18,7 @@ import models.Discount;
 import models.Order;
 import models.Product;
 import services.ConnectionUtil;
+import utils.AccessControlUtil;
 
 @WebServlet("/servlets/DSProduct_Servlet")
 public class DSProduct_Servlet extends HttpServlet {
@@ -29,6 +30,14 @@ public class DSProduct_Servlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+        String page = request.getParameter("page");
+
+        // ✅ Kiểm tra quyền nếu page = admin
+        if (!AccessControlUtil.checkManagerAccess(request, response, "admin")) {
+            return;
+        }
+
 		try (Connection connection = ConnectionUtil.DB()) {
             ProductDAO productDao = new ProductDAO(connection);
             List<Product> products = productDao.getAllProducts();
@@ -43,13 +52,9 @@ public class DSProduct_Servlet extends HttpServlet {
             List<Categorie> categories = categorieDAO.getAllCategories();
             
             String productID = request.getParameter("productID");
-            
-            
-            String page = request.getParameter("page");
-            
             String message = request.getParameter("message");
             String action = request.getParameter("action");
-            
+
             if (message != null) {
                 request.setAttribute("message", message);
             }
@@ -77,5 +82,4 @@ public class DSProduct_Servlet extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

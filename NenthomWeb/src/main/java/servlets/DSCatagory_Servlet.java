@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import utils.AccessControlUtil;
 
 @WebServlet("/servlets/DSCatagory_Servlet")
 public class DSCatagory_Servlet extends HttpServlet {
@@ -16,8 +17,13 @@ public class DSCatagory_Servlet extends HttpServlet {
         super();
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
+
+        // ✅ Chỉ cho phép manager truy cập
+        if (!AccessControlUtil.requireManager(request, response)) return;
+
+        // Tạm thời chưa có xử lý gì
     }
 }
