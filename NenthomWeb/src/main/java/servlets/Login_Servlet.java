@@ -51,6 +51,7 @@ public class Login_Servlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("username", username);
                     session.setAttribute("userID", userID);
+                    session.setAttribute("role", role);
 
                     // Chuyển hướng đến trang quản lý theo quyền
                     if ("manager".equals(role)) {

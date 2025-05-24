@@ -1,0 +1,30 @@
+@charset "UTF-8";
+body {
+    background-color: #fdf8f4;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.error-container {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.error-container h1 {
+    font-size: 72px;
+    color: #d9534f;
+    margin-bottom: 10px;
+}
+
+.error-container p {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.error-icon {
+    font-size: 80px;
+    color: #d9534f;
+    margin-bottom: 20px;
+}
