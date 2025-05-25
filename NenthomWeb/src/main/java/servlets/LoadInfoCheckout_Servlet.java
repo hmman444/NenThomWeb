@@ -80,6 +80,7 @@ public class LoadInfoCheckout_Servlet extends HttpServlet {
             request.setAttribute("subtotal", subtotal);
             request.setAttribute("shippingCost", shippingCost);
             request.setAttribute("totalAmount", formattedTotalAmount);
+            request.setAttribute("voucherId", discountId);
             request.setAttribute("selectedDiscount", selectedDiscount);
 
             // Chuyển tiếp đến trang giỏ hàng (cart.jsp)
