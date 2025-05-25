@@ -13,12 +13,13 @@
 		    <artifactId>commons-text</artifactId>
 		    <version>1.10.0</version>
 		</dependency>
-	
-<dependency>
-    <groupId>org.owasp.esapi</groupId>
-    <artifactId>esapi</artifactId>
-    <version>2.5.2.0</version>
-</dependency>
+
+		<dependency>
+			<groupId>org.owasp.encoder</groupId>
+			<artifactId>encoder</artifactId>
+			<version>1.2.3</version> <!-- hoặc bản mới nhất -->
+		</dependency>
+
 		<!--
 		https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
 		<dependency>
