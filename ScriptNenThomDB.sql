@@ -13,7 +13,7 @@ CREATE TABLE Account (
 CREATE TABLE Users (
     UserID INT PRIMARY KEY IDENTITY(0,1),       -- IDENTITY(0,1) sẽ bắt đầu từ 0 và tăng dần
     AccountID INT NOT NULL,                       -- Tham chiếu đến bảng Account
-    Email VARCHAR(100) UNIQUE,           -- Địa chỉ email của người dùng
+    Email VARCHAR(100),           -- Địa chỉ email của người dùng
     PhoneNumber VARCHAR(15),                     -- Số điện thoại
     Address NVARCHAR(1000),                      -- Địa chỉ của người dùng
     FOREIGN KEY (AccountID) REFERENCES Account(AccountID) ON DELETE CASCADE

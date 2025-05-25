@@ -26,6 +26,7 @@ import models.Order;
 import models.OrderDetail;
 import models.Product;
 import services.ConnectionUtil;
+import utils.CSRFUtil;
 
 @WebServlet("/servlets/Checkout_Servlet")
 public class Checkout_Servlet extends HttpServlet {
@@ -40,6 +41,10 @@ public class Checkout_Servlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (!CSRFUtil.isValid(request)) {
+	        request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+	        return;
+	    }
 	    String totalAmountStr = request.getParameter("totalAmount");        
 	    BigDecimal totalAmount = BigDecimal.valueOf(Double.parseDouble(totalAmountStr));
 	    String shippingAddress = request.getParameter("address");

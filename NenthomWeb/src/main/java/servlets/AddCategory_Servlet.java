@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Categorie;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 @WebServlet("/servlets/AddCategory_Servlet")
 public class AddCategory_Servlet extends HttpServlet {
 
@@ -19,6 +19,10 @@ public class AddCategory_Servlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	if (!CSRFUtil.isValid(request)) {
+            request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+            return;
+        }
     	String name = request.getParameter("name");
         String description = request.getParameter("description");
         if (name != null) {

@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="<c:url value='/css/styles_admin.css'/>">
 </head>
 <body class="bg-gray-100">
+<%
+    String csrfToken = (String) request.getAttribute("csrfToken");
+%>
+
     <div class="flex">
         <!-- Sidebar -->
         <div id="sidebar" class="sidebar">
@@ -61,7 +65,7 @@
 			<div class="product-grid">
 				<c:forEach var="product" items="${products}">
 					<div class="product-card">
-						<img src="../images/anhSanPham.jpg" alt="Product" class="product-image">
+						<img src="<c:url value='/images/anhSanPham.jpg' />" alt="Product" class="product-image">
 						<h3 class="product-name">
 							<c:out value="${product.name}"/>
 						</h3>
@@ -77,6 +81,7 @@
 								</button>
 								<form action="/NenthomWeb/servlets/DeleteProduct_Servlet" method="POST" 
 									  onsubmit="return confirm('Are you sure you want to delete this product?');">
+				                    <input type="hidden" name="csrfToken" value="<%= csrfToken %>">
 									<input type="hidden" name="productName" value="<c:out value='${product.name}'/>" />
 									<button type="submit" class="delete-button">
 										<i class="fas fa-trash"></i>
@@ -103,6 +108,7 @@
 
 						<!-- Form chọn danh mục -->
 						<form id="categoryForm" action="/NenthomWeb/servlets/SaveCategory_Servlet" method="POST" class="d-flex flex-column gap-4">
+			            	<input type="hidden" name="csrfToken" value="<%= csrfToken %>">
 							<input type="hidden" id="productID" name="productID" />
 
 							<!-- Danh sách danh mục -->
@@ -141,6 +147,7 @@
                         </button>
                     </div>
                     <form class="modal-form" action="/NenthomWeb/servlets/AddProduct_Servlet" method="POST">
+                    <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
                         <div class="form-group">
 			                <label class="form-label">Product Name</label>
 			                <input type="text" class="form-input" name="name" required maxlength="100">
@@ -176,6 +183,7 @@
 			            </button>
 			        </div>
 			        <form id="editProductForm" class="modal-form" action="/NenthomWeb/servlets/EditProduct_Servlet" method="POST" >
+			        	<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 			            <input type="hidden" name="productName" id="editProductName">
 			            <div class="form-group">
 			                <label class="form-label">Product Name</label>
@@ -263,6 +271,7 @@
 					                    Edit
 					                </button>
 		                            <form action="/NenthomWeb/servlets/DeleteCategory_Servlet" method="POST" onsubmit="return confirm('Are you sure you want to delete this category?');">
+		                                <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 		                                <input type="hidden" name="categoryID" value="${categorie.categoryID}" />
 		                                <button type="submit" class="text-red-500 hover:underline">
 		                                    Delete
@@ -284,6 +293,7 @@
 		            </button>
 		        </div>
 		        <form class="modal-form" action="/NenthomWeb/servlets/EditCategory_Servlet" method="POST">
+		            <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 		            <input type="hidden" name="categoryID" id="editCategoryID"> <!-- Hidden input để lưu ID -->
 		            <div class="form-group">
 		                <label class="form-label">Category Name</label>
@@ -309,6 +319,7 @@
 		        
 		        <!-- Form thêm danh mục -->
 		        <form class="modal-form" action="/NenthomWeb/servlets/AddCategory_Servlet" method="POST">
+			            <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 			            <div class="form-group">
 			                <label class="form-label">Category Name</label>
 			                <input type="text" class="form-input" name="name" required maxlength="50">
@@ -367,6 +378,7 @@
 					                    Edit
 					                </button>
 		                            <form action="/NenthomWeb/servlets/DeleteDiscount_Servlet" method="POST" onsubmit="return confirm('Are you sure you want to delete this discount?');">
+		                                <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 		                                <input type="hidden" name="discountID" value="${discount.discountID}" />
 		                                <button type="submit" class="text-red-500 hover:underline">
 		                                    Delete
@@ -388,6 +400,7 @@
 			            </button>
 			        </div>
 			        <form class="modal-form" action="/NenthomWeb/servlets/AddDiscount_Servlet" method="POST">
+			            <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 			            <div class="form-group">
 			                <label class="form-label">Discount Name</label>
 			                <input type="text" class="form-input" name="discountName" required maxlength="255">
@@ -425,6 +438,7 @@
 			            </button>
 			        </div>
 			        <form class="modal-form" action="/NenthomWeb/servlets/UpdateDiscount_Servlet" method="POST">
+			            <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 			            <div class="form-group">
 			                <label class="form-label">Discount ID</label>
 			                <input type="text" class="form-input" name="discountID" id="editDiscountID" required>

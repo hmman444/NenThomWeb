@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="<c:url value='/css/toastify.min.css'/>">
 </head>
 <body class="bg-faf7f2">
-    
+<%
+    String csrfToken = (String) request.getAttribute("csrfToken");
+%>
+
     <!-- Header -->
     <%@ include file="header.jsp" %>
 
@@ -28,6 +31,7 @@
                     </div>
                     <div class="user-info">
                         <form action="/NenthomWeb/servlets/UpdateProfile_Servlet" method="post">
+                        	<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
                             <div class="info-item">
                                 <label for="username">ID User</label>
                                 <input type="hidden" id="userId" name="userId" value="${user.userId}">

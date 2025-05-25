@@ -14,6 +14,10 @@
 	<link rel="stylesheet" href="<c:url value='/css/bootstrap-icons.css'/>">
 </head>
 <body class="bg-light-cream">
+<%
+    String csrfToken = (String) request.getAttribute("csrfToken");
+%>
+
 	<!-- Header -->
 	<%@ include file="header.jsp"%>
 
@@ -80,6 +84,7 @@
 
 							<!-- Add to Cart Form -->
 							<form action="/NenthomWeb/servlets/AddToCart_Servlet" method="POST">
+								<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 								<input type="hidden" name="productID" value="<c:out value='${product.productID}'/>">
 								<input type="hidden" name="quantity" id="hiddenQuantity" value="1">
 								<button type="submit" class="add-to-cart">Add to Cart</button>

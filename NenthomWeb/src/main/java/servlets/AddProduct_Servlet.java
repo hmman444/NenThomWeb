@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Product;
 import services.ConnectionUtil;
+import utils.CSRFUtil;
 
 import org.owasp.esapi.ESAPI;
 @WebServlet("/servlets/AddProduct_Servlet")
@@ -28,6 +29,10 @@ public class AddProduct_Servlet extends HttpServlet {
     	
         response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'");
 
+    	if (!CSRFUtil.isValid(request)) {
+            request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+            return;
+        }
         String name = request.getParameter("name");
         if (name != null) {
                     name = name.trim();

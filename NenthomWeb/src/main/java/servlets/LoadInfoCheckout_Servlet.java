@@ -19,7 +19,7 @@ import models.Discount;
 import models.Product;
 import models.User;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 @WebServlet("/servlets/LoadInfoCheckout_Servlet")
 public class LoadInfoCheckout_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -84,6 +84,7 @@ public class LoadInfoCheckout_Servlet extends HttpServlet {
             request.setAttribute("selectedDiscount", selectedDiscount);
 
             // Chuyển tiếp đến trang giỏ hàng (cart.jsp)
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/checkout.jsp").forward(request, response);
 
         } catch (Exception e) {

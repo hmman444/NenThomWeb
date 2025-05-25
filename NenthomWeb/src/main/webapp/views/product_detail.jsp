@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="<c:url value='/css/all.min.css'/>">
 </head>
 <body class="bg-[#faf7f2]">
+<%
+    String csrfToken = (String) request.getAttribute("csrfToken");
+%>
+
     <!-- Header -->
     <%@ include file="header.jsp" %>
 
@@ -61,6 +65,7 @@
                 
                 <div class="button-container">
                 	<form action="/NenthomWeb/servlets/AddToCart_Servlet" method="POST">
+                		<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 					    <input type="hidden" name="productID" value="${product.productID}">
 					    <input type="hidden" name="quantity" id="hiddenQuantity" value="1"> <!-- Thêm trường ẩn cho quantity -->
 					    <button type="submit" class="styled-button">Add to Cart</button>

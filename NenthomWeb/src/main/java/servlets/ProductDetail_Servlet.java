@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Product;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 import org.owasp.esapi.ESAPI;
 @WebServlet("/servlets/ProductDetail_Servlet")
 public class ProductDetail_Servlet extends HttpServlet {
@@ -32,7 +32,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
             product.setDescription(safeDescription);
             
             request.setAttribute("product", product);
-        request.getRequestDispatcher("/views/product_detail.jsp").forward(request, response);
+            CSRFUtil.attachToken(request);
+            request.getRequestDispatcher("/views/product_detail.jsp").forward(request, response);
         
     } catch (Exception e) {
         e.printStackTrace();

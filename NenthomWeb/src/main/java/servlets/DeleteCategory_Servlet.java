@@ -15,12 +15,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Categorie;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 
 @WebServlet("/servlets/DeleteCategory_Servlet")
 public class DeleteCategory_Servlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	if (!CSRFUtil.isValid(request)) {
+            request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+            return;
+        }
     	int categoryId = Integer.parseInt(request.getParameter("categoryID"));
     	try (Connection connection =  ConnectionUtil.DB()) {
     		CategorieDAO categorieDAO = new CategorieDAO(connection);

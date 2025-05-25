@@ -13,11 +13,27 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import services.ConnectionUtil;
+import utils.CSRFUtil;
 
-@WebServlet("/servlets/Login_Servlet")
+@WebServlet("/login")
 public class Login_Servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        CSRFUtil.attachToken(request); 
+
+        if ("1".equals(request.getParameter("logout"))) {
+            request.setAttribute("logoutMessage", "Bạn đã đăng xuất thành công!");
+        }
+
+        request.getRequestDispatcher("/views/login.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
     public Login_Servlet() {
         super();
     }
@@ -29,6 +45,11 @@ public class Login_Servlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!CSRFUtil.isValid(request)) {
+            request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+            return;
+        }
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String message = "";
@@ -47,7 +68,6 @@ public class Login_Servlet extends HttpServlet {
             } else {
                 String storedPassword = taiKhoanDao.getPasswordByUsername(username);
                 if (storedPassword.equals(password)) {
-                    // Lấy role của người dùng
                     String role = taiKhoanDao.getRoleByUsername(username);
                     int userID = userDao.getUserIDByUsername(username);
 
@@ -61,7 +81,7 @@ public class Login_Servlet extends HttpServlet {
                     // Chuyển hướng đến trang quản lý theo quyền
                     if ("manager".equals(role)) {
                         request.getRequestDispatcher("/servlets/DSProduct_Servlet?page=admin").forward(request, response);
-                    } else if ("user".equals(role)) {
+                    } else {
                         request.getRequestDispatcher("/views/TrangChu.jsp").forward(request, response);
                     }
                     return; // Đảm bảo không chạy tiếp phần xử lý lỗi
@@ -73,13 +93,12 @@ public class Login_Servlet extends HttpServlet {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            message = "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu!";
+            message = "Lỗi kết nối cơ sở dữ liệu.";
             error = true;
             System.out.println("[LOGIN] LỖI HỆ THỐNG khi đăng nhập username: " + username);
         }
 
         if (error) {
-            // Đưa thông báo và trạng thái lỗi về JSP
             request.setAttribute("message", message);
             request.setAttribute("error", error);
             request.getRequestDispatcher("/views/login.jsp").forward(request, response);
