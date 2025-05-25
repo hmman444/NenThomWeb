@@ -102,6 +102,7 @@
 	        </form>
 	        <!-- Form thanh toán -->
 			<form action="Checkout_Servlet" method="post">
+			    <input type="hidden" name="voucherId" value="${voucherId}">
 			    <input type="hidden" name="totalAmount" value="${totalAmount}">
 			    <input type="hidden" name="address" value="${user.address}">
 			    <button type="submit" class="submit-button">Thanh toán</button>
