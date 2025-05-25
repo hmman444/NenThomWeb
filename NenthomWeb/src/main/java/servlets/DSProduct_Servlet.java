@@ -45,8 +45,6 @@ public class DSProduct_Servlet extends HttpServlet {
         }
 
 		try (Connection connection = ConnectionUtil.DB()) {
-
-			String page = request.getParameter("page");
 			String message = request.getParameter("message");
 			String action = request.getParameter("action");
 

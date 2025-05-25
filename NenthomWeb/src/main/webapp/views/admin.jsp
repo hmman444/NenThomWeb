@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="en">
@@ -8,17 +9,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Management Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="<c:url value='/webjars/font-awesome/6.0.0/css/all.min.css'/>">
-
-    <link rel="stylesheet" href="<c:url value='/css/styles_admin.css'/>"> <!-- Link đến file CSS -->
+	<link rel="stylesheet" href="<c:url value='/css/all.min.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/tailwindcss.css'/>">
+    <link rel="stylesheet" href="<c:url value='/css/styles_admin.css'/>">
 </head>
 <body class="bg-gray-100">
     <div class="flex">
         <!-- Sidebar -->
         <div id="sidebar" class="sidebar">
             <div class="sidebar-header">
-                <button onclick="toggleSidebar()" class="sidebar-toggle-button">
+                <button id="toggleSidebar" onclick="toggleSidebar()" class="sidebar-toggle-button">
                     <i class="fas fa-bars"></i>
                 </button>
                 <h1 id="dashboardText" class="sidebar-title">Management</h1>
@@ -92,7 +92,7 @@
 			</div>
 			<!-- Modal Chọn danh mục -->
 			<!-- Category Modal -->
-			<div id="categoryModal" class="modal d-none">
+			<div id="categoryModal" class="modal hidden">
 				<div class="modal-dialog modal-dialog-centered modal-lg">
 					<div class="modal-content rounded-3 shadow p-4">
 						<!-- Modal Header -->
