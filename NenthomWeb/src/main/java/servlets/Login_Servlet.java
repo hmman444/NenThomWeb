@@ -18,7 +18,6 @@ import utils.CSRFUtil;
 @WebServlet("/login")
 public class Login_Servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,17 +29,6 @@ public class Login_Servlet extends HttpServlet {
         }
 
         request.getRequestDispatcher("/views/login.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    public Login_Servlet() {
-        super();
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
