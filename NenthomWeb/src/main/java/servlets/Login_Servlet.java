@@ -59,7 +59,8 @@ public class Login_Servlet extends HttpServlet {
                     String role = taiKhoanDao.getRoleByUsername(username);
                     int userID = userDao.getUserIDByUsername(username);
 
-                    HttpSession session = request.getSession();
+                    request.getSession().invalidate();
+                    HttpSession session = request.getSession(true);
                     session.setAttribute("username", username);
                     session.setAttribute("userID", userID);
                     session.setAttribute("role", role);
