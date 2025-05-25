@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Random;
 
 import dao.TaiKhoanDAO;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.TaiKhoan;
+import services.AuthCodeUtil;
 import services.ConnectionUtil;
 
 @WebServlet("/servlets/Register_Servlet")
@@ -23,7 +25,8 @@ public class Register_Servlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		AuthCodeUtil.refreshVerificationCode(request.getSession());
+        request.getRequestDispatcher("/views/register.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -33,9 +36,25 @@ public class Register_Servlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirm-password");
         String message = "";
         boolean error = false;
+        
+        if (!AuthCodeUtil.isVerificationCodeValid(request)) {
+            AuthCodeUtil.refreshVerificationCode(request.getSession());
+            request.setAttribute("message", "Mã xác thực không đúng!");
+            request.setAttribute("error", true);
+            request.getRequestDispatcher("/views/register.jsp").forward(request, response);
+            return;
+        }
+        
+        if (!AuthCodeUtil.isStrongPassword(password)) {
+            AuthCodeUtil.refreshVerificationCode(request.getSession()); // sinh lại mã nếu có dùng
+            request.setAttribute("message", "Mật khẩu không đủ mạnh. Vui lòng sử dụng ít nhất 8 ký tự bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.");
+            request.setAttribute("error", true);
+            request.getRequestDispatcher("/views/register.jsp").forward(request, response);
+            return;
+        }
 
-        try (Connection conn = ConnectionUtil.DB()) {
-            TaiKhoanDAO taiKhoanDao = new TaiKhoanDAO(conn);
+        try {
+            TaiKhoanDAO taiKhoanDao = new TaiKhoanDAO();
 
             if (taiKhoanDao.isUsernameExist(username)) {
                 message = "Tài khoản đã tồn tại!";
@@ -44,7 +63,7 @@ public class Register_Servlet extends HttpServlet {
                 message = "Mật khẩu và xác nhận mật khẩu không khớp!";
                 error = true;
             } else {
-                TaiKhoan taiKhoan = new TaiKhoan(username, password); // Bạn có thể mã hóa password trước khi lưu
+                TaiKhoan taiKhoan = new TaiKhoan(username, password);
                 if (taiKhoanDao.addUser(taiKhoan)) {
                     message = "Đăng ký thành công!";
                     error = false;
@@ -53,6 +72,7 @@ public class Register_Servlet extends HttpServlet {
                     error = true;
                 }
             }
+            taiKhoanDao.close();
         } catch (SQLException e) {
             e.printStackTrace();
             message = "Lỗi kết nối cơ sở dữ liệu!";

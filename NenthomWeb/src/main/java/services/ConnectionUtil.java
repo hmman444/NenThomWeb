@@ -8,9 +8,9 @@ public class ConnectionUtil {
 	public static Connection DB () {
 		Connection con = null;
 		String username = "sa";
-        String password = "123456";
+        String password = "1";
         String nameDatabase ="NenThomDB";
-        String nameLap="localhost\\SQLEXPRESS01";
+        String nameLap="localhost";
         //String nameLap="DESKTOP-LCVENON\\LUAAN";
         String url = "jdbc:sqlserver://"+nameLap+":1433;databaseName="+nameDatabase+";encrypt=false";
 		try {

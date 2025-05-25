@@ -7,12 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import models.TaiKhoan;
+import services.ConnectionUtil;
 
 public class TaiKhoanDAO {
 	private Connection connection;
 
 	public TaiKhoanDAO(Connection connection) {
 		this.connection = connection;
+	}
+	public TaiKhoanDAO() {
+		this.connection = ConnectionUtil.DB();
 	}
 
 	public boolean isUsernameExist(String username) throws SQLException {
@@ -40,7 +44,7 @@ public class TaiKhoanDAO {
 		}
 	}
 
-	public boolean addUser(TaiKhoan taiKhoan) throws SQLException {
+	public boolean addUser(TaiKhoan taiKhoan) {
 	    try {
 	        connection.setAutoCommit(false);
 
@@ -51,40 +55,42 @@ public class TaiKhoanDAO {
 	            stmt.setString(2, taiKhoan.getPassword());
 
 	            int rowsAffected = stmt.executeUpdate();
+	            System.out.println("👉 Insert Account: rowsAffected = " + rowsAffected);
 
 	            if (rowsAffected > 0) {
-	                // Lấy AccountID vừa được insert
 	                ResultSet rs = stmt.getGeneratedKeys();
 	                if (rs.next()) {
 	                    int accountId = rs.getInt(1);
+	                    System.out.println("✅ Lấy được AccountID = " + accountId);
 
 	                    // Insert vào bảng Users
 	                    String queryUser = "INSERT INTO Users (AccountID) VALUES (?)";
 	                    try (PreparedStatement stmtUser = connection.prepareStatement(queryUser, Statement.RETURN_GENERATED_KEYS)) {
 	                        stmtUser.setInt(1, accountId);
+	                        System.out.println("📥 Chuẩn bị insert vào Users với AccountID = " + accountId);
 
 	                        int userRowsAffected = stmtUser.executeUpdate();
+	                        System.out.println("👉 Insert Users: rowsAffected = " + userRowsAffected);
 
 	                        if (userRowsAffected > 0) {
-	                            // Lấy UserID vừa được insert
 	                            ResultSet userRs = stmtUser.getGeneratedKeys();
 	                            if (userRs.next()) {
 	                                int userId = userRs.getInt(1);
+	                                System.out.println("✅ Lấy được UserID = " + userId);
 
-	                                // Insert vào bảng UserRole với RoleID = 1 (Khách Hàng)
+	                                // Insert vào UserRole
 	                                String queryUserRole = "INSERT INTO UserRole (UserID, RoleID) VALUES (?, ?)";
 	                                try (PreparedStatement stmtUserRole = connection.prepareStatement(queryUserRole)) {
 	                                    stmtUserRole.setInt(1, userId);
-	                                    stmtUserRole.setInt(2, 1); // RoleID = 1 (Khách Hàng)
+	                                    stmtUserRole.setInt(2, 1); // Khách hàng
 
-	                                    int userRoleRowsAffected = stmtUserRole.executeUpdate();
+	                                    int roleRowsAffected = stmtUserRole.executeUpdate();
+	                                    System.out.println("👉 Insert UserRole: rowsAffected = " + roleRowsAffected);
 
-	                                    if (userRoleRowsAffected > 0) {
+	                                    if (roleRowsAffected > 0) {
 	                                        connection.commit();
+	                                        System.out.println("✅ Đăng ký thành công!");
 	                                        return true;
-	                                    } else {
-	                                        connection.rollback();
-	                                        return false;
 	                                    }
 	                                }
 	                            }
@@ -92,16 +98,23 @@ public class TaiKhoanDAO {
 	                    }
 	                }
 	            }
+
+	            connection.rollback();
+	            System.out.println("❌ Rollback do lỗi trong quá trình thêm user.");
+	            return false;
+
+	        } catch (SQLException e) {
+	            connection.rollback();
+	            System.out.println("❌ Lỗi SQL chi tiết: " + e.getMessage());
+	            return false;
 	        }
-	        connection.rollback();
-	        return false;
+
 	    } catch (SQLException e) {
-	        connection.rollback();
-	        throw e;
-	    } finally {
-	        connection.setAutoCommit(true);
+	        System.out.println("❌ Lỗi kết nối database: " + e.getMessage());
+	        return false;
 	    }
 	}
+
 	
 	public String getRoleByUsername(String username) {
 	    String query = "SELECT r.Code FROM UserRole ur "
@@ -125,4 +138,14 @@ public class TaiKhoanDAO {
 	        return null; // Trả về null nếu có lỗi xảy ra
 	    }
 	}
+	public void close() {
+	    try {
+	        if (connection != null && !connection.isClosed()) {
+	            connection.close();
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 }

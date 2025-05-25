@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Random;
 
 import dao.TaiKhoanDAO;
 import dao.UserDAO;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import services.AuthCodeUtil;
 import services.ConnectionUtil;
 
 @WebServlet("/servlets/Login_Servlet")
@@ -24,8 +26,10 @@ public class Login_Servlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		AuthCodeUtil.refreshVerificationCode(request.getSession());
+		request.getRequestDispatcher("/views/login.jsp").forward(request, response);
 	}
+
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,6 +37,16 @@ public class Login_Servlet extends HttpServlet {
         String password = request.getParameter("password");
         String message = "";
         boolean error = false;
+        
+		if (!AuthCodeUtil.isVerificationCodeValid(request)) {
+		    AuthCodeUtil.refreshVerificationCode(request.getSession());
+		    request.setAttribute("message", "Mã xác thực không đúng!");
+		    request.setAttribute("error", true);
+		    request.getRequestDispatcher("/views/login.jsp").forward(request, response);
+		    return;
+		}
+
+
 
         try (Connection conn = ConnectionUtil.DB()) {
             TaiKhoanDAO taiKhoanDao = new TaiKhoanDAO(conn);

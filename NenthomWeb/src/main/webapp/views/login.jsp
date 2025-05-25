@@ -33,20 +33,32 @@
                     }
                 %>
 
-                <form id="auth-form" action="/NenthomWeb/servlets/Login_Servlet" method="post">
-                    <!-- Username -->
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
-                    </div>
-                    <!-- Password -->
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                    </div>
-                    <!-- Submit Button -->
-                    <button type="submit" id="submit-button" class="login-page-button">Login</button>
-                </form>
+				<%
+				    String code = (String) session.getAttribute("authCode");
+				%>
+				
+				<form id="auth-form" action="/NenthomWeb/servlets/Login_Servlet" method="post">
+				    <!-- Username -->
+				    <div class="form-group">
+				        <label for="username">Username</label>
+				        <input type="text" id="username" name="username" required>
+				    </div>
+				
+				    <!-- Password -->
+				    <div class="form-group">
+				        <label for="password">Password</label>
+				        <input type="password" id="password" name="password" oninput="validatePassword()" required>
+				        <small id="pw-msg" style="color: red;"></small>
+				    </div>
+				
+				    <!-- Mã xác thực -->
+				    <div class="form-group">
+				        <label>Mã xác thực: <strong style="font-size: 18px;"><%= code %></strong></label>
+				        <input type="text" name="authCodeInput" required placeholder="Nhập mã xác thực">
+				    </div>
+				
+				    <button type="submit" class="login-page-button">Login</button>
+				</form>
 
                 <p class="toggle-link">
                     <span id="toggle-text">Don't have an account?</span>
@@ -60,7 +72,18 @@
 
     <script>
         function toggleForm() {
-            window.location.href = "/NenthomWeb/views/register.jsp"; 
+        	window.location.href = "/NenthomWeb/servlets/Register_Servlet";
+        }
+        function validatePassword() {
+            const password = document.getElementById("password").value;
+            const message = document.getElementById("pw-msg");
+            const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/;
+
+            if (!strongRegex.test(password)) {
+                message.innerText = "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.";
+            } else {
+                message.innerText = "";
+            }
         }
     </script>
 </body>
