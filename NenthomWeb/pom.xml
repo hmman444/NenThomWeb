@@ -117,7 +117,26 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.3</version>
 			</plugin>
-
+			<plugin>
+		        <groupId>org.owasp</groupId>
+		        <artifactId>dependency-check-maven</artifactId>
+		        <version>12.1.1</version>
+		        <configuration>
+		                <failBuildOnCVSS>7</failBuildOnCVSS>
+		                <skipProvidedScope>true</skipProvidedScope>
+		                <skipRuntimeScope>true</skipRuntimeScope>
+		                <suppressionFiles>
+            				<suppressionFile>${project.basedir}/src/main/webapp/WEB-INF/suppressions.xml</suppressionFile>
+        				</suppressionFiles>
+		        </configuration>
+		        <executions>
+		                <execution>
+		                        <goals>
+		                                <goal>check</goal>
+		                        </goals>
+		                </execution>
+		        </executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

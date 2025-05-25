@@ -34,7 +34,37 @@ public class UpdateProfile_Servlet extends HttpServlet {
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         String address = request.getParameter("address");
-       
+     // Xử lý Address: Cắt tối đa 255 ký tự để chống overflow
+        if (address != null) {
+            address = address.trim();
+            if (address.length() > 255) {
+                address = address.substring(0, 255);
+            }
+        }
+
+        // Xử lý Email: Trim, kiểm tra độ dài và định dạng
+        if (email != null) {
+            email = email.trim();
+            if (email.length() > 100) {
+                throw new IllegalArgumentException("Email is too long.");
+            }
+            String emailRegex = "^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+            if (!email.matches(emailRegex)) {
+                throw new IllegalArgumentException("Invalid email format.");
+            }
+        }
+
+        // Xử lý Phone number: Trim, kiểm tra độ dài và ký tự hợp lệ
+        if (phoneNumber != null) {
+            phoneNumber = phoneNumber.trim();
+            if (phoneNumber.length() > 15) {
+                throw new IllegalArgumentException("Phone number is too long.");
+            }
+            String phoneRegex = "^[0-9+\\-()\\s]+$";
+            if (!phoneNumber.matches(phoneRegex)) {
+                throw new IllegalArgumentException("Invalid phone number.");
+            }
+        }
         try (Connection connection = ConnectionUtil.DB()) {
         	User user = new User();
             user.setUserId(userID);
