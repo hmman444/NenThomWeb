@@ -134,6 +134,12 @@
     <servlet-name>SaveCategory_Servlet</servlet-name>
     <url-pattern>/SaveCategory_Servlet</url-pattern>
   </servlet-mapping>
+  <session-config>
+      <session-timeout>15</session-timeout> <!-- phút -->
+  </session-config>
 
-  
+  <listener>
+    <listener-class>listeners.SessionTrackingDisabler</listener-class>
+  </listener>
+
 </web-app>
