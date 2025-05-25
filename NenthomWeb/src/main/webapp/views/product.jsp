@@ -122,6 +122,17 @@
 	    }).showToast();
 	}
 
+	const errorMessage ='<%= request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage") : "" %>'; 
+	if(errorMessage) {
+    	Toastify({
+            text: errorMessage,
+            duration: 3000, // 3 seconds
+            gravity: "top", // Top of the screen
+            position: "right", // Right side of the screen
+            backgroundColor: "red", // Green color for success
+        }).showToast();
+    }
+
 	function ProductDetail(productID) {
 	    window.location.href = "/NenthomWeb/servlets/ProductDetail_Servlet?productID=" + productID;
 	}

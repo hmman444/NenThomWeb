@@ -19,6 +19,7 @@ import models.Discount;
 import models.Order;
 import models.Product;
 import services.ConnectionUtil;
+import utils.AccessControlUtil;
 
 @WebServlet("/servlets/DSProduct_Servlet")
 public class DSProduct_Servlet extends HttpServlet {
@@ -35,6 +36,13 @@ public class DSProduct_Servlet extends HttpServlet {
 		response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'");
 
 		System.out.println("[DSProduct_Servlet] Bắt đầu xử lý yêu cầu doGet");
+
+		String page = request.getParameter("page");
+
+        // ✅ Kiểm tra quyền nếu page = admin
+        if (!AccessControlUtil.checkManagerAccess(request, response, "admin")) {
+            return;
+        }
 
 		try (Connection connection = ConnectionUtil.DB()) {
 

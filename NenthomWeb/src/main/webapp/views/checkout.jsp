@@ -7,7 +7,8 @@
     <title>Checkout - Scented Bliss</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_checkout.css'/>">
-    <link rel="stylesheet" href="<c:url value='/css/all.min.css'/>">
+    <link rel="stylesheet" href="<c:url value='/webjars/font-awesome/6.0.0/css/all.min.css'/>">
+
 </head>
 <body class="bg-faf7f2">
 
@@ -102,6 +103,7 @@
 	        </form>
 	        <!-- Form thanh toán -->
 			<form action="Checkout_Servlet" method="post">
+			    <input type="hidden" name="voucherId" value="${voucherId}">
 			    <input type="hidden" name="totalAmount" value="${totalAmount}">
 			    <input type="hidden" name="address" value="${user.address}">
 			    <button type="submit" class="submit-button">Thanh toán</button>

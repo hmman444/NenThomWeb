@@ -54,6 +54,7 @@ public class Login_Servlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("username", username);
                     session.setAttribute("userID", userID);
+                    session.setAttribute("role", role);
 
                     System.out.println("[LOGIN] THÀNH CÔNG - Username: " + username + ", Role: " + role + ", UserID: " + userID);
 
