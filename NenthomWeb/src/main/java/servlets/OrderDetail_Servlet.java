@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import utils.CSRFUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -29,6 +30,7 @@ public class OrderDetail_Servlet extends HttpServlet {
                 request.setAttribute("order", order);
                 request.setAttribute("orderItems", order.getOrderItems());
             }
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher(VIEW_ORDER_DETAIL_PAGE).forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();

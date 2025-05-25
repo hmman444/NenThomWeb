@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Categorie;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 @WebServlet("/servlets/EditCategory_Servlet")
 public class EditCategory_Servlet extends HttpServlet {
 
@@ -19,6 +19,10 @@ public class EditCategory_Servlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	if (!CSRFUtil.isValid(request)) {
+            request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+            return;
+        }
         // Lấy thông tin từ form
         int categoryId = Integer.parseInt(request.getParameter("categoryID"));
         String name = request.getParameter("name");

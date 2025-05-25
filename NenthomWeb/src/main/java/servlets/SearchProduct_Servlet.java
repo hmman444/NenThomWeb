@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import models.Categorie;
 import models.Product;
 import services.ConnectionUtil;
+import utils.CSRFUtil;
 
 @WebServlet("/servlets/SearchProduct_Servlet")
 public class SearchProduct_Servlet extends HttpServlet {
@@ -71,6 +72,7 @@ public class SearchProduct_Servlet extends HttpServlet {
 
             request.setAttribute("products", products);
             request.setAttribute("categories", categories);
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/product.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,6 +11,9 @@
 
 </head>
 <body class="bg-faf7f2">
+<%
+    String csrfToken = (String) request.getAttribute("csrfToken");
+%>
 
     <!-- Header -->
     <%@ include file="header.jsp" %>
@@ -21,6 +24,7 @@
 	        <h1 class="checkout-title">THANH TOÁN HÓA ĐƠN</h1>
 	        
 	        <form class="checkout-form" action="processCheckout.jsp" method="POST">
+	        	<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 	            <div class="section shipping-information">
 	                <h3>Shipping Information</h3>
 	                <div class="input-grid">
@@ -103,7 +107,8 @@
 	        </form>
 	        <!-- Form thanh toán -->
 			<form action="Checkout_Servlet" method="post">
-			    <input type="hidden" name="voucherId" value="${voucherId}">
+				<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
+				<input type="hidden" name="voucherId" value="${voucherId}">
 			    <input type="hidden" name="totalAmount" value="${totalAmount}">
 			    <input type="hidden" name="address" value="${user.address}">
 			    <button type="submit" class="submit-button">Thanh toán</button>

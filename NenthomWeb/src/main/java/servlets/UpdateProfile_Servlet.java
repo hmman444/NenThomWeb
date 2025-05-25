@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import models.Order;
 import models.User;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 @WebServlet("/servlets/UpdateProfile_Servlet")
 public class UpdateProfile_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,6 +29,11 @@ public class UpdateProfile_Servlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (!CSRFUtil.isValid(request)) {
+		    request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+		    return;
+		}
+
 		HttpSession session = request.getSession();
     	int userID = (int) session.getAttribute("userID");
         String email = request.getParameter("email");
@@ -88,11 +93,12 @@ public class UpdateProfile_Servlet extends HttpServlet {
             
             request.setAttribute("user", user);
             request.setAttribute("orders", orders);
-            
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/profile.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("successMessage", "Error updating profile.");
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/profile.jsp").forward(request, response);
         }
     }

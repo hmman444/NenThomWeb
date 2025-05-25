@@ -13,6 +13,10 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-light-cream">
+<%
+    String csrfToken = (String) request.getAttribute("csrfToken");
+%>
+
 	<!-- Header -->
 	<%@ include file="header.jsp"%>
 
@@ -55,6 +59,7 @@
 			<div class="support-form">
 				<h3>Gửi Yêu Cầu Hỗ Trợ</h3>
 				<form action="submitSupportRequest.jsp" method="post">
+					<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 					<div class="form-group">
 						<label for="name">Tên *</label> <input type="text" id="name"
 							name="name" placeholder="Nhập tên của bạn" required>

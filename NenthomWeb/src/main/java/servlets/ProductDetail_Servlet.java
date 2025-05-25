@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Product;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 @WebServlet("/servlets/ProductDetail_Servlet")
 public class ProductDetail_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +28,7 @@ public class ProductDetail_Servlet extends HttpServlet {
             Product product = productDao.getProductById(productID);                      
            
             request.setAttribute("product", product);
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/product_detail.jsp").forward(request, response);
             
         } catch (Exception e) {

@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import models.Order;
 import services.ConnectionUtil;
 import utils.AccessControlUtil;
-
+import utils.CSRFUtil;
 @WebServlet("/servlets/DSOrder_Servlet")
 public class DSOrder_Servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -34,6 +34,7 @@ public class DSOrder_Servlet extends HttpServlet {
             List<Order> orders = orderDao.getAllOrders();
 
             request.setAttribute("orders", orders);
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/admin.jsp").forward(request, response);
 
         } catch (Exception e) {

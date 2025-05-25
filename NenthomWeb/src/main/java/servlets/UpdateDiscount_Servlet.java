@@ -10,12 +10,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Discount;
-
+import utils.CSRFUtil;
 @WebServlet("/servlets/UpdateDiscount_Servlet")
 public class UpdateDiscount_Servlet extends HttpServlet {
     private DiscountDAO discountDAO = new DiscountDAO();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	if (!CSRFUtil.isValid(request)) {
+            request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+            return;
+        }
         int discountID = Integer.parseInt(request.getParameter("discountID"));
         String discountName = request.getParameter("discountName");
         String discountType = request.getParameter("discountType");

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import models.Cart;
 import services.ConnectionUtil;
+import utils.CSRFUtil;
 
 @WebServlet("/servlets/UpdateCart_Servlet")
 public class UpdateCart_Servlet extends HttpServlet {
@@ -26,6 +27,10 @@ public class UpdateCart_Servlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (!CSRFUtil.isValid(request)) {
+	        request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+	        return;
+	    }
 		HttpSession session = request.getSession();
     	int userID = (int) session.getAttribute("userID");
 
