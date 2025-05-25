@@ -28,10 +28,7 @@ public class Register_Servlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-		if (!CSRFUtil.isValid(request)) {
-	        request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
-	        return;
-	    }
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirm-password");
