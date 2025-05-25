@@ -27,7 +27,7 @@ public class AddProduct_Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-        response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'");
+        // response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'");
 
     	if (!CSRFUtil.isValid(request)) {
             request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);

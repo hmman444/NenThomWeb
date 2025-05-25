@@ -33,7 +33,7 @@ public class DSProduct_Servlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		// Bảo mật: Ngăn XSS
-		response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'");
+		// response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'");
 
 		System.out.println("[DSProduct_Servlet] Bắt đầu xử lý yêu cầu doGet");
 

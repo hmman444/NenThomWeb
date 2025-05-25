@@ -1,4 +1,14 @@
-.settings
-target
+# Eclipse project files
+.settings/
 .classpath
 .project
+
+# Maven target directory
+target/
+
+# Ignore all files in target folder
+**/target/*
+
+.idea/
+*.iml
+.vscode/
