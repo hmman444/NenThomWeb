@@ -132,15 +132,15 @@
                     <form class="modal-form" action="/NenthomWeb/servlets/AddProduct_Servlet" method="POST">
                         <div class="form-group">
 			                <label class="form-label">Product Name</label>
-			                <input type="text" class="form-input" name="name" required>
+			                <input type="text" class="form-input" name="name" required maxlength="100">
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Price</label>
-			                <input type="number" class="form-input" name="price" required>
+			                <input type="number" class="form-input" name="price" required maxlength="10">
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Description</label>
-			                <textarea class="form-input" name="description" required></textarea>
+			                <textarea class="form-input" name="description" required maxlength="1000"></textarea>
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Stock</label>
@@ -168,15 +168,15 @@
 			            <input type="hidden" name="productName" id="editProductName">
 			            <div class="form-group">
 			                <label class="form-label">Product Name</label>
-			                <input type="text" class="form-input" name="name" id="editProductNameField" placeholder="Enter product name" disabled>
+			                <input type="text" class="form-input" name="name" id="editProductNameField" placeholder="Enter product name" disabled maxlength="100">
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Price</label>
-			                <input type="number" class="form-input" name="price" id="editPrice" placeholder="Enter product price" required>
+			                <input type="number" class="form-input" name="price" id="editPrice" placeholder="Enter product price" required maxlength="10">
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Description</label>
-			                <textarea class="form-input" name="description" id="editDescription" placeholder="Enter product description" required></textarea>
+			                <textarea class="form-input" name="description" id="editDescription" placeholder="Enter product description" required maxlength="1000"></textarea>
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Stock</label>
@@ -276,11 +276,11 @@
 		            <input type="hidden" name="categoryID" id="editCategoryID"> <!-- Hidden input để lưu ID -->
 		            <div class="form-group">
 		                <label class="form-label">Category Name</label>
-		                <input type="text" class="form-input" name="name" id="editCategoryName" required>
+		                <input type="text" class="form-input" name="name" id="editCategoryName" required maxlength="50">
 		            </div>
 		            <div class="form-group">
 		                <label class="form-label">Category Description</label>
-		                <textarea class="form-input" name="description" id="editCategoryDescription" required></textarea>
+		                <textarea class="form-input" name="description" id="editCategoryDescription" required maxlength="1000"></textarea>
 		            </div>
 		            <button type="submit" class="submit-button">Save Changes</button>
 		        </form>
@@ -300,11 +300,11 @@
 		        <form class="modal-form" action="/NenthomWeb/servlets/AddCategory_Servlet" method="POST">
 			            <div class="form-group">
 			                <label class="form-label">Category Name</label>
-			                <input type="text" class="form-input" name="name" required>
+			                <input type="text" class="form-input" name="name" required maxlength="50">
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Description</label>
-			                <input type="text" class="form-input" name="description" required>
+			                <input type="text" class="form-input" name="description" required maxlength="1000">
 			            </div>
 			            <button type="submit" class="submit-button">Add Category</button>
 			        </form>
@@ -379,7 +379,7 @@
 			        <form class="modal-form" action="/NenthomWeb/servlets/AddDiscount_Servlet" method="POST">
 			            <div class="form-group">
 			                <label class="form-label">Discount Name</label>
-			                <input type="text" class="form-input" name="discountName" required>
+			                <input type="text" class="form-input" name="discountName" required maxlength="255">
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Discount Type</label>
@@ -390,7 +390,7 @@
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Discount Value</label>
-			                <input type="number" class="form-input" name="discountValue" required>
+			                <input type="number" class="form-input" name="discountValue" required maxlength="10">
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Start Date</label>
