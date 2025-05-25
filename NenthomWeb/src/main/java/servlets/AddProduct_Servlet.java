@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Product;
 import services.ConnectionUtil;
+import utils.CSRFUtil;
 
 @WebServlet("/servlets/AddProduct_Servlet")
 public class AddProduct_Servlet extends HttpServlet {
@@ -23,6 +24,10 @@ public class AddProduct_Servlet extends HttpServlet {
     // Phương thức xử lý yêu cầu POST khi form được gửi đi
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	if (!CSRFUtil.isValid(request)) {
+            request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+            return;
+        }
         String name = request.getParameter("name");
         double price = Double.parseDouble(request.getParameter("price"));
         String description = request.getParameter("description");

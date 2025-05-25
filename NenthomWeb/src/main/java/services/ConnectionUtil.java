@@ -10,8 +10,8 @@ public class ConnectionUtil {
 		String username = "sa";
         String password = "123456";
         String nameDatabase ="NenThomDB";
-        String nameLap="localhost\\SQLEXPRESS01";
-        //String nameLap="DESKTOP-LCVENON\\LUAAN";
+        //String nameLap="localhost\\SQLEXPRESS01";
+        String nameLap="DESKTOP-LCVENON\\LUAAN";
         String url = "jdbc:sqlserver://"+nameLap+":1433;databaseName="+nameDatabase+";encrypt=false";
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

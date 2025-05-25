@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import models.Order;
 import models.User;
 import services.ConnectionUtil;
+import utils.CSRFUtil;
 
 @WebServlet("/servlets/LoadProfile_Servlet")
 public class LoadProfile_Servlet extends HttpServlet {
@@ -37,6 +38,7 @@ public class LoadProfile_Servlet extends HttpServlet {
             
             request.setAttribute("user", user);
             request.setAttribute("orders", orders);
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/profile.jsp").forward(request, response);
 
         } catch (Exception e) {

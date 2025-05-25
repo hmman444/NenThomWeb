@@ -33,17 +33,27 @@
                     }
                 %>
 
-                <form id="auth-form" action="/NenthomWeb/servlets/Login_Servlet" method="post">
+                <form id="auth-form" action="/NenthomWeb/login" method="post">
+
+					<%
+					    String csrfToken = (String) request.getAttribute("csrfToken");
+					%>
+					<input type="hidden" name="csrfToken" value="<%= csrfToken %>"/>
+
+
+
                     <!-- Username -->
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" placeholder="Enter your username" required>
                     </div>
+
                     <!-- Password -->
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" placeholder="Enter your password" required>
                     </div>
+
                     <!-- Submit Button -->
                     <button type="submit" id="submit-button" class="login-page-button">Login</button>
                 </form>

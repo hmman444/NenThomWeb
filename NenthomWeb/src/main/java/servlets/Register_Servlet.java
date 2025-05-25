@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.TaiKhoan;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 @WebServlet("/servlets/Register_Servlet")
 public class Register_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,6 +28,10 @@ public class Register_Servlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+		if (!CSRFUtil.isValid(request)) {
+	        request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+	        return;
+	    }
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirm-password");
@@ -63,9 +67,11 @@ public class Register_Servlet extends HttpServlet {
         request.setAttribute("error", error);
 
         if (!error) {
+        	CSRFUtil.attachToken(request);
             // Chuyển đến trang login nếu đăng ký thành công
             request.getRequestDispatcher("/views/login.jsp").forward(request, response);
         } else {
+        	CSRFUtil.attachToken(request);
             // Quay lại trang đăng ký nếu có lỗi
             request.getRequestDispatcher("/views/register.jsp").forward(request, response);
         }

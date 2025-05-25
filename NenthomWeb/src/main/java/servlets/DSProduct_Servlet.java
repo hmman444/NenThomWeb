@@ -18,7 +18,7 @@ import models.Discount;
 import models.Order;
 import models.Product;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 @WebServlet("/servlets/DSProduct_Servlet")
 public class DSProduct_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -60,12 +60,15 @@ public class DSProduct_Servlet extends HttpServlet {
                 request.setAttribute("orders", orders);
                 request.setAttribute("discounts", discounts);
                 request.setAttribute("categories", categories);
+                CSRFUtil.attachToken(request);
                 request.getRequestDispatcher("/views/admin.jsp").forward(request, response);
             } else {
                 request.setAttribute("products", products);
                 request.setAttribute("categories", categories);
+                CSRFUtil.attachToken(request);
                 request.getRequestDispatcher("/views/product.jsp").forward(request, response);
             }
+            
             
         } catch (Exception e) {
             e.printStackTrace();

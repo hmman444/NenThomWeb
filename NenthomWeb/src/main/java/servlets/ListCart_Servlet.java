@@ -18,6 +18,7 @@ import models.Cart;
 import models.Discount;
 import models.Product;
 import services.ConnectionUtil;
+import utils.CSRFUtil;
 
 @WebServlet("/servlets/ListCart_Servlet")
 public class ListCart_Servlet extends HttpServlet {
@@ -89,6 +90,7 @@ public class ListCart_Servlet extends HttpServlet {
             request.setAttribute("selectedDiscount", selectedDiscount);
 
             // Chuyển tiếp đến trang giỏ hàng (cart.jsp)
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/cart.jsp").forward(request, response);
 
         } catch (Exception e) {

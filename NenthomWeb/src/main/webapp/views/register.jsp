@@ -15,6 +15,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body class="bg-light-cream">
+<%
+    String csrfToken = (String) request.getAttribute("csrfToken");
+%>
 
     <!-- Register Form -->
     <section class="login-section">
@@ -37,6 +40,7 @@
                 <% } %>
 
                 <form id="auth-form" action="../servlets/Register_Servlet" method="post">
+                	<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" placeholder="Enter your username" required>
