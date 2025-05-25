@@ -269,6 +269,14 @@ body {
     margin-bottom: 1rem;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.flex {
+    display: flex;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .sidebar {

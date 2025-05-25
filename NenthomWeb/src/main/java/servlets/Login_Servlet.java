@@ -31,7 +31,6 @@ public class Login_Servlet extends HttpServlet {
         request.getRequestDispatcher("/views/login.jsp").forward(request, response);
     }
 
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (!CSRFUtil.isValid(request)) {
@@ -44,6 +43,8 @@ public class Login_Servlet extends HttpServlet {
         String message = "";
         boolean error = false;
 
+        System.out.println("[LOGIN] Bắt đầu kiểm tra đăng nhập cho username: " + username);
+
         try (Connection conn = ConnectionUtil.DB()) {
             TaiKhoanDAO taiKhoanDao = new TaiKhoanDAO(conn);
             UserDAO userDao = new UserDAO(conn);
@@ -51,6 +52,7 @@ public class Login_Servlet extends HttpServlet {
             if (!taiKhoanDao.isUsernameExist(username)) {
                 message = "Tài khoản không tồn tại!";
                 error = true;
+                System.out.println("[LOGIN] THẤT BẠI - Username không tồn tại: " + username);
             } else {
                 String storedPassword = taiKhoanDao.getPasswordByUsername(username);
                 if (storedPassword.equals(password)) {
@@ -62,21 +64,26 @@ public class Login_Servlet extends HttpServlet {
                     session.setAttribute("userID", userID);
                     session.setAttribute("role", role);
 
+                    System.out.println("[LOGIN] THÀNH CÔNG - Username: " + username + ", Role: " + role + ", UserID: " + userID);
+
+                    // Chuyển hướng đến trang quản lý theo quyền
                     if ("manager".equals(role)) {
                         request.getRequestDispatcher("/servlets/DSProduct_Servlet?page=admin").forward(request, response);
                     } else {
                         request.getRequestDispatcher("/views/TrangChu.jsp").forward(request, response);
                     }
-                    return;
+                    return; // Đảm bảo không chạy tiếp phần xử lý lỗi
                 } else {
                     message = "Mật khẩu không đúng!";
                     error = true;
+                    System.out.println("[LOGIN] THẤT BẠI - Sai mật khẩu cho username: " + username);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
             message = "Lỗi kết nối cơ sở dữ liệu.";
             error = true;
+            System.out.println("[LOGIN] LỖI HỆ THỐNG khi đăng nhập username: " + username);
         }
 
         if (error) {

@@ -6,21 +6,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy"
+    <!-- <meta http-equiv="Content-Security-Policy"
       content="default-src 'self';
                form-action 'self';
                style-src 'self' https://cdnjs.cloudflare.com;
-               script-src 'self' https://cdnjs.cloudflare.com;">
+               script-src 'self' https://cdnjs.cloudflare.com;"> -->
     <title>Sign Up | Nến Thơm</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_login.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
     <!-- Font Awesome -->
-	<link rel="stylesheet" href="<c:url value='/webjars/font-awesome/6.0.0/css/all.min.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/all.min.css'/>">
 	
 	<!-- Toastr -->
-	<link rel="stylesheet" href="<c:url value='/webjars/toastr/2.1.4/toastr.min.css'/>">
-	<script src="<c:url value='/webjars/jquery/3.6.0/jquery.min.js'/>"></script>
-	<script src="<c:url value='/webjars/toastr/2.1.4/toastr.min.js'/>"></script>
+	<link rel="stylesheet" href="<c:url value='/css/toastr.min.css'/>">
+	<script src="<c:url value='/js/jquery.min.js'/>"></script>
+	<script src="<c:url value='/js/toastr.min.js'/>"></script>
 
 </head>
 <body class="bg-light-cream">

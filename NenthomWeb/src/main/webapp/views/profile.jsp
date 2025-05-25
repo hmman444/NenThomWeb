@@ -8,7 +8,7 @@
     <title>User Profile - Scented Bliss</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_profile.css'/>">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.11.2/toastify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value='/css/toastify.min.css'/>">
 </head>
 <body class="bg-faf7f2">
 <%

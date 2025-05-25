@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="en">
@@ -8,11 +9,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Management Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="<c:url value='/webjars/font-awesome/6.0.0/css/all.min.css'/>">
-
-    <link rel="stylesheet" href="<c:url value='/css/styles_admin.css'/>"> <!-- Link đến file CSS -->
-    
+	<link rel="stylesheet" href="<c:url value='/css/all.min.css'/>">
+	<link rel="stylesheet" href="<c:url value='/css/tailwindcss.css'/>">
+    <link rel="stylesheet" href="<c:url value='/css/styles_admin.css'/>">
 </head>
 <body class="bg-gray-100">
 <%
@@ -23,7 +22,7 @@
         <!-- Sidebar -->
         <div id="sidebar" class="sidebar">
             <div class="sidebar-header">
-                <button onclick="toggleSidebar()" class="sidebar-toggle-button">
+                <button id="toggleSidebar" onclick="toggleSidebar()" class="sidebar-toggle-button">
                     <i class="fas fa-bars"></i>
                 </button>
                 <h1 id="dashboardText" class="sidebar-title">Management</h1>
@@ -63,71 +62,81 @@
             </div>
 
             <!-- Product Grid -->
-            <div class="product-grid">
-			    <c:forEach var="product" items="${products}">
-			        <div class="product-card">
-			            <img src="<c:url value='/images/anhSanPham.jpg' />" alt="Product" class="product-image">
-			            <h3 class="product-name">${product.name}</h3>
-			            <p class="product-description">${product.description}</p>
-			            <div class="product-footer">
-			                <span class="product-price">$${product.price}</span>
-			                <span class="product-stock">Stock: ${product.stock}</span>  <!-- Hiển thị số lượng sản phẩm -->
-			                <div class="product-actions">
-			                    <button onclick="showEditModal(this)" class="edit-button"><i class="fas fa-edit"></i></button>
-			                    <form action="/NenthomWeb/servlets/DeleteProduct_Servlet" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">
+			<div class="product-grid">
+				<c:forEach var="product" items="${products}">
+					<div class="product-card">
+						<img src="<c:url value='/images/anhSanPham.jpg' />" alt="Product" class="product-image">
+						<h3 class="product-name">
+							<c:out value="${product.name}"/>
+						</h3>
+						<p class="product-description">
+							<c:out value="${product.description}"/>
+						</p>
+						<div class="product-footer">
+							<span class="product-price">$<c:out value="${product.price}"/></span>
+							<span class="product-stock">Stock: <c:out value="${product.stock}"/></span>  <!-- Hiển thị số lượng sản phẩm -->
+							<div class="product-actions">
+								<button onclick="showEditModal(this)" class="edit-button">
+									<i class="fas fa-edit"></i>
+								</button>
+								<form action="/NenthomWeb/servlets/DeleteProduct_Servlet" method="POST" 
+									  onsubmit="return confirm('Are you sure you want to delete this product?');">
 				                    <input type="hidden" name="csrfToken" value="<%= csrfToken %>">
-				                    <input type="hidden" name="productName" value="${product.name}" />
-				                    <button type="submit" class="delete-button">
-				                        <i class="fas fa-trash"></i>
-				                    </button>
-				                </form>
-				                <button onclick="showCategoryModal(${product.productID})" class="delete-button">
-		                            <i class="fas fa-plus-circle"></i>
-		                        </button>
-			                </div>
-			            </div>
-			        </div>
-			    </c:forEach>
+									<input type="hidden" name="productName" value="<c:out value='${product.name}'/>" />
+									<button type="submit" class="delete-button">
+										<i class="fas fa-trash"></i>
+									</button>
+								</form>
+								<button onclick="showCategoryModal(<c:out value='${product.productID}'/>)" class="delete-button">
+									<i class="fas fa-plus-circle"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
 			<!-- Modal Chọn danh mục -->
+			<!-- Category Modal -->
 			<div id="categoryModal" class="modal hidden">
-			    <div class="modal-content" style="background-color: #fff; border-radius: 12px; padding: 20px; width: 80%; max-width: 900px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-			        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 15px;">
-			            <h3 class="modal-title" style="font-size: 1.5rem; font-weight: 600;">Assign Categories to Product</h3>
-			            <button onclick="hideCategoryModal()" class="close-button" style="background: none; border: none; font-size: 1.5rem; color: #888;">
-			                <i class="fas fa-times"></i>
-			            </button>
-			        </div>
-			
-			        <!-- Form chọn danh mục -->
-			        <form id="categoryForm" action="/NenthomWeb/servlets/SaveCategory_Servlet" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
-			            <input type="hidden" name="csrfToken" value="<%= csrfToken %>">
-			            <input type="hidden" id="productID" name="productID">
-			
-			            <!-- Danh sách danh mục -->
-			            <div style="display: flex; justify-content: space-between; gap: 20px;">
-			                <!-- Danh sách danh mục duy nhất -->
-			                <div style="flex: 1;">
-			                    <label for="availableCategories" class="form-label" style="font-size: 1rem; font-weight: 500;">Available Categories</label>
-			                    <select id="categories" name="categoryIDs[]" multiple class="form-input" style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; min-height: 150px; width: 100%; box-sizing: border-box;">
-			                        <c:forEach var="category" items="${categories}">
-			                            <option value="${category.categoryID}">${category.name}</option>
-			                        </c:forEach>
-			                    </select>
-			                </div>
-			            </div>
-			
-			            <!-- Nút Save -->
-			            <button type="submit" class="submit-button" style="align-self: flex-end; padding: 10px 20px; font-size: 1rem; border-radius: 8px; color: white; background-color: #8b5e3c; border: none; cursor: pointer; margin-top: 20px;">
-			                Save Categories
-			            </button>
-			        </form>
-			    </div>
+				<div class="modal-dialog modal-dialog-centered modal-lg">
+					<div class="modal-content rounded-3 shadow p-4">
+						<!-- Modal Header -->
+						<div class="modal-header border-bottom pb-2 mb-3">
+							<h3 class="modal-title fs-4 fw-semibold">Assign Categories to Product</h3>
+							<button type="button" class="btn-close" onclick="hideCategoryModal()"></button>
+						</div>
+
+						<!-- Form chọn danh mục -->
+						<form id="categoryForm" action="/NenthomWeb/servlets/SaveCategory_Servlet" method="POST" class="d-flex flex-column gap-4">
+			            	<input type="hidden" name="csrfToken" value="<%= csrfToken %>">
+							<input type="hidden" id="productID" name="productID" />
+
+							<!-- Danh sách danh mục -->
+							<div class="row">
+								<div class="col-12">
+									<label for="categories" class="form-label fw-medium">Available Categories</label>
+									<select id="categories" name="categoryIDs[]" multiple class="form-select" style="min-height: 150px;">
+										<c:forEach var="category" items="${categories}">
+											<option value="<c:out value='${category.categoryID}'/>">
+												<c:out value="${category.name}" />
+											</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+
+							<!-- Nút Save -->
+							<div class="text-end">
+								<button type="submit" class="btn text-white px-4 py-2" style="background-color: #8b5e3c;">
+									Save Categories
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 
-
-
-
+			
             <!-- Add Product Modal -->
             <div id="addModal" class="modal hidden">
                 <div class="modal-content" style="max-height: 90%; overflow-y: auto;">

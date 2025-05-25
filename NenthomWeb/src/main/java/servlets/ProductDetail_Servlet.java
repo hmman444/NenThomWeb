@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import org.owasp.encoder.Encode;
 
 import dao.ProductDAO;
 import jakarta.servlet.ServletException;
@@ -20,22 +21,26 @@ public class ProductDetail_Servlet extends HttpServlet {
         super();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-    	int productID = Integer.parseInt(request.getParameter("productID"));
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException {
+	int productID = Integer.parseInt(request.getParameter("productID"));
     	try (Connection connection = ConnectionUtil.DB()) {
             ProductDAO productDao = new ProductDAO(connection);
-            Product product = productDao.getProductById(productID);                      
-           
+            Product product = productDao.getProductById(productID); 
+ 
+
+            String safeDescription = Encode.forHtml(product.getDescription());
+            product.setDescription(safeDescription);
+            
             request.setAttribute("product", product);
             CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/product_detail.jsp").forward(request, response);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu.");
-        }
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu.");
     }
+}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
