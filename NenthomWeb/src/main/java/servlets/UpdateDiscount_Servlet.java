@@ -26,7 +26,12 @@ public class UpdateDiscount_Servlet extends HttpServlet {
         double discountValue = Double.parseDouble(request.getParameter("discountValue"));
         Date startDate = Date.valueOf(request.getParameter("startDate"));
         Date endDate = Date.valueOf(request.getParameter("endDate"));
-
+        if (discountName != null) {
+        	discountName = discountName.trim();
+            if (discountName.length() > 255) {
+            	discountName = discountName.substring(0, 255);
+            }
+        }
         Discount discount = new Discount(discountID, discountName, discountType, discountValue, startDate, endDate, true);
 
         if (discountDAO.updateDiscount(discount)) {

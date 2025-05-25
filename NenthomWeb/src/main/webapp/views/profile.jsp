@@ -39,15 +39,17 @@
                             </div>
                             <div class="info-item">
                                 <label for="email">Email</label>
-                                <input type="email" id="email" name="email" value="${user.email}">
+                                <input type="email" id="email" name="email" value="${user.email}" maxlength="100">
+                                
                             </div>
                             <div class="info-item">
                                 <label for="phone">Phone Number</label>
-                                <input type="text" id="phone" name="phoneNumber" value="${user.phoneNumber}">
+                                <input type="text" id="phone" name="phoneNumber" value="${user.phoneNumber}" maxlength = "15">
+                                
                             </div>
                             <div class="info-item">
                                 <label for="address">Shipping Address</label>
-                                <input type="text" id="address" name="address" value="${user.address}">
+                                <input type="text" id="address" name="address" value="${user.address}" maxlength = "255">                                
                             </div>
 
                             <!-- Nút submit -->

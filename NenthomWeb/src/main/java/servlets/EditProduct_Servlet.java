@@ -31,7 +31,18 @@ public class EditProduct_Servlet extends HttpServlet {
         String description = request.getParameter("description");
         int stock = Integer.parseInt(request.getParameter("stock"));
         String imageBase64 = request.getParameter("imageBase64");
-        
+        if (name != null) {
+        	name = name.trim();
+            if (name.length() > 100) {
+            	name = name.substring(0, 100);
+            }
+        }
+        if (description != null) {
+        	description = description.trim();
+            if (description.length() > 1000) {
+            	description = description.substring(0, 1000);
+            }
+        }
         Product product = new Product(0, name, description, price, stock, imageBase64);
 
         try (Connection connection = ConnectionUtil.DB()) {

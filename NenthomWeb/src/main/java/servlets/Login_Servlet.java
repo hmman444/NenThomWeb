@@ -60,6 +60,7 @@ public class Login_Servlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("username", username);
                     session.setAttribute("userID", userID);
+                    session.setAttribute("role", role);
 
                     if ("manager".equals(role)) {
                         request.getRequestDispatcher("/servlets/DSProduct_Servlet?page=admin").forward(request, response);

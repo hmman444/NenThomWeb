@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+
+    <!-- === Các suppression đã hoạt động từ lần trước (giữ lại) === -->
+    <suppress>
+        <notes><![CDATA[
+        File: activation-1.1.1.jar
+        Dependency: javax.activation:activation:1.1.1
+        Original Reported CPE: cpe:/a:oracle:java_se:1.1.1
+        Reason: False positive. This is the Java Activation Framework, not Oracle Java SE. CVE Count = 0.
+        ]]></notes>
+        <gav regex="true">^javax\.activation:activation:1\.1\.1$</gav>
+        <cpe>cpe:/a:oracle:java_se:1.1.1</cpe>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+        File: jakarta.el-api-5.0.0.jar
+        Dependency: jakarta.el:jakarta.el-api:5.0.0
+        Original Reported CPE: cpe:/a:eclipse:jakarta_expression_language:5.0.0
+        Reason: CPE matches the library type but it's an API with no CVEs. Confidence Low.
+        ]]></notes>
+        <gav regex="true">^jakarta\.el:jakarta\.el-api:5\.0\.0$</gav>
+        <cpe>cpe:/a:eclipse:jakarta_expression_language:5.0.0</cpe>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+        File: jakarta.servlet-api-6.0.0.jar (hoặc phiên bản thực tế trong pom.xml của bạn)
+        Dependency: jakarta.servlet:jakarta.servlet-api:(phiên bản của bạn)
+        Original Reported CPE: cpe:/a:oracle:projects:(phiên bản của bạn)
+        Reason: False positive. "oracle:projects" is too generic for Servlet API. CVE Count = 0.
+        ]]></notes>
+        <!-- Điều chỉnh phiên bản trong GAV và CPE nếu cần -->
+        <gav regex="true">^jakarta\.servlet:jakarta\.servlet-api:.*$</gav> <!-- .* cho mọi phiên bản nếu bạn muốn -->
+        <cpe>cpe:/a:oracle:projects</cpe> <!-- Có thể bỏ phiên bản CPE để bao quát hơn nếu tên sản phẩm đủ đặc trưng -->
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+        File: jtds-1.3.1.jar
+        Dependency: net.sourceforge.jtds:jtds:1.3.1
+        Original Reported CPE: cpe:/a:momo_project:momo:1.3.1
+        Reason: False positive. "momo_project:momo" is unrelated to jTDS. CVE Count = 0.
+        ]]></notes>
+        <gav regex="true">^net\.sourceforge\.jtds:jtds:1\.3\.1$</gav>
+        <cpe>cpe:/a:momo_project:momo:1.3.1</cpe>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+        File: mssql-jdbc-12.8.1.jre11.jar
+        Dependency: com.microsoft.sqlserver:mssql-jdbc:12.8.1.jre11
+        Original Reported CPE: cpe:/a:www-sql_project:www-sql:12.8.1.jre11
+        Reason: False positive. "www-sql_project" is unrelated. CVE Count = 0.
+        ]]></notes>
+        <gav regex="true">^com\.microsoft\.sqlserver:mssql-jdbc:12\.8\.1\.jre11$</gav>
+        <cpe>cpe:/a:www-sql_project:www-sql:12.8.1.jre11</cpe>
+    </suppress>
+
+    <!-- === CẬP NHẬT VÀ BỔ SUNG CHO CÁC LỖI CÒN LẠI TRONG BÁO CÁO MỚI NHẤT === -->
+
+    <!-- Cho jakarta.servlet.jsp.jstl-3.0.1.jar -->
+    <suppress>
+        <notes><![CDATA[
+        File: jakarta.servlet.jsp.jstl-3.0.1.jar
+        Dependency: org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1
+        Previously Reported CPE (Report 1): cpe:/a:web_project:web:3.0.1
+        Reason: False positive.
+        ]]></notes>
+        <gav regex="true">^org\.glassfish\.web:jakarta\.servlet\.jsp\.jstl:3\.0\.1$</gav>
+        <cpe>cpe:/a:web_project:web:3.0.1</cpe> <!-- Giữ lại suppression cũ -->
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+        File: jakarta.servlet.jsp.jstl-3.0.1.jar
+        Dependency: org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1
+        NEW Reported CPE (Report 3): cpe:/a:oracle:jsp:3.0.1
+        Reason: False positive. Likely misidentification for JSTL implementation. CVE Count = 0. Medium confidence.
+        ]]></notes>
+        <gav regex="true">^org\.glassfish\.web:jakarta\.servlet\.jsp\.jstl:3\.0\.1$</gav>
+        <cpe>cpe:/a:oracle:jsp:3.0.1</cpe> <!-- Thêm suppression mới -->
+    </suppress>
+
+    <!-- Cho jakarta.servlet.jsp.jstl-api-3.0.2.jar -->
+    <suppress>
+        <notes><![CDATA[
+        File: jakarta.servlet.jsp.jstl-api-3.0.2.jar
+        Dependency: jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.2
+        Previously Reported CPE (Report 1): cpe:/a:oracle:jsp:3.0.2
+        Reason: False positive.
+        ]]></notes>
+        <gav regex="true">^jakarta\.servlet\.jsp\.jstl:jakarta\.servlet\.jsp\.jstl-api:3\.0\.2$</gav>
+        <cpe>cpe:/a:oracle:jsp:3.0.2</cpe> <!-- Giữ lại suppression cũ -->
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+        File: jakarta.servlet.jsp.jstl-api-3.0.2.jar
+        Dependency: jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.2
+        NEW Reported CPE (Report 3): cpe:/a:oracle:projects:3.0.2
+        Reason: False positive. CPE "oracle:projects" is too generic for JSTL API. CVE Count = 0. Low confidence.
+        ]]></notes>
+        <gav regex="true">^jakarta\.servlet\.jsp\.jstl:jakarta\.servlet\.jsp\.jstl-api:3\.0\.2$</gav>
+        <cpe>cpe:/a:oracle:projects:3.0.2</cpe> <!-- Thêm suppression mới -->
+    </suppress>
+
+    <!-- Cho mssql-jdbc-12.8.1.jre11.jar -->
+    <suppress>
+        <notes><![CDATA[
+        File: mssql-jdbc-12.8.1.jre11.jar
+        Dependency: com.microsoft.sqlserver:mssql-jdbc:12.8.1.jre11
+        Previously Reported CPE (Report 1): cpe:/a:microsoft:sql_server:12.8.1.jre11
+        Reason: CPE is for SQL Server product, not specific to JDBC driver vulnerabilities.
+        ]]></notes>
+        <gav regex="true">^com\.microsoft\.sqlserver:mssql-jdbc:12\.8\.1\.jre11$</gav>
+        <cpe>cpe:/a:microsoft:sql_server:12.8.1.jre11</cpe> <!-- Giữ lại suppression cũ -->
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+        File: mssql-jdbc-12.8.1.jre11.jar
+        Dependency: com.microsoft.sqlserver:mssql-jdbc:12.8.1.jre11
+        NEW Reported CPE (Report 3): cpe:/a:microsoft:server:12.8.1.jre11
+        Reason: False positive. CPE "microsoft:server" likely refers to Windows Server or a general server product, not specifically the JDBC driver. CVE Count = 0. High confidence (likely high confidence in identifying the JAR, not the vulnerability).
+        ]]></notes>
+        <gav regex="true">^com\.microsoft\.sqlserver:mssql-jdbc:12\.8\.1\.jre11$</gav>
+        <cpe>cpe:/a:microsoft:server:12.8.1.jre11</cpe> <!-- Thêm suppression mới -->
+    </suppress>
+
+    <!-- Các suppression bạn đã có từ file gốc của bạn, đã sửa định dạng CPE -->
+    <suppress>
+        <notes><![CDATA[
+        File: jaxb-core-4.0.2.jar (org.glassfish.jaxb:jaxb-core)
+        Suppressed CPE: cpe:/a:eclipse:glassfish:4.0.2 (From user's original suppression file)
+        Reason: Preventative suppression based on user's file.
+        ]]></notes>
+        <gav>org.glassfish.jaxb:jaxb-core:4.0.2</gav>
+        <cpe>cpe:/a:eclipse:glassfish:4.0.2</cpe>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+        File: jakarta.activation-api-2.1.3.jar
+        Suppressed CPE: cpe:/a:eclipse:eclipse_ide:2.1.3 (From user's original suppression file)
+        Reason: Preventative suppression based on user's file.
+        ]]></notes>
+        <gav>jakarta.activation:jakarta.activation-api:2.1.3</gav>
+        <cpe>cpe:/a:eclipse:eclipse_ide:2.1.3</cpe>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+        File: txw2-4.0.2.jar (org.glassfish.jaxb:txw2)
+        Suppressed CPE: cpe:/a:eclipse:glassfish:4.0.2 (From user's original suppression file)
+        Reason: Preventative suppression based on user's file.
+        ]]></notes>
+        <gav>org.glassfish.jaxb:txw2:4.0.2</gav>
+        <cpe>cpe:/a:eclipse:glassfish:4.0.2</cpe>
+    </suppress>
+	<suppress>
+	   <notes><![CDATA[
+	   file name: jakarta.servlet.jsp.jstl-3.0.1.jar
+	   ]]></notes>
+	   <packageUrl regex="true">^pkg:maven/org\.glassfish\.web/jakarta\.servlet\.jsp\.jstl@.*$</packageUrl>
+	   <cpe>cpe:/a:oracle:projects</cpe>
+	</suppress>
+</suppressions>

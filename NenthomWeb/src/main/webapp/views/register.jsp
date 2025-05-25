@@ -6,13 +6,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               form-action 'self';
+               style-src 'self' https://cdnjs.cloudflare.com;
+               script-src 'self' https://cdnjs.cloudflare.com;">
     <title>Sign Up | Nến Thơm</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_Login.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- Font Awesome -->
+	<link rel="stylesheet" href="<c:url value='/webjars/font-awesome/6.0.0/css/all.min.css'/>">
+	
+	<!-- Toastr -->
+	<link rel="stylesheet" href="<c:url value='/webjars/toastr/2.1.4/toastr.min.css'/>">
+	<script src="<c:url value='/webjars/jquery/3.6.0/jquery.min.js'/>"></script>
+	<script src="<c:url value='/webjars/toastr/2.1.4/toastr.min.js'/>"></script>
+
 </head>
 <body class="bg-light-cream">
 <%
@@ -25,19 +34,15 @@
             <div class="login-form">
                 <h2 id="form-title">Sign Up</h2>
 
-                <!-- Check if there is a message attribute to display -->
-                <% if (request.getAttribute("message") != null) { %>
-                    <script type="text/javascript">
-                        var message = "<%= request.getAttribute("message") %>";
-                        var error = <%= request.getAttribute("error") %>;
-
-                        if (error) {
-                            toastr.error(message, "Lỗi");
-                        } else {
-                            toastr.success(message, "Thành công");
-                        }
-                    </script>
-                <% } %>
+                <%
+				    String message = (String) request.getAttribute("message");
+				    Boolean error = (Boolean) request.getAttribute("error");
+				    if (message != null && error != null) {
+				%>
+				    <div id="register-message-data" data-message="<%= message %>" data-error="<%= error %>" style="display:none;"></div>
+				<%
+				    }
+				%>
 
                 <form id="auth-form" action="../servlets/Register_Servlet" method="post">
                 	<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
@@ -57,7 +62,7 @@
                 </form>
                 <p class="toggle-link">
                     <span>Already have an account?</span>
-                    <a href="javascript:void(0)" onclick="toggleForm()">Login</a>
+    				<a href="#" id="go-to-login">Login</a>
                 </p>
             </div>
         </div>
@@ -65,10 +70,7 @@
 
     <%@ include file="footer.jsp"%>
 
-    <script>
-        function toggleForm() {
-            window.location.href = "login.jsp";
-        }
-    </script>
+    <script src="<c:url value='/js/register.js'/>"></script>
+
 </body>
 </html>
