@@ -16,23 +16,25 @@ import services.ConnectionUtil;
 
 @WebServlet("/servlets/Login_Servlet")
 public class Login_Servlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public Login_Servlet() {
-		super();
-	}
+    public Login_Servlet() {
+        super();
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.getWriter().append("Served at: ").append(request.getContextPath());
+    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String message = "";
         boolean error = false;
+
+        System.out.println("[LOGIN] Bắt đầu kiểm tra đăng nhập cho username: " + username);
 
         try (Connection conn = ConnectionUtil.DB()) {
             TaiKhoanDAO taiKhoanDao = new TaiKhoanDAO(conn);
@@ -41,6 +43,7 @@ public class Login_Servlet extends HttpServlet {
             if (!taiKhoanDao.isUsernameExist(username)) {
                 message = "Tài khoản không tồn tại!";
                 error = true;
+                System.out.println("[LOGIN] THẤT BẠI - Username không tồn tại: " + username);
             } else {
                 String storedPassword = taiKhoanDao.getPasswordByUsername(username);
                 if (storedPassword.equals(password)) {
@@ -52,21 +55,26 @@ public class Login_Servlet extends HttpServlet {
                     session.setAttribute("username", username);
                     session.setAttribute("userID", userID);
 
+                    System.out.println("[LOGIN] THÀNH CÔNG - Username: " + username + ", Role: " + role + ", UserID: " + userID);
+
                     // Chuyển hướng đến trang quản lý theo quyền
                     if ("manager".equals(role)) {
                         request.getRequestDispatcher("/servlets/DSProduct_Servlet?page=admin").forward(request, response);
                     } else if ("user".equals(role)) {
                         request.getRequestDispatcher("/views/TrangChu.jsp").forward(request, response);
                     }
+                    return; // Đảm bảo không chạy tiếp phần xử lý lỗi
                 } else {
                     message = "Mật khẩu không đúng!";
                     error = true;
+                    System.out.println("[LOGIN] THẤT BẠI - Sai mật khẩu cho username: " + username);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
             message = "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu!";
             error = true;
+            System.out.println("[LOGIN] LỖI HỆ THỐNG khi đăng nhập username: " + username);
         }
 
         if (error) {
