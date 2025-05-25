@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import org.owasp.encoder.Encode;
 
 import dao.ProductDAO;
 import jakarta.servlet.ServletException;
@@ -12,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import models.Product;
 import services.ConnectionUtil;
 import utils.CSRFUtil;
-import org.owasp.esapi.ESAPI;
 @WebServlet("/servlets/ProductDetail_Servlet")
 public class ProductDetail_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +28,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
             ProductDAO productDao = new ProductDAO(connection);
             Product product = productDao.getProductById(productID); 
  
-            String safeDescription = ESAPI.encoder().encodeForHTML(product.getDescription());
+
+            String safeDescription = Encode.forHtml(product.getDescription());
             product.setDescription(safeDescription);
             
             request.setAttribute("product", product);

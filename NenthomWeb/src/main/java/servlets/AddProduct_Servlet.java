@@ -14,7 +14,6 @@ import models.Product;
 import services.ConnectionUtil;
 import utils.CSRFUtil;
 
-import org.owasp.esapi.ESAPI;
 @WebServlet("/servlets/AddProduct_Servlet")
 public class AddProduct_Servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
