@@ -442,7 +442,7 @@
 			            <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 			            <div class="form-group">
 			                <label class="form-label">Discount ID</label>
-			                <input type="text" class="form-input" name="discountID" id="editDiscountID" required>
+			                <input type="text" class="form-input" name="discountID" id="editDiscountID" required readonly>
 			            </div>
 			            <div class="form-group">
 			                <label class="form-label">Discount Name</label>

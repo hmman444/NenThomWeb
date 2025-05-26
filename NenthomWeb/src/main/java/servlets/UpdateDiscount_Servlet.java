@@ -12,28 +12,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Discount;
 import utils.CSRFUtil;
+import utils.XSSUtil;
 
 @WebServlet("/servlets/UpdateDiscount_Servlet")
 public class UpdateDiscount_Servlet extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(UpdateDiscount_Servlet.class.getName());
     private DiscountDAO discountDAO = new DiscountDAO();
-
-    private static final String[] BANNED_KEYWORDS = {
-        "script", "onload", "onclick", "onerror", "onmouseover", "onmouseenter",
-        "onmouseleave", "javascript:", "eval(", "document.cookie", "alert("
-    };
-
-    private boolean containsBannedKeyword(String input) {
-        if (input == null) return false;
-        String lower = input.toLowerCase();
-        for (String keyword : BANNED_KEYWORDS) {
-            if (lower.contains(keyword)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,7 +50,7 @@ public class UpdateDiscount_Servlet extends HttpServlet {
             }
 
             // Kiểm tra từ khóa JS nguy hiểm
-            if (containsBannedKeyword(discountName)) {
+            if (XSSUtil.containsBannedKeyword(discountName)) {
                 throw new IllegalArgumentException("Tên chương trình giảm giá chứa từ khóa JavaScript nguy hiểm.");
             }
 
