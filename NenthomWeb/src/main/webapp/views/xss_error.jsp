@@ -6,53 +6,7 @@
     <meta charset="UTF-8">
     <title>Lỗi bảo mật - XSS</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #faf7f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .error-container {
-            background-color: white;
-            border-radius: 16px;
-            padding: 40px 60px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 500px;
-        }
-
-        .error-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #b53e3e;
-            margin-bottom: 20px;
-        }
-
-        .error-message {
-            font-size: 18px;
-            color: #444;
-            margin-bottom: 30px;
-        }
-
-        .back-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #8b5e3c;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .back-button:hover {
-            background-color: #734b2f;
-        }
-    </style>
+    <link rel="stylesheet" href="<c:url value='/css/xss_error.css'/>">
 </head>
 <body>
     <div class="error-container">

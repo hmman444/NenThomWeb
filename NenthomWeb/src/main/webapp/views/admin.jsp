@@ -769,5 +769,38 @@
 		});
 
     </script>
+	<script>
+		// Hiển thị modal chỉnh sửa và điền dữ liệu
+		document.querySelectorAll('.edit-btn').forEach(button => {
+		  button.addEventListener('click', () => {
+			// Lấy dữ liệu từ thuộc tính data- của button
+			const categoryId = button.getAttribute('data-id');
+			const categoryName = button.getAttribute('data-name');
+			const categoryDescription = button.getAttribute('data-type');
+	  
+			// Set dữ liệu vào form trong modal
+			document.getElementById('editCategoryID').value = categoryId;
+			document.getElementById('editCategoryName').value = categoryName;
+			document.getElementById('editCategoryDescription').value = categoryDescription;
+	  
+			// Hiện modal
+			document.getElementById('editCategoryModal').classList.remove('hidden');
+		  });
+		});
+	  
+		// Ẩn modal chỉnh sửa
+		function hideEditCategoryModal() {
+		  document.getElementById('editCategoryModal').classList.add('hidden');
+		}
+	  
+		// Tương tự nếu bạn muốn modal Thêm Category hoạt động
+		function showAddCategoryModal() {
+		  document.getElementById('addCategoryModal').classList.remove('hidden');
+		}
+		function hideAddCategoryModal() {
+		  document.getElementById('addCategoryModal').classList.add('hidden');
+		}
+	  </script>
+	  
 </body>
 </html>
