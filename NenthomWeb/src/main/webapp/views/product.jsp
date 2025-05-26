@@ -67,6 +67,23 @@
 	<!-- Product Grid -->
 	<section class="products">
 		<div class="container">
+			<!-- Product Count -->
+				<div class="mb-3">
+				<p class="text-muted">
+					<c:choose>
+						<c:when test="${not empty productCount}">
+							Tìm thấy <strong>${productCount}</strong> sản phẩm
+							<c:if test="${not empty param.search}">
+								cho từ khóa "<strong><c:out value='${param.search}'/></strong>"
+							</c:if>.
+						</c:when>
+						<c:otherwise>
+							Không tìm thấy sản phẩm nào.
+						</c:otherwise>
+					</c:choose>
+				</p>
+			</div>
+			
 			<div class="grid">
 				<!-- Loop through products -->
 				<c:forEach var="product" items="${products}">

@@ -71,6 +71,7 @@ public class SearchProduct_Servlet extends HttpServlet {
             List<Categorie> categories = categorieDAO.getAllCategories();
 
             request.setAttribute("products", products);
+            request.setAttribute("productCount", products.size());
             request.setAttribute("categories", categories);
             CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/product.jsp").forward(request, response);
