@@ -7,11 +7,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy"
-      content="default-src 'self';
-               form-action 'self';
-               style-src 'self' https://cdnjs.cloudflare.com;
-               script-src 'self' https://cdnjs.cloudflare.com;">
+    <%
+    String nonce = (String) request.getAttribute("cspNonce");
+    if (nonce == null) {
+        nonce = java.util.Base64.getEncoder().encodeToString(new java.security.SecureRandom().generateSeed(16));
+        request.setAttribute("cspNonce", nonce);
+    }
+	%>
+	<meta http-equiv="Content-Security-Policy"
+	      content="default-src 'self';
+	               style-src 'self';
+	               script-src 'self' 'nonce-<%= nonce %>';
+	               img-src 'self' data:;
+	               font-src 'self';
+	               form-action 'self';">
     <title>Sign Up | Nến Thơm</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_login.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
@@ -20,10 +29,10 @@
 	
 	<!-- Toastr -->
 	<link rel="stylesheet" href="<c:url value='/css/toastr.min.css'/>">
-	<script src="<c:url value='/js/jquery.min.js'/>"></script>
-	<script src="<c:url value='/js/toastr.min.js'/>"></script>
-	<script src="<c:url value='/js/validateFunction.js'/>"></script>
-	<script src="<c:url value='/js/routeFunction.js'/>"></script>
+	<script nonce="<%= nonce %>" src="<c:url value='/js/jquery.min.js'/>"></script>
+	<script nonce="<%= nonce %>" src="<c:url value='/js/toastr.min.js'/>"></script>
+	<script nonce="<%= nonce %>" src="<c:url value='/js/validateFunction.js'/>"></script>
+	<script nonce="<%= nonce %>" src="<c:url value='/js/routeFunction.js'/>"></script>
 </head>
 <body class="bg-light-cream">
 <%
@@ -58,7 +67,6 @@
 						<label for="username">Username</label> 
 						<input type="text"
 							id="username" name="username" placeholder="Enter your username"
-							oninput="validateUsername()"
 							required>
 				        <small id="un-msg"></small>
 					</div>
@@ -66,7 +74,6 @@
 						<label for="password">Password</label> 
 						<input type="password"
 							id="password" name="password" placeholder="Enter your password"
-							oninput="validatePassword()"
 							required>
 						<small id="pw-msg"></small>
 							
