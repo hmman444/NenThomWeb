@@ -12,7 +12,7 @@
                style-src 'self' https://cdnjs.cloudflare.com;
                script-src 'self' https://cdnjs.cloudflare.com;"> -->
     <title>Sign Up | Nến Thơm</title>
-    <link rel="stylesheet" href="<c:url value='/css/styles_Login.css'/>">
+    <link rel="stylesheet" href="<c:url value='/css/styles_login.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
     <!-- Font Awesome -->
 	<link rel="stylesheet" href="<c:url value='/css/all.min.css'/>">
