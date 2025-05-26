@@ -9,6 +9,7 @@ function validatePassword() {
         message.innerText = "";
     }
 }
+
 function validateUsername() {
     const username = document.getElementById("username").value;
     const message = document.getElementById("un-msg");
@@ -20,3 +21,16 @@ function validateUsername() {
         message.innerText = "";
     }
 }
+
+// Gắn sự kiện sau khi DOM tải xong
+window.addEventListener("DOMContentLoaded", () => {
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+
+    if (usernameInput) {
+        usernameInput.addEventListener("input", validateUsername);
+    }
+    if (passwordInput) {
+        passwordInput.addEventListener("input", validatePassword);
+    }
+});

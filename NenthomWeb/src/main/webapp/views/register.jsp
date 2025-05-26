@@ -67,7 +67,6 @@
 						<label for="username">Username</label> 
 						<input type="text"
 							id="username" name="username" placeholder="Enter your username"
-							oninput="validateUsername()"
 							required>
 				        <small id="un-msg"></small>
 					</div>
@@ -75,7 +74,6 @@
 						<label for="password">Password</label> 
 						<input type="password"
 							id="password" name="password" placeholder="Enter your password"
-							oninput="validatePassword()"
 							required>
 						<small id="pw-msg"></small>
 							

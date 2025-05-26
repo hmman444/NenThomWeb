@@ -63,14 +63,14 @@
 				    <!-- Username -->
 				    <div class="form-group">
 				        <label for="username">Username</label>
-				        <input type="text" id="username" name="username" oninput="validateUsername()" required>
+				        <input type="text" id="username" name="username" required>
 				        <small id="un-msg"></small>
 				    </div>
 				
 				    <!-- Password -->
 				    <div class="form-group">
 				        <label for="password">Password</label>
-				        <input type="password" id="password" name="password" oninput="validatePassword()" required>
+				        <input type="password" id="password" name="password" required>
 				        <small id="pw-msg"></small>
 				    </div>
 				
