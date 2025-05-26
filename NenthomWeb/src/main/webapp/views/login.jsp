@@ -12,6 +12,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="<c:url value='/js/validateFunction.js'/>"></script>
+    <script src="<c:url value='/js/routeFunction.js'/>"></script>
+    
 </head>
 <body class="bg-light-cream">
 
@@ -41,7 +44,8 @@
 				    <!-- Username -->
 				    <div class="form-group">
 				        <label for="username">Username</label>
-				        <input type="text" id="username" name="username" required>
+				        <input type="text" id="username" name="username" oninput="validateUsername()" required>
+				        <small id="un-msg" style="color: red;"></small>
 				    </div>
 				
 				    <!-- Password -->
@@ -62,29 +66,12 @@
 
                 <p class="toggle-link">
                     <span id="toggle-text">Don't have an account?</span>
-                    <a href="javascript:void(0)" onclick="toggleForm()">Sign up</a>
+                    <a href="javascript:void(0)" onclick="goToRegister()">Sign up</a>
                 </p>
             </div>
         </div>
     </section>
 
     <%@ include file="footer.jsp" %>
-
-    <script>
-        function toggleForm() {
-        	window.location.href = "/NenthomWeb/servlets/Register_Servlet";
-        }
-        function validatePassword() {
-            const password = document.getElementById("password").value;
-            const message = document.getElementById("pw-msg");
-            const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/;
-
-            if (!strongRegex.test(password)) {
-                message.innerText = "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.";
-            } else {
-                message.innerText = "";
-            }
-        }
-    </script>
 </body>
 </html>

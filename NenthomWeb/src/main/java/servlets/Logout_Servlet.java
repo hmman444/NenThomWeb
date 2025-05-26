@@ -35,7 +35,7 @@ public class Logout_Servlet extends HttpServlet {
         request.setAttribute("logoutMessage", "Bạn đã đăng xuất thành công!");
 
         // Chuyển hướng người dùng về trang đăng nhập
-        request.getRequestDispatcher("/views/login.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/servlets/Login_Servlet");
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

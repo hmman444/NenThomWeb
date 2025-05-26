@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Random;
+import java.util.Set;
 
 import dao.TaiKhoanDAO;
 import dao.UserDAO;
@@ -13,6 +14,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+import models.TaiKhoan;
 import services.AuthCodeUtil;
 import services.ConnectionUtil;
 
@@ -37,15 +43,34 @@ public class Login_Servlet extends HttpServlet {
         String password = request.getParameter("password");
         String message = "";
         boolean error = false;
-        
-		if (!AuthCodeUtil.isVerificationCodeValid(request)) {
-		    AuthCodeUtil.refreshVerificationCode(request.getSession());
-		    request.setAttribute("message", "Mã xác thực không đúng!");
-		    request.setAttribute("error", true);
-		    request.getRequestDispatcher("/views/login.jsp").forward(request, response);
-		    return;
-		}
+        boolean isValid = true;
+       
+        TaiKhoan tk = new TaiKhoan(username, password);
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<TaiKhoan>> violations = validator.validate(tk);
 
+        StringBuilder errorMessages = new StringBuilder();
+
+        if (!violations.isEmpty()) {
+            isValid = false;
+            for (ConstraintViolation<TaiKhoan> violation : violations) {
+                errorMessages.append(violation.getMessage()).append("<br>");
+            }
+        }
+
+        if (!AuthCodeUtil.isVerificationCodeValid(request)) {
+            isValid = false;
+            errorMessages.append("Mã xác thực không đúng!<br>");
+        }
+
+        if (!isValid) {
+            AuthCodeUtil.refreshVerificationCode(request.getSession());
+            request.setAttribute("message", errorMessages.toString());
+            request.setAttribute("error", true);
+            request.getRequestDispatcher("/views/login.jsp").forward(request, response);
+            return;
+        }
 
 
         try (Connection conn = ConnectionUtil.DB()) {

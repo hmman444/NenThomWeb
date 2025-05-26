@@ -20,6 +20,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script src="<c:url value='/js/validateFunction.js'/>"></script>
+	<script src="<c:url value='/js/routeFunction.js'/>"></script>
 </head>
 <body class="bg-light-cream">
 
@@ -31,26 +33,31 @@
 
 				<!-- Check if there is a message attribute to display -->
 				<% if (request.getAttribute("message") != null) { %>
-				<script type="text/javascript">
-                        var message = "<%= request.getAttribute("message") %>";
-                        var error = <%= request.getAttribute("error") %>;
-
-                        if (error) {
-                            toastr.error(message, "Lỗi");
-                        } else {
-                            toastr.success(message, "Thành công");
-                        }
-                    </script>
+				    <script type="text/javascript">
+				        // Dùng JSTL escape để tránh lỗi JS khi message chứa ký tự đặc biệt
+				        var message = `<%= request.getAttribute("message").toString().replace("\n", "\\n").replace("\"", "\\\"").replace("'", "\\'") %>`;
+				        var error = <%= Boolean.TRUE.equals(request.getAttribute("error")) %>;
+				
+				        if (error) {
+				            toastr.error(message, "Lỗi", {timeOut: 5000, extendedTimeOut: 2000, closeButton: true});
+				        } else {
+				            toastr.success(message, "Thành công", {timeOut: 3000});
+				        }
+				    </script>
 				<% } %>
+
 				<%
 				    String code = (String) session.getAttribute("authCode");
 				%>
 				<form id="auth-form" action="../servlets/Register_Servlet"
 					method="post">
 					<div class="form-group">
-						<label for="username">Username</label> <input type="text"
+						<label for="username">Username</label> 
+						<input type="text"
 							id="username" name="username" placeholder="Enter your username"
+							oninput="validateUsername()"
 							required>
+				        <small id="un-msg" style="color: red;"></small>
 					</div>
 					<div class="form-group">
 						<label for="password">Password</label> 
@@ -78,29 +85,11 @@
 				</form>
 				<p class="toggle-link">
 					<span>Already have an account?</span> <a href="javascript:void(0)"
-						onclick="toggleForm()">Login</a>
+						onclick="goToLogin()">Login</a>
 				</p>
 			</div>
 		</div>
 	</section>
-
 	<%@ include file="footer.jsp"%>
-
-	<script>
-        function toggleForm() {
-        	window.location.href = "/NenthomWeb/servlets/Login_Servlet";
-        }
-        function validatePassword() {
-            const password = document.getElementById("password").value;
-            const message = document.getElementById("pw-msg");
-            const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/;
-
-            if (!strongRegex.test(password)) {
-                message.innerText = "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.";
-            } else {
-                message.innerText = "";
-            }
-        }
-    </script>
 </body>
 </html>
