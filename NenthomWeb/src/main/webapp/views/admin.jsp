@@ -265,7 +265,7 @@
 		                    <td class="border px-4 py-2">${categorie.description}</td>
 		                    <td class="border px-4 py-2">
 		                            <button 
-					                    class="text-blue-500 hover:underline edit-btn" 
+					                    class="text-blue-500 hover:underline edit-btn-category" 
 					                    data-id="${categorie.categoryID}" 
 					                    data-name="${categorie.name}" 
 					                    data-type="${categorie.description}" >
@@ -369,7 +369,7 @@
 		                        <td class="border px-4 py-2">${discount.endDate}</td>
 		                        <td class="border px-4 py-2">
 		                            <button 
-					                    class="text-blue-500 hover:underline edit-btn" 
+					                    class="text-blue-500 hover:underline edit-btn-discount" 
 					                    data-id="${discount.discountID}" 
 					                    data-name="${discount.discountName}" 
 					                    data-type="${discount.discountType}" 
@@ -545,7 +545,7 @@
 			document.getElementById("addDiscountModal").classList.add("hidden");
 		}
 
-		document.querySelectorAll(".edit-btn").forEach(button => {
+		document.querySelectorAll(".edit-btn-discount").forEach(button => {
 			button.addEventListener("click", function () {
 				const discountID = this.getAttribute("data-id");
 				const discountName = this.getAttribute("data-name");
@@ -771,7 +771,7 @@
     </script>
 	<script>
 		// Hiển thị modal chỉnh sửa và điền dữ liệu
-		document.querySelectorAll('.edit-btn').forEach(button => {
+		document.querySelectorAll('.edit-btn-category').forEach(button => {
 		  button.addEventListener('click', () => {
 			// Lấy dữ liệu từ thuộc tính data- của button
 			const categoryId = button.getAttribute('data-id');
