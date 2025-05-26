@@ -3,6 +3,8 @@ package servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Random;
+import java.util.Set;
 
 import dao.TaiKhoanDAO;
 import jakarta.servlet.ServletException;
@@ -10,7 +12,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import models.TaiKhoan;
+import services.AuthCodeUtil;
 import services.ConnectionUtil;
 import utils.CSRFUtil;
 @WebServlet("/servlets/Register_Servlet")
@@ -23,7 +30,8 @@ public class Register_Servlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		AuthCodeUtil.refreshVerificationCode(request.getSession());
+        request.getRequestDispatcher("/views/register.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,9 +42,39 @@ public class Register_Servlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirm-password");
         String message = "";
         boolean error = false;
+        boolean isValid = true;
+       
+        TaiKhoan tk = new TaiKhoan(username, password);
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<TaiKhoan>> violations = validator.validate(tk);
 
-        try (Connection conn = ConnectionUtil.DB()) {
-            TaiKhoanDAO taiKhoanDao = new TaiKhoanDAO(conn);
+        // Dùng StringBuilder để gom tất cả lỗi
+        StringBuilder errorMessages = new StringBuilder();
+
+        if (!violations.isEmpty()) {
+            isValid = false;
+            for (ConstraintViolation<TaiKhoan> violation : violations) {
+                errorMessages.append(violation.getMessage()).append("<br>");
+            }
+        }
+
+        if (!AuthCodeUtil.isVerificationCodeValid(request)) {
+            isValid = false;
+            errorMessages.append("Mã xác thực không đúng!<br>");
+        }
+
+        if (!isValid) {
+            AuthCodeUtil.refreshVerificationCode(request.getSession());
+            request.setAttribute("message", errorMessages.toString());
+            request.setAttribute("error", true);
+            request.getRequestDispatcher("/views/register.jsp").forward(request, response);
+            return;
+        }
+
+
+        try {
+            TaiKhoanDAO taiKhoanDao = new TaiKhoanDAO();
 
             if (taiKhoanDao.isUsernameExist(username)) {
                 message = "Tài khoản đã tồn tại!";
@@ -45,7 +83,7 @@ public class Register_Servlet extends HttpServlet {
                 message = "Mật khẩu và xác nhận mật khẩu không khớp!";
                 error = true;
             } else {
-                TaiKhoan taiKhoan = new TaiKhoan(username, password); // Bạn có thể mã hóa password trước khi lưu
+                TaiKhoan taiKhoan = new TaiKhoan(username, password);
                 if (taiKhoanDao.addUser(taiKhoan)) {
                     message = "Đăng ký thành công!";
                     error = false;
@@ -54,6 +92,7 @@ public class Register_Servlet extends HttpServlet {
                     error = true;
                 }
             }
+            taiKhoanDao.close();
         } catch (SQLException e) {
             e.printStackTrace();
             message = "Lỗi kết nối cơ sở dữ liệu!";

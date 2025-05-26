@@ -15,11 +15,17 @@ public class Logout_Servlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
-        response.sendRedirect(request.getContextPath() + "/login?logout=1");
+
+        request.setAttribute("logoutMessage", "Bạn đã đăng xuất thành công!");
+
+
+        response.sendRedirect(request.getContextPath() + "/login");
+
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
