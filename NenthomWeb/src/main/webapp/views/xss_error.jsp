@@ -21,7 +21,7 @@
                 </c:otherwise>
             </c:choose>
         </p>
-        <a href="/NenthomWeb/views/admin.jsp" class="back-button">Quay lại trang sản phẩm</a>
+        <button onclick="history.back()" class="back-button">Quay lại trang trước đó</button>
     </div>
 </body>
 </html>
