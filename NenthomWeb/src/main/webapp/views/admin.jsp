@@ -479,111 +479,103 @@
 
     <script>
 	    function moveCategory(fromId, toId) {
-	        const fromList = document.getElementById(fromId);
-	        const toList = document.getElementById(toId);
-	
-	        // Lấy danh mục được chọn từ list nguồn
-	        const selectedOptions = Array.from(fromList.selectedOptions);
-	        
-	        selectedOptions.forEach(option => {
-	            // Thêm vào list đích
-	            toList.appendChild(option);
-	        });
-	    }
+			console.log(`Moving category from ${fromId} to ${toId}`);
+			const fromList = document.getElementById(fromId);
+			const toList = document.getElementById(toId);
+			const selectedOptions = Array.from(fromList.selectedOptions);
+			selectedOptions.forEach(option => {
+				toList.appendChild(option);
+				console.log(`Moved option: ${option.value}`);
+			});
+		}
+
 		function showCategoryModal(productID) {
-		    document.getElementById('productID').value = productID; // Gán ProductID cho form
-		    document.getElementById('categoryModal').classList.remove('hidden');
+			console.log(`Showing category modal for product ID: ${productID}`);
+			document.getElementById('productID').value = productID;
+			document.getElementById('categoryModal').classList.remove('hidden');
 		}
-		
-		// Ẩn modal
+
 		function hideCategoryModal() {
-		    document.getElementById('categoryModal').classList.add('hidden');
+			console.log("Hiding category modal");
+			document.getElementById('categoryModal').classList.add('hidden');
 		}
-	
-	    function showAddCategoryModal() {
-	        document.getElementById("addCategoryModal").classList.remove("hidden");
-	    }
-	
-	    // Hide Add Category Modal
-	    function hideAddCategoryModal() {
-	        document.getElementById("addCategoryModal").classList.add("hidden");
-	    }
 
-	    function showEditCategoryModal(button) {
-	        // Lấy thông tin từ các thuộc tính data-* trong nút Edit
-	        const categoryID = button.getAttribute("data-id");
-	        const categoryName = button.getAttribute("data-name");
-	        const categoryDescription = button.getAttribute("data-description");
-	
-	        // Điền thông tin vào các trường trong modal
-	        document.getElementById("editCategoryID").value = categoryID;
-	        document.getElementById("editCategoryName").value = categoryName;
-	        document.getElementById("editCategoryDescription").value = categoryDescription;
-	
-	        // Hiển thị modal
-	        document.getElementById("editCategoryModal").classList.remove("hidden");
-	    }
-	
-	    // Ẩn modal chỉnh sửa
-	    function hideEditCategoryModal() {
-	        document.getElementById("editCategoryModal").classList.add("hidden");
-	    }
-	
-	    // Gắn sự kiện cho các nút Edit
-	    document.querySelectorAll(".edit-btn").forEach(button => {
-	        button.addEventListener("click", function() {
-	            showEditCategoryModal(this);
-	        });
-	    });
-	
-	    // Hàm này giúp đóng modal khi bấm nút đóng
-	    function closeModal() {
-	        document.getElementById("editCategoryModal").classList.add("hidden");
-	    }
-	    function showAddDiscountModal() {
-	        document.getElementById("addDiscountModal").classList.remove("hidden");
-	    }
-	
-	    // Hide Add Discount Modal
-	    function hideAddDiscountModal() {
-	        document.getElementById("addDiscountModal").classList.add("hidden");
-	    }
-	
-	 	// Thêm sự kiện cho nút Edit
-	    document.querySelectorAll(".edit-btn").forEach(button => {
-		    button.addEventListener("click", function() {
-		        // Lấy thông tin từ các thuộc tính data-*
-		        const discountID = this.getAttribute("data-id");
-		        const discountName = this.getAttribute("data-name");
-		        const discountType = this.getAttribute("data-type");
-		        const discountValue = this.getAttribute("data-value");
-		        const startDate = this.getAttribute("data-start");
-		        const endDate = this.getAttribute("data-end");
-		
-		        // Điền thông tin vào modal
-		        document.getElementById("editDiscountID").value = discountID;
-		        document.getElementById("editDiscountName").value = discountName;
-		        document.getElementById("editDiscountType").value = discountType;
-		        document.getElementById("editDiscountValue").value = discountValue;
-		        document.getElementById("editStartDate").value = startDate;
-		        document.getElementById("editEndDate").value = endDate;
-		
-		        // Hiển thị modal
-		        document.getElementById("editDiscountModal").classList.remove("hidden");
-		    });
+		function showAddCategoryModal() {
+			console.log("Showing Add Category Modal");
+			document.getElementById("addCategoryModal").classList.remove("hidden");
+		}
+
+		function hideAddCategoryModal() {
+			console.log("Hiding Add Category Modal");
+			document.getElementById("addCategoryModal").classList.add("hidden");
+		}
+
+		function showEditCategoryModal(button) {
+			console.log("Showing Edit Category Modal");
+			const categoryID = button.getAttribute("data-id");
+			const categoryName = button.getAttribute("data-name");
+			const categoryDescription = button.getAttribute("data-description");
+
+			console.log(`Category Info: ID=${categoryID}, Name=${categoryName}, Description=${categoryDescription}`);
+
+			document.getElementById("editCategoryID").value = categoryID;
+			document.getElementById("editCategoryName").value = categoryName;
+			document.getElementById("editCategoryDescription").value = categoryDescription;
+			document.getElementById("editCategoryModal").classList.remove("hidden");
+		}
+
+		function hideEditCategoryModal() {
+			console.log("Hiding Edit Category Modal");
+			document.getElementById("editCategoryModal").classList.add("hidden");
+		}
+
+		function closeModal() {
+			console.log("Closing modal");
+			document.getElementById("editCategoryModal").classList.add("hidden");
+		}
+
+		function showAddDiscountModal() {
+			console.log("Showing Add Discount Modal");
+			document.getElementById("addDiscountModal").classList.remove("hidden");
+		}
+
+		function hideAddDiscountModal() {
+			console.log("Hiding Add Discount Modal");
+			document.getElementById("addDiscountModal").classList.add("hidden");
+		}
+
+		document.querySelectorAll(".edit-btn").forEach(button => {
+			button.addEventListener("click", function () {
+				const discountID = this.getAttribute("data-id");
+				const discountName = this.getAttribute("data-name");
+				const discountType = this.getAttribute("data-type");
+				const discountValue = this.getAttribute("data-value");
+				const startDate = this.getAttribute("data-start");
+				const endDate = this.getAttribute("data-end");
+
+				console.log(`Editing Discount ID=${discountID}, Name=${discountName}, Type=${discountType}, Value=${discountValue}, Start=${startDate}, End=${endDate}`);
+
+				document.getElementById("editDiscountID").value = discountID;
+				document.getElementById("editDiscountName").value = discountName;
+				document.getElementById("editDiscountType").value = discountType;
+				document.getElementById("editDiscountValue").value = discountValue;
+				document.getElementById("editStartDate").value = startDate;
+				document.getElementById("editEndDate").value = endDate;
+				document.getElementById("editDiscountModal").classList.remove("hidden");
+			});
 		});
-	    // Hide Edit Discount Modal
-	    function hideEditDiscountModal() {
-	        document.getElementById("editDiscountModal").classList.add("hidden");
-	    }
 
-	    function viewOrderDetails(orderID) {
-	        // Gửi yêu cầu AJAX hoặc chuyển hướng đến trang chi tiết của đơn hàng
-	        window.location.href = "/NenthomWeb/servlets/OrderDetails_Servlet?orderID=" + orderID;
-	    }
-	    let currentAction = 'product'; // Biến lưu trạng thái hiện tại, mặc định là 'product'
+		function hideEditDiscountModal() {
+			console.log("Hiding Edit Discount Modal");
+			document.getElementById("editDiscountModal").classList.add("hidden");
+		}
 
-	    // Khi người dùng click vào các tab, hiển thị phần tương ứng và cập nhật action
+		function viewOrderDetails(orderID) {
+			console.log(`Viewing order details for orderID: ${orderID}`);
+			window.location.href = "/NenthomWeb/servlets/OrderDetails_Servlet?orderID=" + orderID;
+		}
+
+		// Khi người dùng click vào các tab, hiển thị phần tương ứng và cập nhật action
 	    document.getElementById("productsLink").addEventListener("click", function(event) {
 	        event.preventDefault();  // Ngừng hành động mặc định của thẻ <a>
 	        document.getElementById("invoicesSection").style.display = 'none';
@@ -592,6 +584,9 @@
 	        document.getElementById("categoriesSection").style.display = 'none';
 	        currentAction = 'product'; // Cập nhật trạng thái
 	        setActionInURL('product'); // Gọi hàm cập nhật URL
+
+			// Remove hidden class for id productsSection
+			document.getElementById("productsSection").classList.remove("hidden");
 	    });
 
 	    document.getElementById("invoicesLink").addEventListener("click", function(event) {
@@ -602,6 +597,9 @@
 	        document.getElementById("categoriesSection").style.display = 'none';
 	        currentAction = 'invoice'; // Cập nhật trạng thái
 	        setActionInURL('invoice'); // Gọi hàm cập nhật URL
+
+			// Remove hidden class for id invoicesSection
+			document.getElementById("invoicesSection").classList.remove("hidden");
 	    });
 
 	    document.getElementById("discountsLink").addEventListener("click", function(event) {
@@ -613,6 +611,9 @@
 
 	        currentAction = 'discount'; // Cập nhật trạng thái
 	        setActionInURL('discount'); // Gọi hàm cập nhật URL
+
+			// Remove hidden class for id discountsSection
+			document.getElementById("discountsSection").classList.remove("hidden");
 	    });
 	    
 	    document.getElementById("categoriesLink").addEventListener("click", function(event) {
@@ -624,171 +625,148 @@
 	        
 	        currentAction = 'category'; // Cập nhật trạng thái
 	        setActionInURL('category'); // Gọi hàm cập nhật URL
+
+			// Remove 'hidden' class for id categoriesSection
+			document.getElementById("categoriesSection").classList.remove("hidden");
 	    });
 
-	    // Hàm cập nhật action vào URL (giữ trạng thái khi tải lại trang)
-	    function setActionInURL(action) {
-	        const url = new URL(window.location.href);
-	        url.searchParams.set('action', action); // Cập nhật tham số action
-	        history.pushState(null, '', url.toString()); // Cập nhật URL mà không tải lại trang
-	    }
+		function setActionInURL(action) {
+			const url = new URL(window.location.href);
+			url.searchParams.set('action', action);
+			history.pushState(null, '', url.toString());
+			console.log(`Set action in URL: ${action}`);
+		}
 
-	    // Khi tải trang, tự động hiển thị tab theo giá trị action trong URL
-	    window.onload = function() {
-	        const url = new URL(window.location.href);
-	        const action = url.searchParams.get('action') || 'product'; // Mặc định là 'product' nếu không có action
+		window.onload = function () {
+			const url = new URL(window.location.href);
+			const action = url.searchParams.get('action') || 'product';
+			console.log(`Page loaded. Showing section: ${action}`);
+			document.getElementById("invoicesSection").style.display = (action === 'invoice') ? 'block' : 'none';
+			document.getElementById("productsSection").style.display = (action === 'product') ? 'block' : 'none';
+			document.getElementById("discountsSection").style.display = (action === 'discount') ? 'block' : 'none';
+			document.getElementById("categoriesSection").style.display = (action === 'category') ? 'block' : 'none';
+		}
 
-	        if (action === 'discount') {
-	            document.getElementById("invoicesSection").style.display = 'none';
-	            document.getElementById("productsSection").style.display = 'none';
-	            document.getElementById("discountsSection").style.display = 'block';
-	            document.getElementById("categoriesSection").style.display = 'none';
-	        } else if (action === 'invoice') {
-	            document.getElementById("invoicesSection").style.display = 'block';
-	            document.getElementById("productsSection").style.display = 'none';
-	            document.getElementById("discountsSection").style.display = 'none';
-	            document.getElementById("categoriesSection").style.display = 'none';
-	        } else if (action === 'category') {
-	            document.getElementById("invoicesSection").style.display = 'none';
-	            document.getElementById("productsSection").style.display = 'none';
-	            document.getElementById("discountsSection").style.display = 'none';
-	            document.getElementById("categoriesSection").style.display = 'block';
-	        } else {
-	            document.getElementById("invoicesSection").style.display = 'none';
-	            document.getElementById("productsSection").style.display = 'block';
-	            document.getElementById("discountsSection").style.display = 'none';
-	            document.getElementById("categoriesSection").style.display = 'none';
-	        }
-	    };
+		document.getElementById("editProductForm").addEventListener("submit", function (event) {
+			event.preventDefault();
+			const fileInput = document.getElementById("editImage");
+			const file = fileInput.files[0];
+			console.log("Submitting edit form. Image file selected:", file ? file.name : "None");
 
-
-	 	// Chuyển đổi file ảnh thành chuỗi Base64
-	    document.getElementById("editProductForm").addEventListener("submit", function (event) {
-		    event.preventDefault(); // Dừng hành động mặc định của form
-		
-		    const fileInput = document.getElementById("editImage"); // Trường nhập file
-		    const file = fileInput.files[0]; // Lấy file đã chọn
-		
-		    if (file) {
-		        const reader = new FileReader();
-		        reader.onload = function (e) {
-		            const base64Image = e.target.result.split(",")[1]; // Lấy phần Base64 từ DataURL
-		            const hiddenInput = document.createElement("input"); // Tạo input ẩn để lưu Base64
-		            hiddenInput.type = "hidden";
-		            hiddenInput.name = "imageBase64";
-		            hiddenInput.value = base64Image;
-		
-		            // Thêm input ẩn vào form
-		            document.getElementById("editProductForm").appendChild(hiddenInput);
-		
-		            // Gửi form sau khi xử lý xong
-		            document.getElementById("editProductForm").submit();
-		        };
-		        reader.readAsDataURL(file); // Đọc file dưới dạng Base64
-		    } else {
-		        // Gửi form nếu không có file mới
-		        document.getElementById("editProductForm").submit();
-		    }
+			if (file) {
+				const reader = new FileReader();
+				reader.onload = function (e) {
+					const base64Image = e.target.result.split(",")[1];
+					const hiddenInput = document.createElement("input");
+					hiddenInput.type = "hidden";
+					hiddenInput.name = "imageBase64";
+					hiddenInput.value = base64Image;
+					document.getElementById("editProductForm").appendChild(hiddenInput);
+					console.log("Base64 image processed. Submitting form.");
+					document.getElementById("editProductForm").submit();
+				};
+				reader.readAsDataURL(file);
+			} else {
+				console.log("No new image selected. Submitting form directly.");
+				document.getElementById("editProductForm").submit();
+			}
 		});
 
-        function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            const dashboardText = document.getElementById("dashboardText");
-            const navTexts = document.querySelectorAll(".nav-text");
-            const toggleButton = document.querySelector(".fa-bars").parentElement;
-            
-            sidebar.classList.toggle("w-16");
-            sidebar.classList.toggle("w-1/4");
-            toggleButton.classList.toggle("rotate-180");
-            
-            if (sidebar.classList.contains("w-16")) {
-                dashboardText.style.opacity = "0";
-                dashboardText.style.transform = "translateX(-20px)";
-                navTexts.forEach(text => {
-                    text.style.opacity = "0";
-                    text.style.transform = "translateX(-20px)";
-                    setTimeout(() => {
-                        text.style.display = "none";
-                    }, 300);
-                });
-            } else {
-                dashboardText.style.opacity = "1";
-                dashboardText.style.transform = "translateX(0)";
-                navTexts.forEach(text => {
-                    text.style.display = "inline";
-                    setTimeout(() => {
-                        text.style.opacity = "1";
-                        text.style.transform = "translateX(0)";
-                    }, 50);
-                });
-            }
-        }
+		function toggleSidebar() {
+			console.log("Toggling sidebar");
+			const sidebar = document.getElementById("sidebar");
+			const dashboardText = document.getElementById("dashboardText");
+			const navTexts = document.querySelectorAll(".nav-text");
+			const toggleButton = document.querySelector(".fa-bars").parentElement;
 
-        function showAddModal() {
-            document.getElementById("addModal").classList.remove("hidden");
-        }
+			sidebar.classList.toggle("w-16");
+			sidebar.classList.toggle("w-1/4");
+			toggleButton.classList.toggle("rotate-180");
 
-        function hideAddModal() {
-            document.getElementById("addModal").classList.add("hidden");
-        }
+			if (sidebar.classList.contains("w-16")) {
+				console.log("Sidebar collapsed");
+				dashboardText.style.opacity = "0";
+				dashboardText.style.transform = "translateX(-20px)";
+				navTexts.forEach(text => {
+					text.style.opacity = "0";
+					text.style.transform = "translateX(-20px)";
+					setTimeout(() => { text.style.display = "none"; }, 300);
+				});
+			} else {
+				console.log("Sidebar expanded");
+				dashboardText.style.opacity = "1";
+				dashboardText.style.transform = "translateX(0)";
+				navTexts.forEach(text => {
+					text.style.display = "inline";
+					setTimeout(() => {
+						text.style.opacity = "1";
+						text.style.transform = "translateX(0)";
+					}, 50);
+				});
+			}
+		}
 
-        function showEditModal(button) {
-            const productCard = button.closest(".product-card"); // Tìm thẻ div chứa sản phẩm
-            const productName = productCard.querySelector(".product-name").textContent; // Lấy tên sản phẩm
-            const price = productCard.querySelector(".product-price").textContent.replace('$', ''); // Lấy giá sản phẩm
-            let priceInt = parseInt(price, 10);
-            const description = productCard.querySelector(".product-description").textContent; // Lấy mô tả sản phẩm
-            const stock = productCard.querySelector(".product-stock").textContent.replace('Stock: ', ''); // Lấy số lượng sản phẩm
-            const currentImage = productCard.querySelector(".product-image").src; // Lấy ảnh sản phẩm
+		function showAddModal() {
+			console.log("Showing Add Product Modal");
+			document.getElementById("addModal").classList.remove("hidden");
+		}
 
-            // Điền thông tin vào form sửa
-            document.getElementById("editProductNameField").value = productName;
-            document.getElementById("editPrice").value = priceInt;
-            document.getElementById("editDescription").value = description;
-            document.getElementById("editStock").value = stock;
-            document.getElementById("editCurrentImage").src = currentImage; // Cập nhật ảnh xem trước
+		function hideAddModal() {
+			console.log("Hiding Add Product Modal");
+			document.getElementById("addModal").classList.add("hidden");
+		}
 
-            // Điền tên sản phẩm vào hidden field (chắc chắn khi submit, tên sản phẩm sẽ được gửi lên)
-            document.getElementById("editProductName").value = productName;
+		function showEditModal(button) {
+			console.log("Showing Edit Product Modal");
+			const productCard = button.closest(".product-card");
+			const productName = productCard.querySelector(".product-name").textContent;
+			const price = productCard.querySelector(".product-price").textContent.replace('$', '');
+			let priceInt = parseInt(price, 10);
+			const description = productCard.querySelector(".product-description").textContent;
+			const stock = productCard.querySelector(".product-stock").textContent.replace('Stock: ', '');
+			const currentImage = productCard.querySelector(".product-image").src;
 
-            // Hiển thị modal sửa
-            document.getElementById("editModal").classList.remove("hidden");
-        }
+			document.getElementById("editProductNameField").value = productName;
+			document.getElementById("editPrice").value = priceInt;
+			document.getElementById("editDescription").value = description;
+			document.getElementById("editStock").value = stock;
+			document.getElementById("editCurrentImage").src = currentImage;
+			document.getElementById("editProductName").value = productName;
+			document.getElementById("editModal").classList.remove("hidden");
+		}
 
-        function previewEditImage(event) {
-            const file = event.target.files[0]; // Lấy file ảnh từ input
-            const preview = document.getElementById("editCurrentImage"); // Lấy thẻ img để hiển thị ảnh
+		function previewEditImage(event) {
+			const file = event.target.files[0];
+			const preview = document.getElementById("editCurrentImage");
 
-            if (file) {
-                const reader = new FileReader(); // Tạo đối tượng FileReader để đọc file
-                reader.onload = function (e) {
-                    preview.src = e.target.result; // Gán ảnh xem trước vào thẻ img
-                };
-                reader.readAsDataURL(file); // Đọc file dưới dạng DataURL (Base64)
-            } else {
-                preview.src = ""; // Nếu không chọn file, xóa ảnh xem trước
-            }
-        }
+			if (file) {
+				console.log(`Previewing new image: ${file.name}`);
+				const reader = new FileReader();
+				reader.onload = function (e) {
+					preview.src = e.target.result;
+				};
+				reader.readAsDataURL(file);
+			} else {
+				console.log("Image preview reset");
+				preview.src = "";
+			}
+		}
 
+		function hideEditModal() {
+			console.log("Hiding Edit Product Modal");
+			document.getElementById("editModal").classList.add("hidden");
+		}
 
-        function hideEditModal() {
-            document.getElementById("editModal").classList.add("hidden");
-        }
-        document.getElementById("editProductForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Ngừng hành động mặc định của form
+		document.getElementById("editProductForm").addEventListener("submit", function(event) {
+			event.preventDefault();
+			const updatedName = document.getElementById("editProductName").value;
+			const updatedPrice = document.getElementById("editPrice").value;
+			const updatedDescription = document.getElementById("editDescription").value;
+			const updatedImage = document.getElementById("editImage").files[0];
+			console.log("Product Updated:", { updatedName, updatedPrice, updatedDescription, updatedImage });
+			hideEditModal();
+		});
 
-            // Lấy các giá trị trong form
-            const updatedName = document.getElementById("editProductName").value;
-            const updatedPrice = document.getElementById("editPrice").value;
-            const updatedDescription = document.getElementById("editDescription").value;
-            const updatedImage = document.getElementById("editImage").files[0]; // Lấy ảnh mới (nếu có)
-
-            // Xử lý việc cập nhật sản phẩm (Bạn có thể gửi dữ liệu này qua AJAX hoặc API nếu cần)
-            console.log("Updated Product:", updatedName, updatedPrice, updatedDescription, updatedImage);
-
-            // Ẩn modal sau khi sửa xong
-            hideEditModal();
-        });
     </script>
 </body>
 </html>
