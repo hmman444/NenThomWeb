@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 @WebServlet("/servlets/SaveCategory_Servlet")
 public class SaveCategory_Servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -22,6 +22,10 @@ public class SaveCategory_Servlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	if (!CSRFUtil.isValid(request)) {
+            request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+            return;
+        }
         try (Connection connection = ConnectionUtil.DB()) {
             // Lấy thông tin từ request
             String[] categoryIds = request.getParameterValues("categoryIDs[]");

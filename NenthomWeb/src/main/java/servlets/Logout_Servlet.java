@@ -13,33 +13,23 @@ import java.io.IOException;
 public class Logout_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public Logout_Servlet() {
-        super();
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Lấy session hiện tại
-        HttpSession session = request.getSession(false); // false để không tạo session mới nếu không tồn tại
 
+        HttpSession session = request.getSession(false);
         if (session != null) {
-            // Hủy các thuộc tính session
-            session.removeAttribute("username");
-            session.removeAttribute("userID");
-
-            // Hủy toàn bộ session
             session.invalidate();
         }
 
-        // Đặt thông báo logout thành công vào request
         request.setAttribute("logoutMessage", "Bạn đã đăng xuất thành công!");
 
-        // Chuyển hướng người dùng về trang đăng nhập
-        response.sendRedirect(request.getContextPath() + "/servlets/Login_Servlet");
+
+        response.sendRedirect(request.getContextPath() + "/login");
+
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
+

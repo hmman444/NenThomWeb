@@ -8,6 +8,18 @@
 	<packaging>war</packaging>
 
 	<dependencies>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-text</artifactId>
+		    <version>1.10.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.owasp.encoder</groupId>
+			<artifactId>encoder</artifactId>
+			<version>1.2.3</version> <!-- hoặc bản mới nhất -->
+		</dependency>
+
 		<!--
 		https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
 		<dependency>
@@ -22,7 +34,22 @@
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
 			<version>3.0.1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>5.8.5</version>
+		</dependency>
+		<dependency>
+	        <groupId>org.springframework.security</groupId>
+	        <artifactId>spring-security-web</artifactId>
+	        <version>5.8.5</version>
+	    </dependency>
+	
+	    <dependency>
+	        <groupId>org.springframework.security</groupId>
+	        <artifactId>spring-security-config</artifactId>
+	        <version>5.8.5</version>
+	    </dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>javax.servlet.jsp-api</artifactId>
@@ -98,6 +125,21 @@
 		    <artifactId>hibernate-validator</artifactId>
 		    <version>7.0.5.Final</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>jquery</artifactId>
+		    <version>3.6.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>font-awesome</artifactId>
+		    <version>6.0.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>toastr</artifactId>
+		    <version>2.1.4</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -112,7 +154,26 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.3</version>
 			</plugin>
-
+			<plugin>
+		        <groupId>org.owasp</groupId>
+		        <artifactId>dependency-check-maven</artifactId>
+		        <version>12.1.1</version>
+		        <configuration>
+		                <failBuildOnCVSS>7</failBuildOnCVSS>
+		                <skipProvidedScope>true</skipProvidedScope>
+		                <skipRuntimeScope>true</skipRuntimeScope>
+		                <suppressionFiles>
+            				<suppressionFile>${project.basedir}/src/main/webapp/WEB-INF/suppressions.xml</suppressionFile>
+        				</suppressionFiles>
+		        </configuration>
+		        <executions>
+		                <execution>
+		                        <goals>
+		                                <goal>check</goal>
+		                        </goals>
+		                </execution>
+		        </executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

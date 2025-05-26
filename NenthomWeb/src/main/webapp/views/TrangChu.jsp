@@ -10,16 +10,15 @@
     <title>Trang chủ | Nến thơm</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_TrangChu.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="<c:url value='/css/all.min.css'/>">
 </head>
 <body class="bg-light-cream">
     <!-- Header -->
     <%@ include file="header.jsp" %>
 
-
 	<!-- Hero Section -->
 	<section class="hero">
-		<img src="../images/anhNen.jpg" alt="Luxury Candle">
+		<img src="<c:url value='/images/anhNen.jpg'/>" alt="Luxury Candle">
 		<div class="overlay">
 			<div class="hero-content">
 				<h1>Illuminate Your Space</h1>
@@ -34,21 +33,21 @@
 		<h2>Our Collections</h2>
 		<div class="grid">
 			<div class="category-item">
-				<img src="../images/anhSanPham.jpg" alt="Fragrance Candles">
+				<img src="<c:url value='/images/anhSanPham.jpg'/>" alt="Fragrance Candles">
 				<div>
 					<h3>Fragrance Candles</h3>
 					<button>View Collection →</button>
 				</div>
 			</div>
 			<div class="category-item">
-				<img src="../images/anhSanPham.jpg" alt="Decorative Candles">
+				<img src="<c:url value='/images/anhSanPham.jpg'/>" alt="Decorative Candles">
 				<div>
 					<h3>Decorative Candles</h3>
 					<button>View Collection →</button>
 				</div>
 			</div>
 			<div class="category-item">
-				<img src="../images/anhSanPham.jpg" alt="Gift Sets">
+				<img src="<c:url value='/images/anhSanPham.jpg'/>" alt="Gift Sets">
 				<div>
 					<h3>Gift Sets</h3>
 					<button>View Collection →</button>

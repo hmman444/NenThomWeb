@@ -154,15 +154,16 @@ public class ProductDAO {
 	    }
 	}
 
-	public boolean updateProductByName(Product product) {
-	    String sqlUpdate = "UPDATE Products SET Description = ?, Price = ?, Stock = ?, ImageBase64 = ? WHERE Name = ?";
+	public boolean updateProductById(Product product) {
+	    String sqlUpdate = "UPDATE Products SET Name = ?, Description = ?, Price = ?, Stock = ?, ImageBase64 = ? WHERE ProductID = ?";
 
 	    try (PreparedStatement preparedStatement = connection.prepareStatement(sqlUpdate)) {
-	        preparedStatement.setString(1, product.getDescription());
-	        preparedStatement.setDouble(2, product.getPrice());
-	        preparedStatement.setInt(3, product.getStock());
-	        preparedStatement.setString(4, product.getImageBase64());
-	        preparedStatement.setString(5, product.getName());
+	        preparedStatement.setString(1, product.getName());
+	        preparedStatement.setString(2, product.getDescription());
+	        preparedStatement.setDouble(3, product.getPrice());
+	        preparedStatement.setInt(4, product.getStock());
+	        preparedStatement.setString(5, product.getImageBase64());
+	        preparedStatement.setInt(6, product.getProductID());
 
 	        int rowsAffected = preparedStatement.executeUpdate();
 	        return rowsAffected > 0;
@@ -171,6 +172,7 @@ public class ProductDAO {
 	    }
 	    return false;
 	}
+
 	
 	public Product getProductByName(String name) {
 	    Product product = null;

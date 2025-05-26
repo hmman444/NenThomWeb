@@ -8,10 +8,13 @@
     <title>User Profile - Scented Bliss</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_profile.css'/>">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.11.2/toastify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value='/css/toastify.min.css'/>">
 </head>
 <body class="bg-faf7f2">
-    
+<%
+    String csrfToken = (String) request.getAttribute("csrfToken");
+%>
+
     <!-- Header -->
     <%@ include file="header.jsp" %>
 
@@ -28,6 +31,7 @@
                     </div>
                     <div class="user-info">
                         <form action="/NenthomWeb/servlets/UpdateProfile_Servlet" method="post">
+                        	<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
                             <div class="info-item">
                                 <label for="username">ID User</label>
                                 <input type="hidden" id="userId" name="userId" value="${user.userId}">
@@ -35,15 +39,17 @@
                             </div>
                             <div class="info-item">
                                 <label for="email">Email</label>
-                                <input type="email" id="email" name="email" value="${user.email}">
+                                <input type="email" id="email" name="email" value="${user.email}" maxlength="100">
+                                
                             </div>
                             <div class="info-item">
                                 <label for="phone">Phone Number</label>
-                                <input type="text" id="phone" name="phoneNumber" value="${user.phoneNumber}">
+                                <input type="text" id="phone" name="phoneNumber" value="${user.phoneNumber}" maxlength = "15">
+                                
                             </div>
                             <div class="info-item">
                                 <label for="address">Shipping Address</label>
-                                <input type="text" id="address" name="address" value="${user.address}">
+                                <input type="text" id="address" name="address" value="${user.address}" maxlength = "255">                                
                             </div>
 
                             <!-- Nút submit -->

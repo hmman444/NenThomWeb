@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import models.Cart;
 import models.Product;
 import services.ConnectionUtil;
+import utils.CSRFUtil;
 
 @WebServlet("/servlets/AddToCart_Servlet")
 public class AddToCart_Servlet extends HttpServlet {
@@ -29,6 +30,10 @@ public class AddToCart_Servlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (!CSRFUtil.isValid(request)) {
+	        request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+	        return;
+	    }
         // Lấy giá trị productID từ request body (POST)
         String productIDStr = request.getParameter("productID");
         int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -61,12 +66,13 @@ public class AddToCart_Servlet extends HttpServlet {
             ProductDAO productDao = new ProductDAO(connection);
             List<Product> products = productDao.getAllProducts();
             request.setAttribute("products", products);
-            
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/product.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
             // Thông báo lỗi nếu có
             request.setAttribute("errorMessage", "Error adding to cart.");
+            CSRFUtil.attachToken(request);
             request.getRequestDispatcher("/views/product.jsp").forward(request, response);
         }
     }

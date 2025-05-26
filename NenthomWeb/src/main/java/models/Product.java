@@ -14,6 +14,13 @@ public class Product {
 	private int stock;
 	private String imageBase64;
 
+	public Product( String name, String description, double price, int stock, String imageBase64) {
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.stock = stock;
+		this.imageBase64 = imageBase64;
+	}
 	public Product(int productID, String name, String description, double price, int stock, String imageBase64) {
 		this.productID = productID;
 		this.name = name;

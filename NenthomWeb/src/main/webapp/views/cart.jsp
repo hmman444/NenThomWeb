@@ -7,9 +7,14 @@
     <title>Scented Bliss - Shopping Cart</title>
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_cart.css'/>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="<c:url value='/css/all.min.css'/>">
+
 </head>
 <body class="bg-faf7f2">
+<%
+    String csrfToken = (String) request.getAttribute("csrfToken");
+%>
+
     <!-- Header -->
     <%@ include file="header.jsp" %>
 
@@ -34,6 +39,7 @@
 					
 					                    <!-- Form để gửi dữ liệu tăng/giảm số lượng -->
 					                    <form action="/NenthomWeb/servlets/UpdateCart_Servlet" method="POST">
+					                    	<input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
 					                        <!-- Lưu thông tin sản phẩm và hành động (tăng/giảm) -->
 					                        <input type="hidden" name="productId" value="${product.productID}" />
 					                        <input type="hidden" name="action" value="decrement" id="action-decrement-${product.productID}" />

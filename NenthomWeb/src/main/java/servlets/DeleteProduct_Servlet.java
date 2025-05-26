@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import services.ConnectionUtil;
-
+import utils.CSRFUtil;
 
 @WebServlet("/servlets/DeleteProduct_Servlet")
 public class DeleteProduct_Servlet extends HttpServlet {
@@ -20,6 +20,10 @@ public class DeleteProduct_Servlet extends HttpServlet {
         super();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	if (!CSRFUtil.isValid(request)) {
+            request.getRequestDispatcher("/views/csrf_error.jsp").forward(request, response);
+            return;
+        }
         String productName = request.getParameter("productName");
         System.out.println("Product to delete: " + productName);
         try (Connection connection =  ConnectionUtil.DB()) {
