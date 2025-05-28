@@ -20,7 +20,7 @@
 	               font-src 'self';
 	               form-action 'self';">
     <title>Login | Nến Thơm</title>
-    <link rel="stylesheet" href="<c:url value='/css/styles_login.css'/>">
+    <link rel="stylesheet" href="<c:url value='/css/login.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/styles_header_footer.css'/>">
 	<link rel="stylesheet" href="<c:url value='/css/all.min.css'/>">
 	<link rel="stylesheet" href="<c:url value='/css/toastr.min.css'/>">
