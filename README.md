@@ -33,8 +33,9 @@ Website thương mại điện tử hỗ trợ mua sắm nến thơm trực tuy�
    git clone https://github.com/<your-username>/<repo-name>.git
    ```
 2. Import vào Eclipse.
-3. Cấu hình kết nối cơ sở dữ liệu trong file config JDBC.
+3. Cấu hình kết nối cơ sở dữ liệu bằng cách chạy script Database ScriptNenThomDB.sql
 4. Chạy dự án trên Apache Tomcat 10.
 
 ## 📄 Báo cáo chi tiết
-[Xem báo cáo đầy đủ tại đây](docs/BaoCaoDuAn.pdf)
+- [Xem báo cáo (DOCX)](docs/BaoCao.docx)
+- [Xem slide dự án (PPTX)](docs/BaoCao.pptx)
