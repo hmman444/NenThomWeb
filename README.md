@@ -30,7 +30,7 @@ Website thương mại điện tử hỗ trợ mua sắm nến thơm trực tuy�
 ## 📥 Cài đặt & chạy dự án
 1. Clone repo:
    ```bash
-   git clone https://github.com/<your-username>/<repo-name>.git
+   git clone https://github.com/hmman444/NenThomWeb.git
    ```
 2. Import vào Eclipse.
 3. Cấu hình kết nối cơ sở dữ liệu bằng cách chạy script Database ScriptNenThomDB.sql
