@@ -21,10 +21,11 @@ Website thương mại điện tử hỗ trợ mua sắm nến thơm trực tuy�
 
 ## 📷 Demo giao diện
 ![Trang chủ](images/home.png)
+![Trang cá nhân](images/profile.png)
 ![Trang sản phẩm](images/products.png)
+![Trang chi tiết sản phẩm](images/product_detail.png)
 ![Trang giỏ hàng](images/cart.png)
-
-*(Thay link ảnh trên bằng ảnh chụp màn hình thực tế của bạn)*
+![Trang đăng ký, đăng nhập](images/sign_up_in.png)
 
 ## 📥 Cài đặt & chạy dự án
 1. Clone repo:
